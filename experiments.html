@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="HumaLog-VLA joint-angle, horizon, and data augmentation experiments." />
+    <meta name="theme-color" content="#07131f" />
+    <title>Experiments · HumaLog-VLA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="HumaLog-VLA home"><span class="brand-mark" aria-hidden="true">H</span><span>HumaLog-VLA</span></a>
+      <nav aria-label="Primary navigation"><a href="method.html">Method</a><a class="active" href="experiments.html">Experiments</a><a href="results.html">Results</a><a href="demo.html">Demo</a><a href="demo.html#resources">Resources</a></nav>
+    </header>
+    <main id="top">
+      <section class="page-hero experiment-page-hero"><div class="section-shell"><p class="eyebrow">02 / Experiments</p><h1>Three experiments.<br />One stronger policy.</h1><p>Joint-angle representation, action horizon, and data augmentation are evaluated separately.</p></div></section>
+      <section class="experiments section-shell standalone-section">
+        <article class="experiment-block reveal"><div class="experiment-copy"><span class="experiment-number">Experiment 01</span><h2>Relative joint-angle representation</h2><p>Absolute dual-arm targets vary in scale across future horizon steps. Relative joint actions reduce this shift, while Horizon × Joint statistics normalize each time step and joint dimension independently.</p><div class="experiment-result"><strong>−6.5%</strong><span>training loss</span></div></div><div class="experiment-visual"><code>a<sub>h</sub> = q<sub>target,h</sub> − q<sub>now</sub></code><div class="comparison-bar"><span>Baseline</span><i style="--bar:100%"></i><b>100</b></div><div class="comparison-bar accent"><span>Horizon × Joint</span><i style="--bar:93.5%"></i><b>93.5</b></div><small>Relative loss index; baseline = 100</small></div></article>
+        <article class="experiment-block reveal"><div class="experiment-copy"><span class="experiment-number">Experiment 02</span><h2>Action-horizon execution</h2><p>Fixed action horizons accumulate phase and execution errors. AutoHorizon dynamically adjusts the actual chunk length as the task progresses.</p><div class="experiment-result"><strong>+2.6%</strong><span>task success</span></div></div><div class="experiment-visual horizon-visual"><div class="horizon-value"><span>Average executed horizon</span><strong>23.1</strong><small>steps</small></div><div class="horizon-track"><i></i><b></b></div><p>Dynamic execution replaces a single fixed horizon.</p></div></article>
+        <article class="experiment-block reveal"><div class="experiment-copy"><span class="experiment-number">Experiment 03</span><h2>Clean data augmentation</h2><p>Augmenting the Clean demonstrations expands the training sample distribution and improves robustness in complex scenes.</p><div class="experiment-result"><strong>−6.1%</strong><span>training loss</span></div></div><div class="experiment-visual"><div class="loss-pair"><div><span>Baseline</span><strong>0.066</strong></div><em>→</em><div class="is-better"><span>Augmented</span><strong>0.062</strong></div></div><div class="loss-drop"><i></i></div><small>Clean demonstration augmentation</small></div></article>
+      </section>
+      <section class="next-page section-shell"><p>Continue exploring</p><a href="results.html"><span>Evaluation results</span><strong>See performance across 50 tasks →</strong></a></section></main>
+    <footer><div><strong>HumaLog-VLA</strong><p>LingBot-VLA 2.0 adaptation for robust manipulation.</p></div><div class="footer-meta"><a href="index.html">Home</a><a href="#top">Back to top ↑</a></div></footer>
+    <script src="assets/main.js" defer></script>
+  </body>
+</html>

@@ -2,6 +2,14 @@
 
 Public project page for HumaLog's LingBot-VLA 2.0 adaptation and RoboTwin 2.0 evaluation.
 
+The site is organized into five focused pages:
+
+- Home: project overview and headline metrics
+- Method: training and execution pipeline
+- Experiments: joint-angle, action-horizon, and data-augmentation studies
+- Results: aggregate and per-task RoboTwin evaluation
+- Demo: SO101 dual-arm video and project resources
+
 - Clean2Clean: 72.6%
 - Clean2Random: 39.2%
 - Combined RoboTwin 2.0 success: 55.9%

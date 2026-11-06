@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="HumaLog-VLA SO101 dual-arm demo and resources." />
+    <meta name="theme-color" content="#07131f" />
+    <title>Demo · HumaLog-VLA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="HumaLog-VLA home"><span class="brand-mark" aria-hidden="true">H</span><span>HumaLog-VLA</span></a>
+      <nav aria-label="Primary navigation"><a href="method.html">Method</a><a href="experiments.html">Experiments</a><a href="results.html">Results</a><a class="active" href="demo.html">Demo</a><a href="demo.html#resources">Resources</a></nav>
+    </header>
+    <main id="top"><section class="page-hero"><div class="section-shell"><p class="eyebrow">04 / Real-world demo</p><h1>From simulation to<br />dual-arm handover.</h1><p>A LingBot-VLA adaptation for two SO101 follower arms.</p></div></section><section id="demo" class="demo-section standalone-demo">
+        <div class="section-shell">
+          <div class="section-heading light">
+            <div>
+              <p class="section-index">05 / Real-world demo</p>
+              <h2>From simulation to dual-arm handover</h2>
+            </div>
+            <p>A full-parameter LingBot-VLA adaptation for two SO101 follower arms.</p>
+          </div>
+          <div class="video-frame reveal">
+            <video controls playsinline preload="metadata">
+              <source src="assets/videos/so101-demo.mp4" type="video/mp4" />
+              Your browser does not support embedded video.
+            </video>
+          </div>
+          <div class="demo-caption">
+            <span>Grasp</span><i></i><span>Dual-arm handover</span><i></i><span>Transfer</span>
+          </div>
+        </div>
+      </section><section id="resources" class="resources section-shell standalone-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">06 / Resources</p>
+            <h2>Reproduce the system</h2>
+          </div>
+          <p>Code, model, protocol, and evidence remain version-bound.</p>
+        </div>
+        <div class="resource-grid">
+          <a href="https://github.com/4588025/lingbot-vla-project-page" class="resource-card reveal" target="_blank" rel="noreferrer">
+            <span>Source</span><strong>Project page repository</strong><i aria-hidden="true">↗</i>
+          </a>
+          <a href="https://huggingface.co/Humalog2/Lab20k-FullSFT-Aug16000" class="resource-card reveal" target="_blank" rel="noreferrer">
+            <span>Model</span><strong>Dense FP32 checkpoint</strong><i aria-hidden="true">↗</i>
+          </a>
+          <a href="results.html" class="resource-card reveal">
+            <span>Protocol</span><strong>3,000-episode evaluation</strong><i aria-hidden="true">↓</i>
+          </a>
+          <a href="method.html" class="resource-card reveal">
+            <span>Report</span><strong>Method & reproduction</strong><i aria-hidden="true">↓</i>
+          </a>
+        </div>
+      </section></main>
+    <footer><div><strong>HumaLog-VLA</strong><p>LingBot-VLA 2.0 adaptation for robust manipulation.</p></div><div class="footer-meta"><a href="index.html">Home</a><a href="#top">Back to top ↑</a></div></footer>
+    <script src="assets/main.js" defer></script>
+  </body>
+</html>

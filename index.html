@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="HumaLog-VLA: relative-joint control and AutoHorizon execution for LingBot-VLA 2.0 on RoboTwin." />
+    <meta name="description" content="HumaLog-VLA: robust LingBot-VLA 2.0 adaptation and evaluation on RoboTwin." />
     <meta name="theme-color" content="#07131f" />
     <title>HumaLog-VLA · LingBot-VLA × RoboTwin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,295 +13,38 @@
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="#top" aria-label="HumaLog-VLA home">
-        <span class="brand-mark" aria-hidden="true">H</span>
-        <span>HumaLog-VLA</span>
-      </a>
-      <nav aria-label="Primary navigation">
-        <a href="#method">Method</a>
-        <a href="#results">Results</a>
-        <a href="#demo">Demo</a>
-        <a href="#resources">Resources</a>
-      </nav>
+      <a class="brand" href="index.html" aria-label="HumaLog-VLA home"><span class="brand-mark" aria-hidden="true">H</span><span>HumaLog-VLA</span></a>
+      <nav aria-label="Primary navigation"><a href="method.html">Method</a><a href="experiments.html">Experiments</a><a href="results.html">Results</a><a href="demo.html">Demo</a><a href="demo.html#resources">Resources</a></nav>
     </header>
-
     <main id="top">
       <section class="hero section-shell">
         <div class="hero-copy reveal">
           <p class="eyebrow">LingBot-VLA 2.0 × RoboTwin 2.0</p>
-          <h1>Adaptive horizons<br />for robust robot control.</h1>
-          <p class="hero-lede">
-            A LingBot-VLA 2.0 policy trained with augmented Clean demonstrations, relative-joint
-            actions, and AutoHorizon execution across 50 RoboTwin manipulation tasks.
-          </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#results">Explore results</a>
-            <a class="button button-ghost" href="#demo">Watch robot demo <span aria-hidden="true">↗</span></a>
-          </div>
+          <h1>Robust robot policies<br />from clean demonstrations.</h1>
+          <p class="hero-lede">A 6B vision-language-action policy adapted with multi-stage full-parameter training, protected visual augmentation, and closed-loop evaluation across 50 manipulation tasks.</p>
+          <div class="hero-actions"><a class="button button-primary" href="method.html">Explore the method</a><a class="button button-ghost" href="results.html">View results <span aria-hidden="true">↗</span></a></div>
           <p class="hero-note">HumaLog Team · 2026</p>
         </div>
-
         <div class="hero-visual reveal" aria-label="Project overview visualization">
-          <div class="orbit orbit-a"></div>
-          <div class="orbit orbit-b"></div>
-          <div class="hero-core">
-            <span class="core-kicker">AutoHorizon</span>
-            <strong>23.1</strong>
-            <span>average executed steps</span>
-          </div>
-          <div class="visual-tag tag-data"><span>01</span> Clean augmentation</div>
-          <div class="visual-tag tag-train"><span>02</span> Relative action</div>
-          <div class="visual-tag tag-eval"><span>03</span> Dynamic horizon</div>
+          <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+          <div class="hero-core"><span class="core-kicker">Dense FP32 policy</span><strong>6.38B</strong><span>student parameters</span></div>
+          <div class="visual-tag tag-data"><span>01</span> Clean data</div><div class="visual-tag tag-train"><span>02</span> Full SFT</div><div class="visual-tag tag-eval"><span>03</span> Closed loop</div>
         </div>
       </section>
-
       <section class="metrics-band" aria-label="Evaluation summary">
-        <div class="metric reveal">
-          <span class="metric-label">Clean2Clean</span>
-          <strong>72.6<span>%</span></strong>
-          <small>best model</small>
-        </div>
-        <div class="metric reveal">
-          <span class="metric-label">Clean2Random</span>
-          <strong>39.2<span>%</span></strong>
-          <small>best model</small>
-        </div>
-        <div class="metric reveal">
-          <span class="metric-label">Combined</span>
-          <strong>55.9<span>%</span></strong>
-          <small>RoboTwin 2.0 success</small>
-        </div>
-        <div class="metric reveal">
-          <span class="metric-label">AutoHorizon gain</span>
-          <strong>+2.6<span>%</span></strong>
-          <small>over the best fixed horizon</small>
-        </div>
+        <div class="metric reveal"><span class="metric-label">Clean2Clean</span><strong>72.6<span>%</span></strong><small>best model</small></div>
+        <div class="metric reveal"><span class="metric-label">Clean2Random</span><strong>39.2<span>%</span></strong><small>best model</small></div>
+        <div class="metric reveal"><span class="metric-label">Combined</span><strong>55.9<span>%</span></strong><small>RoboTwin 2.0 success</small></div>
+        <div class="metric reveal"><span class="metric-label">Coverage</span><strong>50<span> tasks</span></strong><small>Clean + Randomized</small></div>
       </section>
-
-      <section class="intro section-shell">
-        <p class="section-index">01 / Motivation</p>
-        <div class="intro-grid">
-          <h2 class="reveal">Better data. Better actions.<br />The right execution length.</h2>
-          <div class="intro-copy reveal">
-            <p>
-              Clean demonstrations are augmented to expand the training distribution, reducing
-              training loss from 0.066 to 0.062. Dual-arm targets are represented as relative
-              joint actions to reduce scale differences across horizon steps.
-            </p>
-            <p>
-              AutoHorizon replaces a fixed execution length with dynamic action-chunk execution.
-              The measured average horizon is 23.1 steps and success improves by 2.6% over the
-              best fixed-horizon strategy.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="method" class="method section-shell">
-        <div class="section-heading">
-          <div>
-            <p class="section-index">02 / Method</p>
-            <h2>Data, action, and horizon optimization</h2>
-          </div>
-          <p>Three coordinated changes improve generalization and closed-loop execution.</p>
-        </div>
-
-        <div class="pipeline" role="list" aria-label="Training and evaluation pipeline">
-          <article class="pipeline-card reveal" role="listitem">
-            <span class="pipeline-num">01</span>
-            <div class="pipeline-icon" aria-hidden="true">◫</div>
-            <h3>Clean augmentation</h3>
-            <p>Expand the Clean demonstration distribution for more robust scene generalization.</p>
-            <small>Training loss 0.066 → 0.062 · −6.1%</small>
-          </article>
-          <article class="pipeline-card reveal" role="listitem">
-            <span class="pipeline-num">02</span>
-            <div class="pipeline-icon" aria-hidden="true">◎</div>
-            <h3>Relative joint actions</h3>
-            <p>Represent dual-arm targets relative to the current joints to reduce horizon-dependent scale shifts.</p>
-            <small>Training loss reduced by 6.5%</small>
-          </article>
-          <article class="pipeline-card reveal" role="listitem">
-            <span class="pipeline-num">03</span>
-            <div class="pipeline-icon" aria-hidden="true">⌁</div>
-            <h3>Two-stage training</h3>
-            <p>Stage 1 uses Clean demonstrations for 20k-step full SFT; Stage 2 applies 8k-step LoRA on augmented Clean data.</p>
-            <small>4 × RTX 4090 48GB</small>
-          </article>
-          <article class="pipeline-card reveal" role="listitem">
-            <span class="pipeline-num">04</span>
-            <div class="pipeline-icon" aria-hidden="true">↻</div>
-            <h3>AutoHorizon execution</h3>
-            <p>Dynamically adjust the actual action-chunk execution length as task phases progress.</p>
-            <small>Average 23.1 steps · +2.6% success</small>
-          </article>
-        </div>
-
-        <div class="action-spec reveal">
-          <div>
-            <span class="chip">Action representation</span>
-            <h3>Horizon × Joint normalization.</h3>
-          </div>
-          <div class="action-formula">
-            <code>a<sub>arm,h</sub> = q<sub>target,h</sub> − q<sub>now</sub></code>
-            <p>Compared with Joint-wise normalization, Horizon × Joint statistics independently normalize every time step and joint dimension, reducing training loss by 6.5%.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="training section-shell">
-        <div class="section-heading">
-          <div>
-            <p class="section-index">03 / Training</p>
-            <h2>Two stages of targeted optimization</h2>
-          </div>
-          <p>Full-parameter adaptation establishes the policy; LoRA refines it with augmented Clean data.</p>
-        </div>
-
-        <div class="training-grid">
-          <div class="chart-card training-impact reveal">
-            <div class="impact-row">
-              <span>Clean data augmentation</span>
-              <strong>0.066 → 0.062</strong>
-              <small>−6.1% training loss</small>
-            </div>
-            <div class="impact-row">
-              <span>Relative joint representation</span>
-              <strong>Horizon × Joint</strong>
-              <small>−6.5% training loss</small>
-            </div>
-            <div class="impact-row impact-row-accent">
-              <span>AutoHorizon execution</span>
-              <strong>23.1 steps</strong>
-              <small>+2.6% task success</small>
-            </div>
-          </div>
-          <div class="training-notes reveal">
-            <div class="training-stat">
-              <span>Training hardware</span>
-              <strong>4 × RTX 4090 48GB</strong>
-              <small>two-stage optimization strategy</small>
-            </div>
-            <div class="timeline" aria-label="Training stages">
-              <div><span>20k</span><p>Stage 1 · Clean full-parameter SFT</p></div>
-              <div><span>+8k</span><p>Stage 2 · augmented Clean LoRA</p></div>
-            </div>
-            <p class="fine-print">The final policy combines relative-joint control with AutoHorizon execution.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="results" class="results section-shell">
-        <div class="section-heading">
-          <div>
-            <p class="section-index">04 / Evaluation</p>
-            <h2>AutoHorizon delivers the best result</h2>
-          </div>
-          <p>RoboTwin 2.0 · Clean2Clean and Clean2Random · combined success 55.9%.</p>
-        </div>
-
-        <div class="result-overview">
-          <figure class="chart-card reveal">
-            <img src="assets/images/eval-success-by-task.png" alt="Per-task success rates for Clean and Random evaluation" loading="lazy" />
-            <figcaption>Per-task success, 30 trials per setting</figcaption>
-          </figure>
-          <div class="score-bars reveal" aria-label="Aggregate success rates">
-            <div class="score-row">
-              <div><span>Clean2Clean</span><strong>72.6%</strong></div>
-              <div class="bar-track"><span style="--score:72.6%"></span></div>
-              <small>Clean evaluation setting</small>
-            </div>
-            <div class="score-row">
-              <div><span>Clean2Random</span><strong>39.2%</strong></div>
-              <div class="bar-track"><span style="--score:39.2%"></span></div>
-              <small>Randomized evaluation setting</small>
-            </div>
-            <div class="score-row score-row-total">
-              <div><span>Combined</span><strong>55.9%</strong></div>
-              <div class="bar-track"><span style="--score:55.9%"></span></div>
-              <small>best RoboTwin 2.0 model</small>
-            </div>
-            <p class="protocol-note">
-              AutoHorizon dynamically adjusts action-chunk execution length as task phases progress. Its average executed horizon is 23.1 steps, improving task success by 2.6% over the best fixed-horizon strategy.
-            </p>
-          </div>
-        </div>
-
-        <div class="task-explorer reveal">
-          <div class="task-toolbar">
-            <div>
-              <span class="chip">Task explorer</span>
-              <h3>Inspect all 50 tasks</h3>
-            </div>
-            <div class="segmented" role="group" aria-label="Result setting">
-              <button class="is-active" data-setting="clean" type="button">Clean</button>
-              <button data-setting="random" type="button">Random</button>
-              <button data-setting="gap" type="button">Gap</button>
-            </div>
-          </div>
-          <div id="task-list" class="task-list" aria-live="polite">
-            <p class="loading">Loading verified task results…</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="demo" class="demo-section">
-        <div class="section-shell">
-          <div class="section-heading light">
-            <div>
-              <p class="section-index">05 / Real-world demo</p>
-              <h2>From simulation to dual-arm handover</h2>
-            </div>
-            <p>A full-parameter LingBot-VLA adaptation for two SO101 follower arms.</p>
-          </div>
-          <div class="video-frame reveal">
-            <video controls playsinline preload="metadata">
-              <source src="assets/videos/so101-demo.mp4" type="video/mp4" />
-              Your browser does not support embedded video.
-            </video>
-          </div>
-          <div class="demo-caption">
-            <span>Grasp</span><i></i><span>Dual-arm handover</span><i></i><span>Transfer</span>
-          </div>
-        </div>
-      </section>
-
-      <section id="resources" class="resources section-shell">
-        <div class="section-heading">
-          <div>
-            <p class="section-index">06 / Resources</p>
-            <h2>Reproduce the system</h2>
-          </div>
-          <p>Code, model, protocol, and evidence remain version-bound.</p>
-        </div>
-        <div class="resource-grid">
-          <a href="https://github.com/4588025/lingbot-vla-project-page" class="resource-card reveal" target="_blank" rel="noreferrer">
-            <span>Source</span><strong>Project page repository</strong><i aria-hidden="true">↗</i>
-          </a>
-          <a href="https://huggingface.co/Humalog2/Lab20k-FullSFT-Aug16000" class="resource-card reveal" target="_blank" rel="noreferrer">
-            <span>Model</span><strong>Dense FP32 checkpoint</strong><i aria-hidden="true">↗</i>
-          </a>
-          <a href="#results" class="resource-card reveal">
-            <span>Protocol</span><strong>3,000-episode evaluation</strong><i aria-hidden="true">↓</i>
-          </a>
-          <a href="#method" class="resource-card reveal">
-            <span>Report</span><strong>Method & reproduction</strong><i aria-hidden="true">↓</i>
-          </a>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div>
-        <strong>HumaLog-VLA</strong>
-        <p>LingBot-VLA 2.0 adaptation for robust manipulation.</p>
-      </div>
-      <div class="footer-meta">
-        <span>Built from verified experiment records</span>
-        <a href="#top">Back to top ↑</a>
-      </div>
-    </footer>
-
+      <section class="intro section-shell home-intro"><p class="section-index">Project overview</p><div class="intro-grid"><h2 class="reveal">Learning from clean data.<br />Acting beyond clean scenes.</h2><div class="intro-copy reveal"><p>The project combines data augmentation, relative joint actions, multi-stage training, and adaptive closed-loop execution for robust manipulation.</p><p>Methods, controlled experiments, task-level results, and the real-world SO101 demonstration are separated into focused pages.</p></div></div></section>
+      <section class="page-directory section-shell" aria-label="Project pages">
+        <a class="page-link-card reveal" href="method.html"><span>01 / Method</span><h2>How the policy is trained and executed.</h2><p>Data, relative actions, normalization, two-stage training, and closed-loop control.</p><i>Open method →</i></a>
+        <a class="page-link-card reveal" href="experiments.html"><span>02 / Experiments</span><h2>Three controlled experiment groups.</h2><p>Joint-angle representation, action horizon, and Clean data augmentation.</p><i>Open experiments →</i></a>
+        <a class="page-link-card reveal" href="results.html"><span>03 / Results</span><h2>Performance across 50 RoboTwin tasks.</h2><p>Clean2Clean, Clean2Random, aggregate scores, and task-level exploration.</p><i>Open results →</i></a>
+        <a class="page-link-card reveal" href="demo.html"><span>04 / Demo</span><h2>Dual-arm handover in the real world.</h2><p>Watch the SO101 demonstration and access project resources.</p><i>Open demo →</i></a>
+      </section></main>
+    <footer><div><strong>HumaLog-VLA</strong><p>LingBot-VLA 2.0 adaptation for robust manipulation.</p></div><div class="footer-meta"><a href="index.html">Home</a><a href="#top">Back to top ↑</a></div></footer>
     <script src="assets/main.js" defer></script>
   </body>
 </html>

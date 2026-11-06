@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="HumaLog-VLA training and execution method." />
+    <meta name="theme-color" content="#07131f" />
+    <title>Method · HumaLog-VLA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="HumaLog-VLA home"><span class="brand-mark" aria-hidden="true">H</span><span>HumaLog-VLA</span></a>
+      <nav aria-label="Primary navigation"><a class="active" href="method.html">Method</a><a href="experiments.html">Experiments</a><a href="results.html">Results</a><a href="demo.html">Demo</a><a href="demo.html#resources">Resources</a></nav>
+    </header>
+    <main id="top"><section class="page-hero"><div class="section-shell"><p class="eyebrow">01 / Method</p><h1>Data, action, and<br />horizon optimization.</h1><p>The complete system combines data processing, relative-joint control, two-stage training, and adaptive execution.</p></div></section><section id="method" class="method section-shell standalone-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">02 / Method</p>
+            <h2>Data, action, and horizon optimization</h2>
+          </div>
+          <p>Three coordinated changes improve generalization and closed-loop execution.</p>
+        </div>
+
+        <div class="pipeline" role="list" aria-label="Training and evaluation pipeline">
+          <article class="pipeline-card reveal" role="listitem">
+            <span class="pipeline-num">01</span>
+            <div class="pipeline-icon" aria-hidden="true">◫</div>
+            <h3>Clean augmentation</h3>
+            <p>Expand the Clean demonstration distribution for more robust scene generalization.</p>
+            <small>Training loss 0.066 → 0.062 · −6.1%</small>
+          </article>
+          <article class="pipeline-card reveal" role="listitem">
+            <span class="pipeline-num">02</span>
+            <div class="pipeline-icon" aria-hidden="true">◎</div>
+            <h3>Relative joint actions</h3>
+            <p>Represent dual-arm targets relative to the current joints to reduce horizon-dependent scale shifts.</p>
+            <small>Training loss reduced by 6.5%</small>
+          </article>
+          <article class="pipeline-card reveal" role="listitem">
+            <span class="pipeline-num">03</span>
+            <div class="pipeline-icon" aria-hidden="true">⌁</div>
+            <h3>Two-stage training</h3>
+            <p>Stage 1 uses Clean demonstrations for 20k-step full SFT; Stage 2 applies 8k-step LoRA on augmented Clean data.</p>
+            <small>4 × RTX 4090 48GB</small>
+          </article>
+          <article class="pipeline-card reveal" role="listitem">
+            <span class="pipeline-num">04</span>
+            <div class="pipeline-icon" aria-hidden="true">↻</div>
+            <h3>AutoHorizon execution</h3>
+            <p>Dynamically adjust the actual action-chunk execution length as task phases progress.</p>
+            <small>Average 23.1 steps · +2.6% success</small>
+          </article>
+        </div>
+
+        <div class="action-spec reveal">
+          <div>
+            <span class="chip">Action representation</span>
+            <h3>Horizon × Joint normalization.</h3>
+          </div>
+          <div class="action-formula">
+            <code>a<sub>arm,h</sub> = q<sub>target,h</sub> − q<sub>now</sub></code>
+            <p>Compared with Joint-wise normalization, Horizon × Joint statistics independently normalize every time step and joint dimension, reducing training loss by 6.5%.</p>
+          </div>
+        </div>
+      </section><section class="training section-shell compact-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">03 / Training</p>
+            <h2>Two stages of targeted optimization</h2>
+          </div>
+          <p>Full-parameter adaptation establishes the policy; LoRA refines it with augmented Clean data.</p>
+        </div>
+
+        <div class="training-grid">
+          <div class="chart-card training-impact reveal">
+            <div class="impact-row">
+              <span>Clean data augmentation</span>
+              <strong>0.066 → 0.062</strong>
+              <small>−6.1% training loss</small>
+            </div>
+            <div class="impact-row">
+              <span>Relative joint representation</span>
+              <strong>Horizon × Joint</strong>
+              <small>−6.5% training loss</small>
+            </div>
+            <div class="impact-row impact-row-accent">
+              <span>AutoHorizon execution</span>
+              <strong>23.1 steps</strong>
+              <small>+2.6% task success</small>
+            </div>
+          </div>
+          <div class="training-notes reveal">
+            <div class="training-stat">
+              <span>Training hardware</span>
+              <strong>4 × RTX 4090 48GB</strong>
+              <small>two-stage optimization strategy</small>
+            </div>
+            <div class="timeline" aria-label="Training stages">
+              <div><span>20k</span><p>Stage 1 · Clean full-parameter SFT</p></div>
+              <div><span>+8k</span><p>Stage 2 · augmented Clean LoRA</p></div>
+            </div>
+            <p class="fine-print">The final policy combines relative-joint control with AutoHorizon execution.</p>
+          </div>
+        </div>
+      </section><section class="next-page section-shell"><p>Continue exploring</p><a href="experiments.html"><span>Controlled experiments</span><strong>Inspect the ablations →</strong></a></section></main>
+    <footer><div><strong>HumaLog-VLA</strong><p>LingBot-VLA 2.0 adaptation for robust manipulation.</p></div><div class="footer-meta"><a href="index.html">Home</a><a href="#top">Back to top ↑</a></div></footer>
+    <script src="assets/main.js" defer></script>
+  </body>
+</html>
