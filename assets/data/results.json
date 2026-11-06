@@ -10,17 +10,17 @@
     "clean": {
       "success": 1090,
       "scored": 1500,
-      "rate": 72.67
+      "rate": 72.6
     },
     "random": {
       "success": 589,
       "scored": 1500,
-      "rate": 39.27
+      "rate": 39.2
     },
     "overall": {
       "success": 1679,
       "scored": 3000,
-      "rate": 55.97
+      "rate": 55.9
     }
   },
   "tasks": [

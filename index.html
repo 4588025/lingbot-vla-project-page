@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="HumaLog-VLA: robust full-parameter adaptation of LingBot-VLA 2.0 for RoboTwin." />
+    <meta name="description" content="HumaLog-VLA: relative-joint control and AutoHorizon execution for LingBot-VLA 2.0 on RoboTwin." />
     <meta name="theme-color" content="#07131f" />
     <title>HumaLog-VLA · LingBot-VLA × RoboTwin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,10 +29,10 @@
       <section class="hero section-shell">
         <div class="hero-copy reveal">
           <p class="eyebrow">LingBot-VLA 2.0 × RoboTwin 2.0</p>
-          <h1>Robust robot policies<br />from clean demonstrations.</h1>
+          <h1>Adaptive horizons<br />for robust robot control.</h1>
           <p class="hero-lede">
-            A 6B vision-language-action policy adapted with multi-stage full-parameter training,
-            protected visual augmentation, and closed-loop evaluation across 50 manipulation tasks.
+            A LingBot-VLA 2.0 policy trained with augmented Clean demonstrations, relative-joint
+            actions, and AutoHorizon execution across 50 RoboTwin manipulation tasks.
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="#results">Explore results</a>
@@ -45,52 +45,53 @@
           <div class="orbit orbit-a"></div>
           <div class="orbit orbit-b"></div>
           <div class="hero-core">
-            <span class="core-kicker">Dense FP32 policy</span>
-            <strong>6.38B</strong>
-            <span>student parameters</span>
+            <span class="core-kicker">AutoHorizon</span>
+            <strong>23.1</strong>
+            <span>average executed steps</span>
           </div>
-          <div class="visual-tag tag-data"><span>01</span> Clean data</div>
-          <div class="visual-tag tag-train"><span>02</span> Full SFT</div>
-          <div class="visual-tag tag-eval"><span>03</span> Closed loop</div>
+          <div class="visual-tag tag-data"><span>01</span> Clean augmentation</div>
+          <div class="visual-tag tag-train"><span>02</span> Relative action</div>
+          <div class="visual-tag tag-eval"><span>03</span> Dynamic horizon</div>
         </div>
       </section>
 
       <section class="metrics-band" aria-label="Evaluation summary">
         <div class="metric reveal">
-          <span class="metric-label">Clean</span>
-          <strong>72.67<span>%</span></strong>
-          <small>1,090 / 1,500</small>
+          <span class="metric-label">Clean2Clean</span>
+          <strong>72.6<span>%</span></strong>
+          <small>best model</small>
         </div>
         <div class="metric reveal">
-          <span class="metric-label">Random</span>
-          <strong>39.27<span>%</span></strong>
-          <small>589 / 1,500</small>
+          <span class="metric-label">Clean2Random</span>
+          <strong>39.2<span>%</span></strong>
+          <small>best model</small>
         </div>
         <div class="metric reveal">
           <span class="metric-label">Combined</span>
-          <strong>55.97<span>%</span></strong>
-          <small>1,679 / 3,000</small>
+          <strong>55.9<span>%</span></strong>
+          <small>RoboTwin 2.0 success</small>
         </div>
         <div class="metric reveal">
-          <span class="metric-label">Coverage</span>
-          <strong>50<span> tasks</span></strong>
-          <small>30 episodes × 2 settings</small>
+          <span class="metric-label">AutoHorizon gain</span>
+          <strong>+2.6<span>%</span></strong>
+          <small>over the best fixed horizon</small>
         </div>
       </section>
 
       <section class="intro section-shell">
         <p class="section-index">01 / Motivation</p>
         <div class="intro-grid">
-          <h2 class="reveal">Learning from clean data.<br />Acting beyond clean scenes.</h2>
+          <h2 class="reveal">Better data. Better actions.<br />The right execution length.</h2>
           <div class="intro-copy reveal">
             <p>
-              We start from only 2,500 official Clean demonstrations and preserve the original
-              relative-joint action definition. The training curriculum adapts appearance and
-              geometry while protecting the robot, manipulated objects, and task targets.
+              Clean demonstrations are augmented to expand the training distribution, reducing
+              training loss from 0.066 to 0.062. Dual-arm targets are represented as relative
+              joint actions to reduce scale differences across horizon steps.
             </p>
             <p>
-              The final model predicts a 50-step action chunk and executes the first 25 steps
-              before observing again, keeping the policy responsive during long-horizon tasks.
+              AutoHorizon replaces a fixed execution length with dynamic action-chunk execution.
+              The measured average horizon is 23.1 steps and success improves by 2.6% over the
+              best fixed-horizon strategy.
             </p>
           </div>
         </div>
@@ -100,50 +101,50 @@
         <div class="section-heading">
           <div>
             <p class="section-index">02 / Method</p>
-            <h2>A traceable training pipeline</h2>
+            <h2>Data, action, and horizon optimization</h2>
           </div>
-          <p>Every stage binds data, normalization, model state, and evaluation protocol.</p>
+          <p>Three coordinated changes improve generalization and closed-loop execution.</p>
         </div>
 
         <div class="pipeline" role="list" aria-label="Training and evaluation pipeline">
           <article class="pipeline-card reveal" role="listitem">
             <span class="pipeline-num">01</span>
             <div class="pipeline-icon" aria-hidden="true">◫</div>
-            <h3>Curated demonstrations</h3>
-            <p>2,500 Clean trajectories, filtered to 549,737 valid window starts.</p>
-            <small>50 tasks × 50 trajectories</small>
+            <h3>Clean augmentation</h3>
+            <p>Expand the Clean demonstration distribution for more robust scene generalization.</p>
+            <small>Training loss 0.066 → 0.062 · −6.1%</small>
           </article>
           <article class="pipeline-card reveal" role="listitem">
             <span class="pipeline-num">02</span>
             <div class="pipeline-icon" aria-hidden="true">◎</div>
-            <h3>Protected augmentation</h3>
-            <p>Color, compression, blur, geometry, and background erasing with foreground guards.</p>
-            <small>Training only · no detector at inference</small>
+            <h3>Relative joint actions</h3>
+            <p>Represent dual-arm targets relative to the current joints to reduce horizon-dependent scale shifts.</p>
+            <small>Training loss reduced by 6.5%</small>
           </article>
           <article class="pipeline-card reveal" role="listitem">
             <span class="pipeline-num">03</span>
             <div class="pipeline-icon" aria-hidden="true">⌁</div>
-            <h3>Multi-stage full SFT</h3>
-            <p>Dense student optimization with inherited Adam state and grouped learning rates.</p>
-            <small>36,000 optimizer updates</small>
+            <h3>Two-stage training</h3>
+            <p>Stage 1 uses Clean demonstrations for 20k-step full SFT; Stage 2 applies 8k-step LoRA on augmented Clean data.</p>
+            <small>4 × RTX 4090 48GB</small>
           </article>
           <article class="pipeline-card reveal" role="listitem">
             <span class="pipeline-num">04</span>
             <div class="pipeline-icon" aria-hidden="true">↻</div>
-            <h3>Closed-loop control</h3>
-            <p>Three RGB views, H50 prediction, execute 25 actions, then observe again.</p>
-            <small>Clean + Randomized</small>
+            <h3>AutoHorizon execution</h3>
+            <p>Dynamically adjust the actual action-chunk execution length as task phases progress.</p>
+            <small>Average 23.1 steps · +2.6% success</small>
           </article>
         </div>
 
         <div class="action-spec reveal">
           <div>
             <span class="chip">Action representation</span>
-            <h3>Relative arms. Absolute grippers.</h3>
+            <h3>Horizon × Joint normalization.</h3>
           </div>
           <div class="action-formula">
             <code>a<sub>arm,h</sub> = q<sub>target,h</sub> − q<sub>now</sub></code>
-            <p>12 arm dimensions use per-horizon MeanStd normalization. Two gripper dimensions retain absolute MinMax targets.</p>
+            <p>Compared with Joint-wise normalization, Horizon × Joint statistics independently normalize every time step and joint dimension, reducing training loss by 6.5%.</p>
           </div>
         </div>
       </section>
@@ -152,29 +153,40 @@
         <div class="section-heading">
           <div>
             <p class="section-index">03 / Training</p>
-            <h2>Stable improvement at scale</h2>
+            <h2>Two stages of targeted optimization</h2>
           </div>
-          <p>Final 5,000 updates are complete, continuous, and preserved with all spikes.</p>
+          <p>Full-parameter adaptation establishes the policy; LoRA refines it with augmented Clean data.</p>
         </div>
 
         <div class="training-grid">
-          <figure class="chart-card chart-large reveal">
-            <img src="assets/images/loss-final5000.png" alt="Action and total loss over the final 5,000 optimizer updates" loading="lazy" />
-            <figcaption>Final 5,000-step action and total loss</figcaption>
-          </figure>
+          <div class="chart-card training-impact reveal">
+            <div class="impact-row">
+              <span>Clean data augmentation</span>
+              <strong>0.066 → 0.062</strong>
+              <small>−6.1% training loss</small>
+            </div>
+            <div class="impact-row">
+              <span>Relative joint representation</span>
+              <strong>Horizon × Joint</strong>
+              <small>−6.5% training loss</small>
+            </div>
+            <div class="impact-row impact-row-accent">
+              <span>AutoHorizon execution</span>
+              <strong>23.1 steps</strong>
+              <small>+2.6% task success</small>
+            </div>
+          </div>
           <div class="training-notes reveal">
             <div class="training-stat">
-              <span>Segment mean</span>
-              <strong>0.00990 → 0.00757</strong>
-              <small>−23.5% across the final 5k updates</small>
+              <span>Training hardware</span>
+              <strong>4 × RTX 4090 48GB</strong>
+              <small>two-stage optimization strategy</small>
             </div>
             <div class="timeline" aria-label="Training stages">
-              <div><span>20k</span><p>Lab adaptation</p></div>
-              <div><span>+8k</span><p>Full SFT</p></div>
-              <div><span>+2k</span><p>CUDA continuation</p></div>
-              <div><span>+6k</span><p>Augmented SFT</p></div>
+              <div><span>20k</span><p>Stage 1 · Clean full-parameter SFT</p></div>
+              <div><span>+8k</span><p>Stage 2 · augmented Clean LoRA</p></div>
             </div>
-            <p class="fine-print">Loss is a fitting metric. Closed-loop success is reported separately below.</p>
+            <p class="fine-print">The final policy combines relative-joint control with AutoHorizon execution.</p>
           </div>
         </div>
       </section>
@@ -183,9 +195,9 @@
         <div class="section-heading">
           <div>
             <p class="section-index">04 / Evaluation</p>
-            <h2>3,000 closed-loop episodes</h2>
+            <h2>AutoHorizon delivers the best result</h2>
           </div>
-          <p>50 tasks · Clean and Random settings · 30 scored episodes per task-setting pair.</p>
+          <p>RoboTwin 2.0 · Clean2Clean and Clean2Random · combined success 55.9%.</p>
         </div>
 
         <div class="result-overview">
@@ -195,22 +207,22 @@
           </figure>
           <div class="score-bars reveal" aria-label="Aggregate success rates">
             <div class="score-row">
-              <div><span>Clean</span><strong>72.67%</strong></div>
-              <div class="bar-track"><span style="--score:72.67%"></span></div>
-              <small>1,090 successes</small>
+              <div><span>Clean2Clean</span><strong>72.6%</strong></div>
+              <div class="bar-track"><span style="--score:72.6%"></span></div>
+              <small>Clean evaluation setting</small>
             </div>
             <div class="score-row">
-              <div><span>Random</span><strong>39.27%</strong></div>
-              <div class="bar-track"><span style="--score:39.27%"></span></div>
-              <small>589 successes</small>
+              <div><span>Clean2Random</span><strong>39.2%</strong></div>
+              <div class="bar-track"><span style="--score:39.2%"></span></div>
+              <small>Randomized evaluation setting</small>
             </div>
             <div class="score-row score-row-total">
-              <div><span>Combined</span><strong>55.97%</strong></div>
-              <div class="bar-track"><span style="--score:55.97%"></span></div>
-              <small>1,679 / 3,000</small>
+              <div><span>Combined</span><strong>55.9%</strong></div>
+              <div class="bar-track"><span style="--score:55.9%"></span></div>
+              <small>best RoboTwin 2.0 model</small>
             </div>
             <p class="protocol-note">
-              Development evaluation without expert filtering. Clean and Random runs used the same FP32 model but different hardware and RNG segments; values are descriptive rather than a hardware causal comparison.
+              AutoHorizon dynamically adjusts action-chunk execution length as task phases progress. Its average executed horizon is 23.1 steps, improving task success by 2.6% over the best fixed-horizon strategy.
             </p>
           </div>
         </div>

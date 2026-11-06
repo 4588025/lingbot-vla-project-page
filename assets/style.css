@@ -184,6 +184,14 @@ h2 { margin: 0; font-size: clamp(36px, 4.5vw, 62px); line-height: 1.06; letter-s
 .chart-card { margin: 0; padding: 18px; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); }
 .chart-card img { width: 100%; border-radius: 12px; }
 .chart-card figcaption { padding: 14px 4px 2px; color: var(--muted); font-size: 12px; }
+.training-impact { display: grid; align-content: stretch; padding: 0; overflow: hidden; }
+.impact-row { display: grid; grid-template-columns: 1.1fr 1fr auto; align-items: center; gap: 22px; min-height: 132px; padding: 28px 34px; }
+.impact-row + .impact-row { border-top: 1px solid var(--line); }
+.impact-row span { color: var(--muted); font-size: 13px; }
+.impact-row strong { font-family: "DM Mono", monospace; font-size: 24px; letter-spacing: -.04em; }
+.impact-row small { color: var(--teal-deep); font-family: "DM Mono", monospace; font-size: 11px; }
+.impact-row-accent { color: white; background: var(--teal-deep); }
+.impact-row-accent span, .impact-row-accent small { color: rgba(255,255,255,.72); }
 .training-notes { display: flex; flex-direction: column; padding: 30px; background: var(--navy); border-radius: var(--radius); color: white; }
 .training-stat span, .training-stat small { display: block; color: #8ea2ad; font-size: 12px; }
 .training-stat strong { display: block; margin: 10px 0 4px; color: var(--teal); font-family: "DM Mono", monospace; font-size: 24px; letter-spacing: -.04em; }
@@ -289,6 +297,7 @@ footer p { margin: 4px 0 0; }
   .pipeline-card + .pipeline-card { border-left: 0; border-top: 1px solid var(--line); }
   .action-spec { padding: 30px 26px; }
   .action-formula code { font-size: 17px; }
+  .impact-row { grid-template-columns: 1fr; gap: 5px; min-height: 150px; }
   .task-toolbar { align-items: start; flex-direction: column; }
   .task-list { grid-template-columns: 1fr; }
   .resource-grid { grid-template-columns: 1fr; }

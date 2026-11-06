@@ -2,11 +2,12 @@
 
 Public project page for HumaLog's LingBot-VLA 2.0 adaptation and RoboTwin 2.0 evaluation.
 
-- Clean: 1090/1500 (72.67%)
-- Random: 589/1500 (39.27%)
-- Combined: 1679/3000 (55.97%)
-- Coverage: 50 tasks, 30 episodes per task-setting pair
+- Clean2Clean: 72.6%
+- Clean2Random: 39.2%
+- Combined RoboTwin 2.0 success: 55.9%
+- AutoHorizon: 23.1 average executed steps, +2.6% success over the best fixed horizon
+- Training: 20k-step full SFT followed by 8k-step LoRA on augmented Clean data
 
 Website: <https://4588025.github.io/lingbot-vla-project-page/>
 
-The displayed metrics are generated from the repository-backed evaluation archive. The full training and evaluation repository remains private during the current release stage.
+The page presents the HumaLog team's Clean augmentation, relative-joint action representation, Horizon × Joint normalization, two-stage training, and AutoHorizon execution method. The full training and evaluation repository remains private during the current release stage.
