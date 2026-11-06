@@ -1,0 +1,478 @@
+{
+  "generatedFrom": "eval/results/aug16000-clean-random-3000-20261025/by-task.csv",
+  "protocol": {
+    "tasks": 50,
+    "settings": 2,
+    "episodesPerGroup": 30,
+    "totalEpisodes": 3000
+  },
+  "summary": {
+    "clean": {
+      "success": 1090,
+      "scored": 1500,
+      "rate": 72.67
+    },
+    "random": {
+      "success": 589,
+      "scored": 1500,
+      "rate": 39.27
+    },
+    "overall": {
+      "success": 1679,
+      "scored": 3000,
+      "rate": 55.97
+    }
+  },
+  "tasks": [
+    {
+      "task": "adjust_bottle",
+      "cleanSuccess": 30,
+      "cleanScored": 30,
+      "cleanRate": 100.0,
+      "randomSuccess": 24,
+      "randomScored": 30,
+      "randomRate": 80.0
+    },
+    {
+      "task": "beat_block_hammer",
+      "cleanSuccess": 21,
+      "cleanScored": 30,
+      "cleanRate": 70.0,
+      "randomSuccess": 9,
+      "randomScored": 30,
+      "randomRate": 30.0
+    },
+    {
+      "task": "blocks_ranking_rgb",
+      "cleanSuccess": 23,
+      "cleanScored": 30,
+      "cleanRate": 76.67,
+      "randomSuccess": 19,
+      "randomScored": 30,
+      "randomRate": 63.33
+    },
+    {
+      "task": "blocks_ranking_size",
+      "cleanSuccess": 12,
+      "cleanScored": 30,
+      "cleanRate": 40.0,
+      "randomSuccess": 2,
+      "randomScored": 30,
+      "randomRate": 6.67
+    },
+    {
+      "task": "click_alarmclock",
+      "cleanSuccess": 30,
+      "cleanScored": 30,
+      "cleanRate": 100.0,
+      "randomSuccess": 19,
+      "randomScored": 30,
+      "randomRate": 63.33
+    },
+    {
+      "task": "click_bell",
+      "cleanSuccess": 30,
+      "cleanScored": 30,
+      "cleanRate": 100.0,
+      "randomSuccess": 25,
+      "randomScored": 30,
+      "randomRate": 83.33
+    },
+    {
+      "task": "dump_bin_bigbin",
+      "cleanSuccess": 22,
+      "cleanScored": 30,
+      "cleanRate": 73.33,
+      "randomSuccess": 9,
+      "randomScored": 30,
+      "randomRate": 30.0
+    },
+    {
+      "task": "grab_roller",
+      "cleanSuccess": 30,
+      "cleanScored": 30,
+      "cleanRate": 100.0,
+      "randomSuccess": 22,
+      "randomScored": 30,
+      "randomRate": 73.33
+    },
+    {
+      "task": "handover_block",
+      "cleanSuccess": 18,
+      "cleanScored": 30,
+      "cleanRate": 60.0,
+      "randomSuccess": 5,
+      "randomScored": 30,
+      "randomRate": 16.67
+    },
+    {
+      "task": "handover_mic",
+      "cleanSuccess": 27,
+      "cleanScored": 30,
+      "cleanRate": 90.0,
+      "randomSuccess": 5,
+      "randomScored": 30,
+      "randomRate": 16.67
+    },
+    {
+      "task": "hanging_mug",
+      "cleanSuccess": 9,
+      "cleanScored": 30,
+      "cleanRate": 30.0,
+      "randomSuccess": 1,
+      "randomScored": 30,
+      "randomRate": 3.33
+    },
+    {
+      "task": "lift_pot",
+      "cleanSuccess": 15,
+      "cleanScored": 30,
+      "cleanRate": 50.0,
+      "randomSuccess": 1,
+      "randomScored": 30,
+      "randomRate": 3.33
+    },
+    {
+      "task": "move_can_pot",
+      "cleanSuccess": 19,
+      "cleanScored": 30,
+      "cleanRate": 63.33,
+      "randomSuccess": 4,
+      "randomScored": 30,
+      "randomRate": 13.33
+    },
+    {
+      "task": "move_pillbottle_pad",
+      "cleanSuccess": 24,
+      "cleanScored": 30,
+      "cleanRate": 80.0,
+      "randomSuccess": 7,
+      "randomScored": 30,
+      "randomRate": 23.33
+    },
+    {
+      "task": "move_playingcard_away",
+      "cleanSuccess": 29,
+      "cleanScored": 30,
+      "cleanRate": 96.67,
+      "randomSuccess": 19,
+      "randomScored": 30,
+      "randomRate": 63.33
+    },
+    {
+      "task": "move_stapler_pad",
+      "cleanSuccess": 10,
+      "cleanScored": 30,
+      "cleanRate": 33.33,
+      "randomSuccess": 1,
+      "randomScored": 30,
+      "randomRate": 3.33
+    },
+    {
+      "task": "open_laptop",
+      "cleanSuccess": 26,
+      "cleanScored": 30,
+      "cleanRate": 86.67,
+      "randomSuccess": 9,
+      "randomScored": 30,
+      "randomRate": 30.0
+    },
+    {
+      "task": "open_microwave",
+      "cleanSuccess": 23,
+      "cleanScored": 30,
+      "cleanRate": 76.67,
+      "randomSuccess": 14,
+      "randomScored": 30,
+      "randomRate": 46.67
+    },
+    {
+      "task": "pick_diverse_bottles",
+      "cleanSuccess": 15,
+      "cleanScored": 30,
+      "cleanRate": 50.0,
+      "randomSuccess": 7,
+      "randomScored": 30,
+      "randomRate": 23.33
+    },
+    {
+      "task": "pick_dual_bottles",
+      "cleanSuccess": 24,
+      "cleanScored": 30,
+      "cleanRate": 80.0,
+      "randomSuccess": 12,
+      "randomScored": 30,
+      "randomRate": 40.0
+    },
+    {
+      "task": "place_a2b_left",
+      "cleanSuccess": 20,
+      "cleanScored": 30,
+      "cleanRate": 66.67,
+      "randomSuccess": 12,
+      "randomScored": 30,
+      "randomRate": 40.0
+    },
+    {
+      "task": "place_a2b_right",
+      "cleanSuccess": 19,
+      "cleanScored": 30,
+      "cleanRate": 63.33,
+      "randomSuccess": 9,
+      "randomScored": 30,
+      "randomRate": 30.0
+    },
+    {
+      "task": "place_bread_basket",
+      "cleanSuccess": 22,
+      "cleanScored": 30,
+      "cleanRate": 73.33,
+      "randomSuccess": 9,
+      "randomScored": 30,
+      "randomRate": 30.0
+    },
+    {
+      "task": "place_bread_skillet",
+      "cleanSuccess": 24,
+      "cleanScored": 30,
+      "cleanRate": 80.0,
+      "randomSuccess": 11,
+      "randomScored": 30,
+      "randomRate": 36.67
+    },
+    {
+      "task": "place_burger_fries",
+      "cleanSuccess": 27,
+      "cleanScored": 30,
+      "cleanRate": 90.0,
+      "randomSuccess": 17,
+      "randomScored": 30,
+      "randomRate": 56.67
+    },
+    {
+      "task": "place_can_basket",
+      "cleanSuccess": 13,
+      "cleanScored": 30,
+      "cleanRate": 43.33,
+      "randomSuccess": 8,
+      "randomScored": 30,
+      "randomRate": 26.67
+    },
+    {
+      "task": "place_cans_plasticbox",
+      "cleanSuccess": 27,
+      "cleanScored": 30,
+      "cleanRate": 90.0,
+      "randomSuccess": 11,
+      "randomScored": 30,
+      "randomRate": 36.67
+    },
+    {
+      "task": "place_container_plate",
+      "cleanSuccess": 26,
+      "cleanScored": 30,
+      "cleanRate": 86.67,
+      "randomSuccess": 13,
+      "randomScored": 30,
+      "randomRate": 43.33
+    },
+    {
+      "task": "place_dual_shoes",
+      "cleanSuccess": 19,
+      "cleanScored": 30,
+      "cleanRate": 63.33,
+      "randomSuccess": 13,
+      "randomScored": 30,
+      "randomRate": 43.33
+    },
+    {
+      "task": "place_empty_cup",
+      "cleanSuccess": 29,
+      "cleanScored": 30,
+      "cleanRate": 96.67,
+      "randomSuccess": 18,
+      "randomScored": 30,
+      "randomRate": 60.0
+    },
+    {
+      "task": "place_fan",
+      "cleanSuccess": 16,
+      "cleanScored": 30,
+      "cleanRate": 53.33,
+      "randomSuccess": 13,
+      "randomScored": 30,
+      "randomRate": 43.33
+    },
+    {
+      "task": "place_mouse_pad",
+      "cleanSuccess": 9,
+      "cleanScored": 30,
+      "cleanRate": 30.0,
+      "randomSuccess": 4,
+      "randomScored": 30,
+      "randomRate": 13.33
+    },
+    {
+      "task": "place_object_basket",
+      "cleanSuccess": 23,
+      "cleanScored": 30,
+      "cleanRate": 76.67,
+      "randomSuccess": 18,
+      "randomScored": 30,
+      "randomRate": 60.0
+    },
+    {
+      "task": "place_object_scale",
+      "cleanSuccess": 17,
+      "cleanScored": 30,
+      "cleanRate": 56.67,
+      "randomSuccess": 6,
+      "randomScored": 30,
+      "randomRate": 20.0
+    },
+    {
+      "task": "place_object_stand",
+      "cleanSuccess": 24,
+      "cleanScored": 30,
+      "cleanRate": 80.0,
+      "randomSuccess": 21,
+      "randomScored": 30,
+      "randomRate": 70.0
+    },
+    {
+      "task": "place_phone_stand",
+      "cleanSuccess": 22,
+      "cleanScored": 30,
+      "cleanRate": 73.33,
+      "randomSuccess": 13,
+      "randomScored": 30,
+      "randomRate": 43.33
+    },
+    {
+      "task": "place_shoe",
+      "cleanSuccess": 27,
+      "cleanScored": 30,
+      "cleanRate": 90.0,
+      "randomSuccess": 13,
+      "randomScored": 30,
+      "randomRate": 43.33
+    },
+    {
+      "task": "press_stapler",
+      "cleanSuccess": 26,
+      "cleanScored": 30,
+      "cleanRate": 86.67,
+      "randomSuccess": 22,
+      "randomScored": 30,
+      "randomRate": 73.33
+    },
+    {
+      "task": "put_bottles_dustbin",
+      "cleanSuccess": 21,
+      "cleanScored": 30,
+      "cleanRate": 70.0,
+      "randomSuccess": 9,
+      "randomScored": 30,
+      "randomRate": 30.0
+    },
+    {
+      "task": "put_object_cabinet",
+      "cleanSuccess": 12,
+      "cleanScored": 30,
+      "cleanRate": 40.0,
+      "randomSuccess": 4,
+      "randomScored": 30,
+      "randomRate": 13.33
+    },
+    {
+      "task": "rotate_qrcode",
+      "cleanSuccess": 26,
+      "cleanScored": 30,
+      "cleanRate": 86.67,
+      "randomSuccess": 3,
+      "randomScored": 30,
+      "randomRate": 10.0
+    },
+    {
+      "task": "scan_object",
+      "cleanSuccess": 8,
+      "cleanScored": 30,
+      "cleanRate": 26.67,
+      "randomSuccess": 3,
+      "randomScored": 30,
+      "randomRate": 10.0
+    },
+    {
+      "task": "shake_bottle",
+      "cleanSuccess": 30,
+      "cleanScored": 30,
+      "cleanRate": 100.0,
+      "randomSuccess": 21,
+      "randomScored": 30,
+      "randomRate": 70.0
+    },
+    {
+      "task": "shake_bottle_horizontally",
+      "cleanSuccess": 30,
+      "cleanScored": 30,
+      "cleanRate": 100.0,
+      "randomSuccess": 22,
+      "randomScored": 30,
+      "randomRate": 73.33
+    },
+    {
+      "task": "stack_blocks_three",
+      "cleanSuccess": 21,
+      "cleanScored": 30,
+      "cleanRate": 70.0,
+      "randomSuccess": 8,
+      "randomScored": 30,
+      "randomRate": 26.67
+    },
+    {
+      "task": "stack_blocks_two",
+      "cleanSuccess": 29,
+      "cleanScored": 30,
+      "cleanRate": 96.67,
+      "randomSuccess": 23,
+      "randomScored": 30,
+      "randomRate": 76.67
+    },
+    {
+      "task": "stack_bowls_three",
+      "cleanSuccess": 25,
+      "cleanScored": 30,
+      "cleanRate": 83.33,
+      "randomSuccess": 19,
+      "randomScored": 30,
+      "randomRate": 63.33
+    },
+    {
+      "task": "stack_bowls_two",
+      "cleanSuccess": 29,
+      "cleanScored": 30,
+      "cleanRate": 96.67,
+      "randomSuccess": 21,
+      "randomScored": 30,
+      "randomRate": 70.0
+    },
+    {
+      "task": "stamp_seal",
+      "cleanSuccess": 14,
+      "cleanScored": 30,
+      "cleanRate": 46.67,
+      "randomSuccess": 5,
+      "randomScored": 30,
+      "randomRate": 16.67
+    },
+    {
+      "task": "turn_switch",
+      "cleanSuccess": 18,
+      "cleanScored": 30,
+      "cleanRate": 60.0,
+      "randomSuccess": 6,
+      "randomScored": 30,
+      "randomRate": 20.0
+    }
+  ]
+}

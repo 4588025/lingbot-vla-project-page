@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="HumaLog-VLA: robust full-parameter adaptation of LingBot-VLA 2.0 for RoboTwin." />
+    <meta name="theme-color" content="#07131f" />
+    <title>HumaLog-VLA · LingBot-VLA × RoboTwin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="HumaLog-VLA home">
+        <span class="brand-mark" aria-hidden="true">H</span>
+        <span>HumaLog-VLA</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#demo">Demo</a>
+        <a href="#resources">Resources</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-shell">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">LingBot-VLA 2.0 × RoboTwin 2.0</p>
+          <h1>Robust robot policies<br />from clean demonstrations.</h1>
+          <p class="hero-lede">
+            A 6B vision-language-action policy adapted with multi-stage full-parameter training,
+            protected visual augmentation, and closed-loop evaluation across 50 manipulation tasks.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#results">Explore results</a>
+            <a class="button button-ghost" href="#demo">Watch robot demo <span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="hero-note">HumaLog Team · 2026</p>
+        </div>
+
+        <div class="hero-visual reveal" aria-label="Project overview visualization">
+          <div class="orbit orbit-a"></div>
+          <div class="orbit orbit-b"></div>
+          <div class="hero-core">
+            <span class="core-kicker">Dense FP32 policy</span>
+            <strong>6.38B</strong>
+            <span>student parameters</span>
+          </div>
+          <div class="visual-tag tag-data"><span>01</span> Clean data</div>
+          <div class="visual-tag tag-train"><span>02</span> Full SFT</div>
+          <div class="visual-tag tag-eval"><span>03</span> Closed loop</div>
+        </div>
+      </section>
+
+      <section class="metrics-band" aria-label="Evaluation summary">
+        <div class="metric reveal">
+          <span class="metric-label">Clean</span>
+          <strong>72.67<span>%</span></strong>
+          <small>1,090 / 1,500</small>
+        </div>
+        <div class="metric reveal">
+          <span class="metric-label">Random</span>
+          <strong>39.27<span>%</span></strong>
+          <small>589 / 1,500</small>
+        </div>
+        <div class="metric reveal">
+          <span class="metric-label">Combined</span>
+          <strong>55.97<span>%</span></strong>
+          <small>1,679 / 3,000</small>
+        </div>
+        <div class="metric reveal">
+          <span class="metric-label">Coverage</span>
+          <strong>50<span> tasks</span></strong>
+          <small>30 episodes × 2 settings</small>
+        </div>
+      </section>
+
+      <section class="intro section-shell">
+        <p class="section-index">01 / Motivation</p>
+        <div class="intro-grid">
+          <h2 class="reveal">Learning from clean data.<br />Acting beyond clean scenes.</h2>
+          <div class="intro-copy reveal">
+            <p>
+              We start from only 2,500 official Clean demonstrations and preserve the original
+              relative-joint action definition. The training curriculum adapts appearance and
+              geometry while protecting the robot, manipulated objects, and task targets.
+            </p>
+            <p>
+              The final model predicts a 50-step action chunk and executes the first 25 steps
+              before observing again, keeping the policy responsive during long-horizon tasks.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="method" class="method section-shell">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">02 / Method</p>
+            <h2>A traceable training pipeline</h2>
+          </div>
+          <p>Every stage binds data, normalization, model state, and evaluation protocol.</p>
+        </div>
+
+        <div class="pipeline" role="list" aria-label="Training and evaluation pipeline">
+          <article class="pipeline-card reveal" role="listitem">
+            <span class="pipeline-num">01</span>
+            <div class="pipeline-icon" aria-hidden="true">◫</div>
+            <h3>Curated demonstrations</h3>
+            <p>2,500 Clean trajectories, filtered to 549,737 valid window starts.</p>
+            <small>50 tasks × 50 trajectories</small>
+          </article>
+          <article class="pipeline-card reveal" role="listitem">
+            <span class="pipeline-num">02</span>
+            <div class="pipeline-icon" aria-hidden="true">◎</div>
+            <h3>Protected augmentation</h3>
+            <p>Color, compression, blur, geometry, and background erasing with foreground guards.</p>
+            <small>Training only · no detector at inference</small>
+          </article>
+          <article class="pipeline-card reveal" role="listitem">
+            <span class="pipeline-num">03</span>
+            <div class="pipeline-icon" aria-hidden="true">⌁</div>
+            <h3>Multi-stage full SFT</h3>
+            <p>Dense student optimization with inherited Adam state and grouped learning rates.</p>
+            <small>36,000 optimizer updates</small>
+          </article>
+          <article class="pipeline-card reveal" role="listitem">
+            <span class="pipeline-num">04</span>
+            <div class="pipeline-icon" aria-hidden="true">↻</div>
+            <h3>Closed-loop control</h3>
+            <p>Three RGB views, H50 prediction, execute 25 actions, then observe again.</p>
+            <small>Clean + Randomized</small>
+          </article>
+        </div>
+
+        <div class="action-spec reveal">
+          <div>
+            <span class="chip">Action representation</span>
+            <h3>Relative arms. Absolute grippers.</h3>
+          </div>
+          <div class="action-formula">
+            <code>a<sub>arm,h</sub> = q<sub>target,h</sub> − q<sub>now</sub></code>
+            <p>12 arm dimensions use per-horizon MeanStd normalization. Two gripper dimensions retain absolute MinMax targets.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="training section-shell">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">03 / Training</p>
+            <h2>Stable improvement at scale</h2>
+          </div>
+          <p>Final 5,000 updates are complete, continuous, and preserved with all spikes.</p>
+        </div>
+
+        <div class="training-grid">
+          <figure class="chart-card chart-large reveal">
+            <img src="assets/images/loss-final5000.png" alt="Action and total loss over the final 5,000 optimizer updates" loading="lazy" />
+            <figcaption>Final 5,000-step action and total loss</figcaption>
+          </figure>
+          <div class="training-notes reveal">
+            <div class="training-stat">
+              <span>Segment mean</span>
+              <strong>0.00990 → 0.00757</strong>
+              <small>−23.5% across the final 5k updates</small>
+            </div>
+            <div class="timeline" aria-label="Training stages">
+              <div><span>20k</span><p>Lab adaptation</p></div>
+              <div><span>+8k</span><p>Full SFT</p></div>
+              <div><span>+2k</span><p>CUDA continuation</p></div>
+              <div><span>+6k</span><p>Augmented SFT</p></div>
+            </div>
+            <p class="fine-print">Loss is a fitting metric. Closed-loop success is reported separately below.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="results" class="results section-shell">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">04 / Evaluation</p>
+            <h2>3,000 closed-loop episodes</h2>
+          </div>
+          <p>50 tasks · Clean and Random settings · 30 scored episodes per task-setting pair.</p>
+        </div>
+
+        <div class="result-overview">
+          <figure class="chart-card reveal">
+            <img src="assets/images/eval-success-by-task.png" alt="Per-task success rates for Clean and Random evaluation" loading="lazy" />
+            <figcaption>Per-task success, 30 trials per setting</figcaption>
+          </figure>
+          <div class="score-bars reveal" aria-label="Aggregate success rates">
+            <div class="score-row">
+              <div><span>Clean</span><strong>72.67%</strong></div>
+              <div class="bar-track"><span style="--score:72.67%"></span></div>
+              <small>1,090 successes</small>
+            </div>
+            <div class="score-row">
+              <div><span>Random</span><strong>39.27%</strong></div>
+              <div class="bar-track"><span style="--score:39.27%"></span></div>
+              <small>589 successes</small>
+            </div>
+            <div class="score-row score-row-total">
+              <div><span>Combined</span><strong>55.97%</strong></div>
+              <div class="bar-track"><span style="--score:55.97%"></span></div>
+              <small>1,679 / 3,000</small>
+            </div>
+            <p class="protocol-note">
+              Development evaluation without expert filtering. Clean and Random runs used the same FP32 model but different hardware and RNG segments; values are descriptive rather than a hardware causal comparison.
+            </p>
+          </div>
+        </div>
+
+        <div class="task-explorer reveal">
+          <div class="task-toolbar">
+            <div>
+              <span class="chip">Task explorer</span>
+              <h3>Inspect all 50 tasks</h3>
+            </div>
+            <div class="segmented" role="group" aria-label="Result setting">
+              <button class="is-active" data-setting="clean" type="button">Clean</button>
+              <button data-setting="random" type="button">Random</button>
+              <button data-setting="gap" type="button">Gap</button>
+            </div>
+          </div>
+          <div id="task-list" class="task-list" aria-live="polite">
+            <p class="loading">Loading verified task results…</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="demo" class="demo-section">
+        <div class="section-shell">
+          <div class="section-heading light">
+            <div>
+              <p class="section-index">05 / Real-world demo</p>
+              <h2>From simulation to dual-arm handover</h2>
+            </div>
+            <p>A full-parameter LingBot-VLA adaptation for two SO101 follower arms.</p>
+          </div>
+          <div class="video-frame reveal">
+            <video controls playsinline preload="metadata">
+              <source src="assets/videos/so101-demo.mp4" type="video/mp4" />
+              Your browser does not support embedded video.
+            </video>
+          </div>
+          <div class="demo-caption">
+            <span>Grasp</span><i></i><span>Dual-arm handover</span><i></i><span>Transfer</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="resources" class="resources section-shell">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">06 / Resources</p>
+            <h2>Reproduce the system</h2>
+          </div>
+          <p>Code, model, protocol, and evidence remain version-bound.</p>
+        </div>
+        <div class="resource-grid">
+          <a href="https://github.com/4588025/lingbot-vla-project-page" class="resource-card reveal" target="_blank" rel="noreferrer">
+            <span>Source</span><strong>Project page repository</strong><i aria-hidden="true">↗</i>
+          </a>
+          <a href="https://huggingface.co/Humalog2/Lab20k-FullSFT-Aug16000" class="resource-card reveal" target="_blank" rel="noreferrer">
+            <span>Model</span><strong>Dense FP32 checkpoint</strong><i aria-hidden="true">↗</i>
+          </a>
+          <a href="#results" class="resource-card reveal">
+            <span>Protocol</span><strong>3,000-episode evaluation</strong><i aria-hidden="true">↓</i>
+          </a>
+          <a href="#method" class="resource-card reveal">
+            <span>Report</span><strong>Method & reproduction</strong><i aria-hidden="true">↓</i>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        <strong>HumaLog-VLA</strong>
+        <p>LingBot-VLA 2.0 adaptation for robust manipulation.</p>
+      </div>
+      <div class="footer-meta">
+        <span>Built from verified experiment records</span>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+
+    <script src="assets/main.js" defer></script>
+  </body>
+</html>
