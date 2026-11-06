@@ -2,11 +2,14 @@
 
 Public project page for HumaLog's LingBot-VLA 2.0 adaptation and RoboTwin 2.0 evaluation.
 
-The site is organized into five focused pages:
+The site is organized into five main pages plus three focused experiment pages:
 
 - Home: project overview and headline metrics
 - Method: training and execution pipeline
-- Experiments: joint-angle, action-horizon, and data-augmentation studies
+- Experiments: a dropdown index for the three controlled studies
+  - Relative joint-angle: Joint-wise vs. Horizon × Joint normalization
+  - Action horizon: fixed H25/H50 vs. AutoHorizon
+  - Data augmentation: Clean demonstration augmentation
 - Results: aggregate and per-task RoboTwin evaluation
 - Demo: SO101 dual-arm video and project resources
 

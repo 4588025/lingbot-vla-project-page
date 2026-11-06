@@ -59,6 +59,14 @@ button { font: inherit; }
 .site-header nav { display: flex; gap: 30px; font-size: 13px; font-weight: 700; }
 .site-header nav a { opacity: .72; transition: opacity .2s ease, color .2s ease; }
 .site-header nav a:hover, .site-header nav a:focus-visible, .site-header nav a.active { opacity: 1; color: var(--teal); }
+.nav-dropdown { position: relative; }
+.nav-dropdown > a span { display: inline-block; margin-left: 3px; transition: transform .2s ease; }
+.nav-menu { position: absolute; top: calc(100% + 14px); left: 50%; width: 190px; padding: 10px; transform: translate(-50%, -5px); visibility: hidden; opacity: 0; background: rgba(7,19,31,.98); border: 1px solid rgba(255,255,255,.13); border-radius: 13px; box-shadow: 0 18px 45px rgba(0,0,0,.28); transition: opacity .2s ease, transform .2s ease, visibility .2s; }
+.nav-menu::before { content: ""; position: absolute; inset: -15px 0 auto; height: 15px; }
+.nav-menu a { display: block; padding: 10px 12px; border-radius: 8px; white-space: nowrap; }
+.nav-menu a:hover, .nav-menu a:focus-visible { background: rgba(34,199,169,.09); }
+.nav-dropdown:hover .nav-menu, .nav-dropdown:focus-within .nav-menu { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
+.nav-dropdown:hover > a span, .nav-dropdown:focus-within > a span { transform: rotate(180deg); }
 
 .section-shell { width: min(calc(100% - 48px), var(--max)); margin-inline: auto; }
 .hero {
@@ -267,6 +275,16 @@ h2 { margin: 0; font-size: clamp(36px, 4.5vw, 62px); line-height: 1.06; letter-s
 .page-link-card:hover { color: white; background: var(--navy-soft); transform: translateY(-4px); }
 .page-link-card:hover p { color: #9fb1ba; }
 
+.experiment-index { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding-bottom: 110px; }
+.experiment-index-card { display: flex; min-height: 390px; padding: 38px; flex-direction: column; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); transition: transform .2s ease, color .2s ease, background .2s ease; }
+.experiment-index-card > span { color: var(--teal-deep); font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.experiment-index-card h2 { margin: 54px 0 16px; font-size: 34px; }
+.experiment-index-card p { margin: 0; color: var(--muted); }
+.experiment-index-card strong { margin-top: auto; color: var(--teal-deep); font-family: "DM Mono", monospace; font-size: 18px; }
+.experiment-index-card i { margin-top: 18px; font-style: normal; font-weight: 800; font-size: 13px; }
+.experiment-index-card:hover { color: white; background: var(--navy-soft); transform: translateY(-4px); }
+.experiment-index-card:hover p { color: #9fb1ba; }
+
 .next-page { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-bottom: 110px; padding: 35px 40px; color: white; background: var(--navy-soft); border-radius: var(--radius); }
 .next-page > p { margin: 0; color: #8196a1; font-family: "DM Mono", monospace; font-size: 11px; text-transform: uppercase; }
 .next-page a { display: flex; gap: 12px; flex-direction: column; text-align: right; }
@@ -284,6 +302,18 @@ h2 { margin: 0; font-size: clamp(36px, 4.5vw, 62px); line-height: 1.06; letter-s
 .experiment-visual { display: flex; padding: 48px; flex-direction: column; justify-content: center; color: white; background: var(--navy-soft); }
 .experiment-visual > code { margin-bottom: 50px; color: var(--teal); font-family: "DM Mono", monospace; font-size: 24px; }
 .experiment-visual > small { margin-top: 22px; color: #718690; font-family: "DM Mono", monospace; font-size: 10px; }
+.norm-visual { justify-content: flex-start; }
+.norm-visual > code { margin-bottom: 30px; }
+.norm-method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.norm-method-card { padding: 18px; background: rgba(255,255,255,.05); border: 1px solid transparent; border-radius: 13px; }
+.norm-method-card.selected { background: rgba(34,199,169,.08); border-color: rgba(34,199,169,.45); }
+.norm-method-card span { color: #9eb0b8; font-size: 11px; }
+.norm-method-card strong { display: block; margin: 5px 0 10px; color: white; font-family: "DM Mono", monospace; font-size: 23px; }
+.norm-method-card.selected strong { color: var(--teal); }
+.norm-method-card p { margin: 0; color: #8ea2ad; font-size: 11px; line-height: 1.55; }
+.selection-reason { margin-top: 16px; padding: 18px; border-left: 2px solid var(--teal); background: rgba(0,0,0,.14); }
+.selection-reason span { color: var(--teal); font-family: "DM Mono", monospace; font-size: 10px; text-transform: uppercase; }
+.selection-reason p { margin: 8px 0 0; color: #a7bac2; font-size: 12px; line-height: 1.65; }
 .comparison-bar { display: grid; grid-template-columns: 140px 1fr 56px; align-items: center; gap: 14px; min-height: 45px; }
 .comparison-bar span { color: #9eb0b8; font-size: 12px; }
 .comparison-bar i { height: 8px; width: var(--bar); background: #4b606b; border-radius: 999px; }
@@ -333,6 +363,8 @@ footer p { margin: 4px 0 0; }
   .pipeline-card:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
   .pipeline-card:nth-child(4) { border-top: 1px solid var(--line); }
   .training-grid, .result-overview { grid-template-columns: 1fr; }
+  .experiment-index { grid-template-columns: 1fr; }
+  .experiment-index-card { min-height: 300px; }
   .experiment-block { grid-template-columns: 1fr; }
   .experiment-copy { min-height: 390px; }
   .training-notes { min-height: 420px; }
@@ -380,6 +412,7 @@ footer p { margin: 4px 0 0; }
   .loss-pair { gap: 10px; }
   .loss-pair div { padding: 17px; }
   .loss-pair strong { font-size: 25px; }
+  .norm-method-grid { grid-template-columns: 1fr; }
   .resource-card:nth-child(odd) { border-right: 0; }
   .resource-card + .resource-card { border-top: 1px solid var(--line); }
   .demo-section { padding-block: 80px; }
