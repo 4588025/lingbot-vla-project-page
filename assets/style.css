@@ -341,6 +341,18 @@ h2 { margin: 0; font-size: clamp(36px, 4.5vw, 62px); line-height: 1.06; letter-s
 .horizon-value strong { color: var(--teal); font-family: "DM Mono", monospace; font-size: 94px; line-height: .85; letter-spacing: -.08em; }
 .horizon-value small { grid-column: 2; color: #8ea2ad; text-align: right; }
 .horizon-comparison { margin-top: 45px; }
+.pace-rationale, .pace-flow { padding-bottom: 100px; }
+.pace-reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.pace-reason-grid article { min-height: 230px; padding: 32px; background: var(--navy-soft); border: 1px solid rgba(255,255,255,.09); border-radius: var(--radius); }
+.pace-reason-grid span, .pace-flow-grid span { color: var(--teal); font-family: "DM Mono", monospace; font-size: 10px; text-transform: uppercase; }
+.pace-reason-grid h3, .pace-flow-grid h3 { margin: 24px 0 12px; font-size: 22px; }
+.pace-reason-grid p, .pace-flow-grid p { margin: 0; color: #9eb0b8; font-size: 12px; line-height: 1.75; }
+.pace-flow-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr) 22px) minmax(0, 1fr); align-items: stretch; }
+.pace-flow-grid article { padding: 25px 20px; background: var(--navy-soft); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; }
+.pace-flow-grid > i { display: grid; place-items: center; color: var(--teal); font-style: normal; }
+.pace-flow-grid h3 { margin: 18px 0 10px; font-size: 16px; }
+.pace-runtime-note { margin: 18px 0 0; color: var(--muted); font-size: 10px; }
+.pace-runtime-note code { color: var(--teal-deep); }
 .horizon-track { position: relative; height: 7px; margin: 58px 0 20px; background: #304653; border-radius: 999px; }
 .horizon-track i { position: absolute; left: 0; width: 58%; height: 100%; background: var(--teal); border-radius: inherit; }
 .horizon-track b { position: absolute; left: 58%; top: 50%; width: 20px; height: 20px; transform: translate(-50%,-50%); background: white; border: 5px solid var(--teal-deep); border-radius: 50%; }
@@ -462,6 +474,9 @@ footer p { margin: 4px 0 0; }
   .experiment-copy h2 { font-size: 32px; }
   .experiment-visual { min-height: 360px; }
   .comparison-bar { grid-template-columns: 105px 1fr 38px; }
+  .pace-reason-grid { grid-template-columns: 1fr; }
+  .pace-flow-grid { grid-template-columns: 1fr; gap: 10px; }
+  .pace-flow-grid > i { transform: rotate(90deg); }
   .horizon-value strong { font-size: 72px; }
   .loss-pair { gap: 10px; }
   .loss-pair div { padding: 17px; }
