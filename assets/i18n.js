@@ -13,6 +13,8 @@ const ZH_TRANSLATIONS = {
 
   "Robust robot policies": "从干净示范中",
   "from clean demonstrations.": "学习稳健机器人策略。",
+  "Multi-task VLA post-training for complex scenes": "面向复杂场景泛化的多任务 VLA 后训练",
+  "and adaptive temporal inference.": "与自适应时域推理优化",
   "A 6B vision-language-action policy adapted with multi-stage full-parameter training, protected visual augmentation, and closed-loop evaluation across 50 manipulation tasks.": "通过多阶段全参数训练、受保护的视觉增强和 50 个操作任务闭环测评，对 60 亿参数视觉—语言—动作策略进行适配。",
   "Explore the method": "查看方法",
   "View results": "查看结果",
@@ -218,6 +220,7 @@ const ZH_TRANSLATIONS = {
   "H0 → H1 / Model progression": "H0 → H1 / 模型演进",
   "H1 compared with H0.": "H1 与 H0 对比。",
   "H0 uses the Lab20k baseline; H1 is the best reported system with relative actions, augmentation, and adaptive execution.": "H0 使用 Lab20k 基线；H1 是结合相对动作、数据增强与自适应执行的最终最佳系统。",
+  "H0 uses the Lab20k baseline; H1 combines joint-space relative displacement, demonstration distribution expansion, and adaptive temporal execution.": "H0 使用 Lab20k 基线；H1 融合关节空间相对偏移表征、专家示范分布扩展与自适应执行步长。",
   "H1 − H0": "H1 − H0",
   "Reported task-success comparison. H0 denotes the Lab20k baseline, while H1 denotes the final best system.": "报告中的任务成功率对比：H0 表示 Lab20k 基线，H1 表示最终最佳系统。",
   "H1 / Best model": "H1 / 最优模型",
@@ -256,15 +259,67 @@ const ZH_TRANSLATIONS = {
   "3,000-episode evaluation": "3,000 回合测评",
   "Report": "报告",
   "Method & reproduction": "方法与复现"
+  ,"Joint-space representation": "关节空间表征"
+  ,"Adaptive execution": "自适应执行步长"
+  ,"Demonstration expansion": "专家示范分布扩展"
+  ,"The project combines expert-demonstration distribution expansion, joint-space relative displacement representation, two-stage parameter adaptation, and adaptive temporal execution.": "项目结合专家示范分布扩展、关节空间相对偏移表征、两阶段参数适配与自适应执行步长。"
+  ,"Demonstration expansion, joint-space offsets, factorized normalization, staged adaptation, and adaptive execution.": "涵盖示范分布扩展、关节空间偏移、因子化归一化、分阶段参数适配与自适应执行。"
+  ,"Joint-space representation, adaptive execution horizon, and expert-demonstration distribution expansion.": "关节空间相对偏移表征、自适应执行步长与专家示范分布扩展。"
+  ,"Distribution, representation,": "分布、表征与"
+  ,"and temporal adaptation.": "时域自适应。"
+  ,"The complete system couples demonstration distribution expansion, joint-space relative displacement control, staged parameter adaptation, and adaptive temporal execution.": "完整系统融合专家示范分布扩展、关节空间相对偏移控制、分阶段参数适配与自适应时域执行。"
+  ,"Expert-demonstration distribution expansion": "专家示范分布扩展"
+  ,"Expand the Clean expert-demonstration distribution for stronger generalization to complex scenes.": "扩展 Clean 专家示范分布，提升模型对复杂场景的泛化能力。"
+  ,"Joint-space relative displacement representation": "关节空间相对偏移表征"
+  ,"Encode dual-arm targets as offsets from the current joint state to suppress initialization sensitivity and horizon-dependent scale drift.": "将双臂目标编码为相对当前关节状态的偏移，以降低初始位姿敏感性与随预测步长增长产生的尺度漂移。"
+  ,"Full-parameter adaptation → parameter-efficient refinement": "全参数适配 → 参数高效精调"
+  ,"Adaptive temporal execution": "自适应执行步长"
+  ,"Dynamically regulate the effective action-chunk length as manipulation phases evolve.": "随操作阶段演化动态调节 Action Chunk 的实际执行长度。"
+  ,"Time–joint factorized normalization.": "时序—关节维度独立归一化。"
+  ,"Compared with joint-wise shared statistics, the time–joint factorized scheme estimates an independent distribution for every prediction step and joint dimension, reducing training loss by 6.5%.": "相比按关节共享统计量的方案，时序—关节维度独立归一化为每个预测步与关节维度分别估计分布，使训练损失降低 6.5%。"
+  ,"Two-stage parameter adaptation": "两阶段参数适配"
+  ,"Full-parameter SFT establishes the task policy; LoRA performs parameter-efficient refinement on expanded Clean demonstrations.": "全参数 SFT 建立任务策略，LoRA 再基于扩展后的 Clean 示范进行参数高效精调。"
+  ,"Demonstration distribution expansion": "专家示范分布扩展"
+  ,"Joint-space relative displacement": "关节空间相对偏移表征"
+  ,"Time × Joint": "时序 × 关节"
+  ,"full adaptation → efficient refinement": "全参数适配 → 参数高效精调"
+  ,"The final policy combines joint-space relative displacement control with PACE-based adaptive temporal execution.": "最终策略结合关节空间相对偏移控制与基于 PACE 的自适应执行步长。"
+  ,"Action representation, adaptive temporal execution, and demonstration distribution expansion are evaluated separately.": "分别评估关节空间表征、自适应执行步长与专家示范分布扩展。"
+  ,"E1 / Action representation": "E1 / 动作表征"
+  ,"Compare joint-wise shared statistics with time–joint factorized normalization.": "比较按关节共享统计量与时序—关节维度独立归一化。"
+  ,"G1 / Temporal execution": "G1 / 时域执行"
+  ,"Adaptive execution horizon": "自适应执行步长"
+  ,"F1 / Distribution expansion": "F1 / 分布扩展"
+  ,"Measure the effect of expanding the Clean expert-demonstration distribution.": "评估扩展 Clean 专家示范分布所带来的效果。"
+  ,"Joint-space offsets.": "关节空间偏移。"
+  ,"Time-aware statistics.": "时间感知统计。"
+  ,"The policy predicts local displacement in joint space instead of a global joint pose.": "策略预测关节空间中的局部偏移，而非全局关节姿态。"
+  ,"Representation definition": "表征定义"
+  ,"Joint-wise shared": "按关节共享统计"
+  ,"Time × Joint factorized": "时序 × 关节独立统计"
+  ,"Why time–joint factorization": "为什么采用时序—关节维度独立归一化"
+  ,"G1 / Adaptive temporal execution": "G1 / 自适应执行步长"
+  ,"Closed-loop temporal control": "闭环时域控制"
+  ,"Adaptive execution-horizon comparison": "自适应执行步长对比"
+  ,"Shorter replanning improves responsiveness, while longer chunks reduce inference frequency. PACE regulates the executable prefix of every predicted action chunk.": "更短的重规划周期提升响应性，更长的动作块降低推理频率；PACE 动态调节每个预测 Action Chunk 的可执行前缀。"
+  ,"PACE adaptive execution success": "PACE 自适应执行成功率"
+  ,"Average effective horizon": "平均实际执行步长"
+  ,"With joint-space relative displacement actions, attention decay and its plateau can be less distinct. A flatter distribution weakens the boundary signal that VLA-KIL uses to decide where a prediction remains reliable.": "在关节空间相对偏移表征下，注意力衰减及平台期可能不再明显；更平坦的分布会削弱 VLA-KIL 用于判断预测可靠边界的信号。"
+  ,"Expert-demonstration expansion →": "专家示范分布扩展 →"
+  ,"F1 / Demonstration distribution expansion": "F1 / 专家示范分布扩展"
+  ,"Broader visual support.": "更广的视觉分布支持。"
+  ,"Semantics-preserving perturbations expand the Clean expert-demonstration distribution.": "通过语义保持扰动扩展 Clean 专家示范分布。"
+  ,"Semantics-preserving strong–weak expansion": "语义保持的强—弱增强"
+  ,"Expanded": "分布扩展后"
 };
 
 const TITLE_ZH = {
   "HumaLog-VLA · LingBot-VLA × RoboTwin": "HumaLog-VLA · LingBot-VLA × RoboTwin",
   "Method · HumaLog-VLA": "方法 · HumaLog-VLA",
   "Experiments · HumaLog-VLA": "实验 · HumaLog-VLA",
-  "Relative joint-angle · HumaLog-VLA": "相对关节角度 · HumaLog-VLA",
-  "Action horizon · HumaLog-VLA": "动作 Horizon · HumaLog-VLA",
-  "Data augmentation · HumaLog-VLA": "数据增强 · HumaLog-VLA",
+  "Joint-space relative displacement · HumaLog-VLA": "关节空间相对偏移表征 · HumaLog-VLA",
+  "Adaptive temporal execution · HumaLog-VLA": "自适应执行步长 · HumaLog-VLA",
+  "Demonstration distribution expansion · HumaLog-VLA": "专家示范分布扩展 · HumaLog-VLA",
   "Results · HumaLog-VLA": "结果 · HumaLog-VLA",
   "Demo · HumaLog-VLA": "演示 · HumaLog-VLA"
 };
