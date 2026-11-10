@@ -1,5 +1,124 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deployment · π₀ × SO-ARM101</title><link rel="stylesheet" href="assets/style.css?v=20261110a"></head><body data-page="deployment"><div data-header></div><main><section class="page-hero"><div class="shell"><p class="eyebrow">03 / DEPLOYMENT</p><h1 data-zh="减少等待，平滑动作块切换。" data-en="Wait less. Switch chunks smoothly.">减少等待，平滑动作块切换。</h1><p data-zh="Receding Horizon 让下一次请求在当前动作块完全结束前就开始，BLEND_STEPS 则通过线性插值减轻相邻动作块预测差异造成的突变。" data-en="Receding Horizon starts the next request before the current action chunk fully ends, while BLEND_STEPS linearly interpolates chunk transitions to reduce discontinuities between predictions.">Receding Horizon 让下一次请求在当前动作块完全结束前就开始，BLEND_STEPS 则通过线性插值减轻相邻动作块预测差异造成的突变。</p></div></section><section class="section shell"><div class="split-feature"><article class="feature-copy"><span class="chip">RECEDING HORIZON</span><h2 data-zh="请求延迟降低 6×" data-en="6× lower request latency">请求延迟降低 6×</h2><p data-zh="将动作执行与下一次云端推理解耦，使请求延迟从 1200ms 降至 200ms，降低长时序控制中的等待累积。" data-en="Decoupling action execution from the next cloud inference request reduces request latency from 1200ms to 200ms and limits accumulated waiting in long-horizon control.">将动作执行与下一次云端推理解耦，使请求延迟从 1200ms 降至 200ms，降低长时序控制中的等待累积。</p></article><article class="feature-visual"><span class="chip">LATENCY</span><div class="latency-chart"><div class="latency-row"><span data-zh="同步执行" data-en="Synchronous">同步执行</span><i style="--width:100%"></i><b>1200ms</b></div><div class="latency-row good"><span>Receding</span><i style="--width:16.7%"></i><b>200ms</b></div></div><p class="evidence-note" data-zh="BLEND_STEPS 在动作块交界处做线性插值，避免突然跳变。" data-en="BLEND_STEPS applies linear interpolation at action-chunk boundaries to avoid abrupt jumps.">BLEND_STEPS 在动作块交界处做线性插值，避免突然跳变。</p></article></div></section>
-<section class="section shell blend-comparison"><div class="section-head"><div><p class="section-index">BLEND_STEPS</p><h2 data-zh="两套动作块衔接方式。" data-en="Two action-chunk blending strategies.">两套动作块衔接方式。</h2></div><p data-zh="两者都先解决动作时间对齐，再进行平滑；平滑不能代替对齐。以下是实现机制对比，不是成功率对比。" data-en="Both align action time before smoothing; smoothing cannot replace alignment. This compares implementation mechanics, not success rates.">两者都先解决动作时间对齐，再进行平滑；平滑不能代替对齐。以下是实现机制对比，不是成功率对比。</p></div><div class="blend-grid">
-<article class="blend-card"><div class="blend-card-head"><span class="chip">LEROBOT · ALIGNED BLEND</span><h3 data-zh="旧未来轨迹 × 新未来轨迹" data-en="Previous future × incoming future">旧未来轨迹 × 新未来轨迹</h3><p data-zh="固定混合权重，按对应时间索引融合。" data-en="Constant blend weight at matching time indices.">固定混合权重，按对应时间索引融合。</p></div><div class="blend-curve"><span>incoming weight</span><i style="--a:50%"></i><i style="--b:50%"></i><i style="--c:50%"></i><i style="--d:100%"></i></div><dl class="blend-spec"><div><dt data-zh="对齐" data-en="Alignment">对齐</dt><dd data-zh="action cursor 裁掉已过期前缀" data-en="Action cursor trims the stale prefix">action cursor 裁掉已过期前缀</dd></div><div><dt data-zh="参考动作" data-en="Reference">参考动作</dt><dd data-zh="旧队列中相同未来索引的动作" data-en="Previous queued action at the same future index">旧队列中相同未来索引的动作</dd></div><div><dt data-zh="权重" data-en="Weight">权重</dt><dd><code>(1−w)·old[i] + w·new[i]</code>，默认 <code>w=0.5</code></dd></div><div><dt data-zh="通道" data-en="Channels">通道</dt><dd data-zh="仅显式指定的连续关节分量" data-en="Only explicitly selected continuous joint components">仅显式指定的连续关节分量</dd></div><div><dt data-zh="保护" data-en="Guards">保护</dt><dd data-zh="上下文、来源时间与最大观测年龄检查" data-en="Context, provenance time, and maximum observation-age checks">上下文、来源时间与最大观测年龄检查</dd></div></dl></article>
-<article class="blend-card custom"><div class="blend-card-head"><span class="chip">ROLLING ACTION EXECUTOR</span><h3 data-zh="上一步实发动作 → 新轨迹" data-en="Last executed action → incoming trajectory">上一步实发动作 → 新轨迹</h3><p data-zh="3 步递增权重，逐渐接入新 chunk。" data-en="A three-step ramp progressively enters the new chunk.">3 步递增权重，逐渐接入新 chunk。</p></div><div class="blend-curve"><span>incoming weight</span><i style="--a:25%"></i><i style="--b:50%"></i><i style="--c:75%"></i><i style="--d:100%"></i></div><dl class="blend-spec"><div><dt data-zh="对齐" data-en="Alignment">对齐</dt><dd><code>start_idx = floor(elapsed × fps)</code></dd></div><div><dt data-zh="参考动作" data-en="Reference">参考动作</dt><dd data-zh="上一条实际发送给机械臂的动作" data-en="The last action actually sent to the robot">上一条实际发送给机械臂的动作</dd></div><div><dt data-zh="权重" data-en="Weight">权重</dt><dd><code>wᵢ=(i+1)/(n+1)</code>，<code>n=3</code> 时为 0.25 / 0.50 / 0.75</dd></div><div><dt data-zh="通道" data-en="Channels">通道</dt><dd data-zh="当前脚本混合完整 6 维动作，包括夹爪" data-en="The current script blends all six action dimensions, including the gripper">当前脚本混合完整 6 维动作，包括夹爪</dd></div><div><dt data-zh="保护" data-en="Guards">保护</dt><dd data-zh="state/robot 双锁与 chunk_id 写回检查" data-en="Separate state/robot locks and a chunk-id write-back guard">state/robot 双锁与 chunk_id 写回检查</dd></div></dl></article></div><p class="source-note"><span data-zh="LeRobot 对比依据官方" data-en="The LeRobot comparison follows the official">LeRobot 对比依据官方</span> <a href="https://github.com/huggingface/lerobot/blob/81b8c5bfdd5591ec59e512cfc7ac6db8151c70ee/src/lerobot/inference/execution.py#L526-L578" target="_blank" rel="noreferrer">execution.py aligned merge</a> <span data-zh="实现（固定版本 81b8c5b）；右侧依据本项目" data-en="implementation (revision 81b8c5b); the right side follows this project's">实现（固定版本 81b8c5b）；右侧依据本项目</span> <code>deploy_so101_receding.py</code>.</p></section>
-<section class="next-page shell"><div><span data-zh="下一页" data-en="Next">下一页</span><strong data-zh="实验结果与真机视频" data-en="Results and real-robot video">实验结果与真机视频</strong></div><a href="results.html">Results →</a></section></main><div data-footer></div><script src="assets/shared.js"></script><script src="assets/main.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Deployment · π₀ × SO-ARM101</title>
+  <link rel="stylesheet" href="assets/style.css?v=20261110b">
+</head>
+<body data-page="deployment">
+  <div data-header></div>
+  <main>
+    <section class="page-hero">
+      <div class="shell">
+        <p class="eyebrow">03 / DEPLOYMENT</p>
+        <h1 data-zh="减少等待，平滑动作块切换。" data-en="Wait less. Switch chunks smoothly.">减少等待，平滑动作块切换。</h1>
+        <p data-zh="Receding Horizon 让下一次请求在当前动作块完全结束前就开始，BLEND_STEPS 则通过线性插值减轻相邻动作块预测差异造成的突变。" data-en="Receding Horizon starts the next request before the current action chunk fully ends, while BLEND_STEPS linearly interpolates chunk transitions to reduce discontinuities between predictions.">Receding Horizon 让下一次请求在当前动作块完全结束前就开始，BLEND_STEPS 则通过线性插值减轻相邻动作块预测差异造成的突变。</p>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="split-feature">
+        <article class="feature-copy">
+          <span class="chip">RECEDING HORIZON</span>
+          <h2 data-zh="请求延迟降低 6×" data-en="6× lower request latency">请求延迟降低 6×</h2>
+          <p data-zh="将动作执行与下一次云端推理解耦，使请求延迟从 1200ms 降至 200ms，降低长时序控制中的等待累积。" data-en="Decoupling action execution from the next cloud inference request reduces request latency from 1200ms to 200ms and limits accumulated waiting in long-horizon control.">将动作执行与下一次云端推理解耦，使请求延迟从 1200ms 降至 200ms，降低长时序控制中的等待累积。</p>
+        </article>
+        <article class="feature-visual">
+          <span class="chip">LATENCY</span>
+          <div class="latency-chart">
+            <div class="latency-row"><span data-zh="同步执行" data-en="Synchronous">同步执行</span><i style="--width:100%"></i><b>1200ms</b></div>
+            <div class="latency-row good"><span>Receding</span><i style="--width:16.7%"></i><b>200ms</b></div>
+          </div>
+          <p class="evidence-note" data-zh="BLEND_STEPS 在动作块交界处做线性插值，避免突然跳变。" data-en="BLEND_STEPS applies linear interpolation at action-chunk boundaries to avoid abrupt jumps.">BLEND_STEPS 在动作块交界处做线性插值，避免突然跳变。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell rh-explainer">
+      <div class="section-head">
+        <div>
+          <p class="section-index">WHY RECEDING HORIZON</p>
+          <h2 data-zh="为什么“整块执行后再推理”会停顿？" data-en="Why does full-chunk execution pause?">为什么“整块执行后再推理”会停顿？</h2>
+        </div>
+        <p data-zh="限速只能约束动作下发频率，无法消除网络传输和模型计算。若机械臂执行完整个 chunk 后才请求下一块，这段推理时间就会直接变成可感知的停顿。" data-en="Rate limiting controls action dispatch frequency, but it cannot remove network and model-compute time. If the next chunk is requested only after the current one finishes, inference time becomes a visible pause.">限速只能约束动作下发频率，无法消除网络传输和模型计算。若机械臂执行完整个 chunk 后才请求下一块，这段推理时间就会直接变成可感知的停顿。</p>
+      </div>
+      <div class="rh-grid">
+        <article class="rh-card">
+          <span class="chip">SERIAL · BLOCKING</span>
+          <h3 data-zh="执行完整 chunk，再等待推理" data-en="Finish the chunk, then wait for inference">执行完整 chunk，再等待推理</h3>
+          <p data-zh="25 步旧计划全部播放完才发起下一次 infer；网络与计算期间没有新动作可发。" data-en="The next inference starts only after all 25 actions are played; no fresh action is available during network and compute time.">25 步旧计划全部播放完才发起下一次 infer；网络与计算期间没有新动作可发。</p>
+          <div class="execution-lanes">
+            <div class="execution-lane"><span>control</span><div class="lane-track"><i class="execute" style="--flex:5">execute chunk</i><i class="gap" style="--flex:2">pause</i><i class="execute" style="--flex:3">next chunk</i></div></div>
+            <div class="execution-lane"><span>inference</span><div class="lane-track"><i style="--flex:5">idle</i><i class="infer" style="--flex:2">infer()</i><i style="--flex:3">idle</i></div></div>
+          </div>
+          <div class="rh-steps">
+            <div><b>01</b><span data-zh="执行 25 步" data-en="Execute 25 steps">执行 25 步</span></div>
+            <div><b>02</b><span data-zh="请求下一块" data-en="Request next chunk">请求下一块</span></div>
+            <div><b>03</b><span data-zh="机械臂等待" data-en="Robot waits">机械臂等待</span></div>
+            <div><b>04</b><span data-zh="新动作开始" data-en="New actions begin">新动作开始</span></div>
+          </div>
+        </article>
+
+        <article class="rh-card rolling">
+          <span class="chip">ROLLING · TWO THREADS</span>
+          <h3 data-zh="推理与动作下发并行" data-en="Infer and dispatch actions in parallel">推理与动作下发并行</h3>
+          <p data-zh="后台线程用最新观测提前推理，主线程继续按固定帧率执行；新 chunk 到达后从与当前时钟对齐的第 N 步接入。" data-en="A background thread infers from the latest observation while the main thread dispatches at a fixed rate; the incoming chunk joins at clock-aligned step N.">后台线程用最新观测提前推理，主线程继续按固定帧率执行；新 chunk 到达后从与当前时钟对齐的第 N 步接入。</p>
+          <div class="execution-lanes">
+            <div class="execution-lane"><span>control</span><div class="lane-track"><i class="execute" style="--flex:5">old chunk</i><i class="execute" style="--flex:5">switch at N → new chunk</i></div></div>
+            <div class="execution-lane"><span>worker</span><div class="lane-track"><i style="--flex:2">observe</i><i class="infer" style="--flex:4">async infer()</i><i style="--flex:4">next request</i></div></div>
+          </div>
+          <div class="rh-steps">
+            <div><b>01</b><span data-zh="读取最新观测" data-en="Read latest observation">读取最新观测</span></div>
+            <div><b>02</b><span data-zh="异步推理" data-en="Infer asynchronously">异步推理</span></div>
+            <div><b>03</b><span>N=floor(elapsed×fps)</span></div>
+            <div><b>04</b><span data-zh="从 N 步切换" data-en="Switch from step N">从 N 步切换</span></div>
+          </div>
+        </article>
+      </div>
+      <p class="rh-note" data-zh="当前脚本默认 EXEC_HORIZON=None：后台线程完成一次推理后立即发起下一次，不依赖固定的 10–15 步触发点。只要新 chunk 在旧块耗尽前返回，动作下发节奏就与推理耗时解耦；若仍未返回，主线程保持旧 chunk 的最后一个目标点等待，避免无动作空档。" data-en="The current script defaults to EXEC_HORIZON=None: the worker starts another request immediately after inference, rather than relying on a fixed 10–15-step trigger. Dispatch cadence is decoupled from inference as long as a fresh chunk arrives before playback is exhausted; otherwise, the main thread holds the previous chunk's final target instead of leaving an empty command gap.">当前脚本默认 EXEC_HORIZON=None：后台线程完成一次推理后立即发起下一次，不依赖固定的 10–15 步触发点。只要新 chunk 在旧块耗尽前返回，动作下发节奏就与推理耗时解耦；若仍未返回，主线程保持旧 chunk 的最后一个目标点等待，避免无动作空档。</p>
+    </section>
+
+    <section class="section shell blend-comparison">
+      <div class="section-head">
+        <div><p class="section-index">BLEND_STEPS</p><h2 data-zh="两套动作块衔接方式。" data-en="Two action-chunk blending strategies.">两套动作块衔接方式。</h2></div>
+        <p data-zh="两者都先解决动作时间对齐，再进行平滑；平滑不能代替对齐。以下是实现机制对比，不是成功率对比。" data-en="Both align action time before smoothing; smoothing cannot replace alignment. This compares implementation mechanics, not success rates.">两者都先解决动作时间对齐，再进行平滑；平滑不能代替对齐。以下是实现机制对比，不是成功率对比。</p>
+      </div>
+      <div class="blend-grid">
+        <article class="blend-card">
+          <div class="blend-card-head"><span class="chip">LEROBOT · ALIGNED BLEND</span><h3 data-zh="旧未来轨迹 × 新未来轨迹" data-en="Previous future × incoming future">旧未来轨迹 × 新未来轨迹</h3><p data-zh="固定混合权重，按对应时间索引融合。" data-en="Constant blend weight at matching time indices.">固定混合权重，按对应时间索引融合。</p></div>
+          <div class="blend-curve"><span>incoming weight</span><i style="--a:50%"></i><i style="--b:50%"></i><i style="--c:50%"></i><i style="--d:100%"></i></div>
+          <dl class="blend-spec">
+            <div><dt data-zh="对齐" data-en="Alignment">对齐</dt><dd data-zh="action cursor 裁掉已过期前缀" data-en="Action cursor trims the stale prefix">action cursor 裁掉已过期前缀</dd></div>
+            <div><dt data-zh="参考动作" data-en="Reference">参考动作</dt><dd data-zh="旧队列中相同未来索引的动作" data-en="Previous queued action at the same future index">旧队列中相同未来索引的动作</dd></div>
+            <div><dt data-zh="权重" data-en="Weight">权重</dt><dd><code>(1−w)·old[i] + w·new[i]</code>，默认 <code>w=0.5</code></dd></div>
+            <div><dt data-zh="通道" data-en="Channels">通道</dt><dd data-zh="仅显式指定的连续关节分量" data-en="Only explicitly selected continuous joint components">仅显式指定的连续关节分量</dd></div>
+            <div><dt data-zh="保护" data-en="Guards">保护</dt><dd data-zh="上下文、来源时间与最大观测年龄检查" data-en="Context, provenance time, and maximum observation-age checks">上下文、来源时间与最大观测年龄检查</dd></div>
+          </dl>
+        </article>
+
+        <article class="blend-card custom">
+          <div class="blend-card-head"><span class="chip">ROLLING ACTION EXECUTOR</span><h3 data-zh="上一步实发动作 → 新轨迹" data-en="Last executed action → incoming trajectory">上一步实发动作 → 新轨迹</h3><p data-zh="3 步递增权重，逐渐接入新 chunk。" data-en="A three-step ramp progressively enters the new chunk.">3 步递增权重，逐渐接入新 chunk。</p></div>
+          <div class="blend-curve"><span>incoming weight</span><i style="--a:25%"></i><i style="--b:50%"></i><i style="--c:75%"></i><i style="--d:100%"></i></div>
+          <dl class="blend-spec">
+            <div><dt data-zh="对齐" data-en="Alignment">对齐</dt><dd><code>start_idx = floor(elapsed × fps)</code></dd></div>
+            <div><dt data-zh="参考动作" data-en="Reference">参考动作</dt><dd data-zh="上一条实际发送给机械臂的动作" data-en="The last action actually sent to the robot">上一条实际发送给机械臂的动作</dd></div>
+            <div><dt data-zh="权重" data-en="Weight">权重</dt><dd><code>wᵢ=(i+1)/(n+1)</code>，<code>n=3</code> 时为 0.25 / 0.50 / 0.75</dd></div>
+            <div><dt data-zh="通道" data-en="Channels">通道</dt><dd data-zh="当前脚本混合完整 6 维动作，包括夹爪" data-en="The current script blends all six action dimensions, including the gripper">当前脚本混合完整 6 维动作，包括夹爪</dd></div>
+            <div><dt data-zh="保护" data-en="Guards">保护</dt><dd data-zh="state/robot 双锁与 chunk_id 写回检查" data-en="Separate state/robot locks and a chunk-id write-back guard">state/robot 双锁与 chunk_id 写回检查</dd></div>
+          </dl>
+        </article>
+      </div>
+      <p class="source-note"><span data-zh="LeRobot 对比依据官方" data-en="The LeRobot comparison follows the official">LeRobot 对比依据官方</span> <a href="https://github.com/huggingface/lerobot/blob/81b8c5bfdd5591ec59e512cfc7ac6db8151c70ee/src/lerobot/inference/execution.py#L526-L578" target="_blank" rel="noreferrer">execution.py aligned merge</a> <span data-zh="实现（固定版本 81b8c5b）；右侧依据本项目" data-en="implementation (revision 81b8c5b); the right side follows this project's">实现（固定版本 81b8c5b）；右侧依据本项目</span> <code>deploy_so101_receding.py</code>.</p>
+    </section>
+
+    <section class="next-page shell">
+      <div><span data-zh="下一页" data-en="Next">下一页</span><strong data-zh="实验结果与真机视频" data-en="Results and real-robot video">实验结果与真机视频</strong></div>
+      <a href="results.html">Results →</a>
+    </section>
+  </main>
+  <div data-footer></div>
+  <script src="assets/shared.js"></script>
+  <script src="assets/main.js"></script>
+</body>
+</html>

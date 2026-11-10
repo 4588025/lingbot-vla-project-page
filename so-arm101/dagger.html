@@ -1,1 +1,46 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DAgger · π₀ × SO-ARM101</title><link rel="stylesheet" href="assets/style.css"></head><body data-page="dagger"><div data-header></div><main><section class="page-hero"><div class="shell"><p class="eyebrow">02 / HUMAN-IN-THE-LOOP DAGGER</p><h1 data-zh="只在策略真正困难的地方纠偏。" data-en="Correct the policy where it actually struggles.">只在策略真正困难的地方纠偏。</h1><p data-zh="行为克隆在抓取偏移、夹取失败和堆叠定位等状态下会遇到训练分布之外的观测。人类在这些关键时刻接管，并把修正轨迹聚合回数据集。" data-en="Behavior cloning encounters out-of-distribution observations during grasp offsets, failed grips, and stacking misalignment. A human takes over at these moments and aggregates corrected trajectories back into the dataset.">行为克隆在抓取偏移、夹取失败和堆叠定位等状态下会遇到训练分布之外的观测。人类在这些关键时刻接管，并把修正轨迹聚合回数据集。</p></div></section><section class="section shell"><div class="split-feature"><article class="feature-copy"><span class="chip">DISTRIBUTION SHIFT</span><h2 data-zh="从 50% 到 70%" data-en="From 50% to 70%">从 50% 到 70%</h2><p data-zh="通过 Leader Arm 接管错误动作、采集失败状态下的专家示范并迭代微调 π₀，真机任务成功率由 50% 提升至 70%。" data-en="The Leader Arm takes over erroneous actions, captures expert demonstrations in failure states, and iteratively fine-tunes π₀, improving real-world task success from 50% to 70%.">通过 Leader Arm 接管错误动作、采集失败状态下的专家示范并迭代微调 π₀，真机任务成功率由 50% 提升至 70%。</p></article><article class="feature-visual"><div class="dagger-loop"><div class="loop-core"><strong>50→70</strong><span>% success</span></div><div class="loop-node node-a"><b>01 · Policy rollout</b><span data-zh="策略执行" data-en="Run the current policy">策略执行</span></div><div class="loop-node node-b"><b>02 · Human takeover</b><span data-zh="失败前接管" data-en="Intervene before failure">失败前接管</span></div><div class="loop-node node-c"><b>03 · Aggregate</b><span data-zh="追加纠偏轨迹" data-en="Append corrected trajectories">追加纠偏轨迹</span></div><div class="loop-node node-d"><b>04 · Fine-tune</b><span data-zh="更新 π₀" data-en="Update π₀">更新 π₀</span></div></div></article></div></section><section class="next-page shell"><div><span data-zh="下一页" data-en="Next">下一页</span><strong data-zh="低延迟闭环部署" data-en="Low-latency deployment">低延迟闭环部署</strong></div><a href="deployment.html">Deployment →</a></section></main><div data-footer></div><script src="assets/shared.js"></script><script src="assets/main.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DAgger · π₀ × SO-ARM101</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="dagger">
+  <div data-header></div>
+  <main>
+    <section class="page-hero">
+      <div class="shell">
+        <p class="eyebrow">02 / HUMAN-IN-THE-LOOP DAGGER</p>
+        <h1 data-zh="只在策略真正困难的地方纠偏。" data-en="Correct the policy where it actually struggles.">只在策略真正困难的地方纠偏。</h1>
+        <p data-zh="行为克隆在抓取偏移、夹取失败和堆叠定位等状态下会遇到训练分布之外的观测。人类在这些关键时刻接管，并把修正轨迹聚合回数据集。" data-en="Behavior cloning encounters out-of-distribution observations during grasp offsets, failed grips, and stacking misalignment. A human takes over at these moments and aggregates corrected trajectories back into the dataset.">行为克隆在抓取偏移、夹取失败和堆叠定位等状态下会遇到训练分布之外的观测。人类在这些关键时刻接管，并把修正轨迹聚合回数据集。</p>
+      </div>
+    </section>
+    <section class="section shell">
+      <div class="split-feature">
+        <article class="feature-copy">
+          <span class="chip">DISTRIBUTION SHIFT</span>
+          <h2 data-zh="从 50% 到 70%" data-en="From 50% to 70%">从 50% 到 70%</h2>
+          <p data-zh="通过 Leader Arm 接管错误动作、采集失败状态下的专家示范并聚合回训练集，在纠偏数据上继续训练 2.5k steps，真机任务成功率由 50% 提升至 70%。" data-en="The Leader Arm takes over erroneous actions and captures expert demonstrations in failure states. After aggregating these corrections, π₀ is trained for another 2.5k steps, improving real-world task success from 50% to 70%.">通过 Leader Arm 接管错误动作、采集失败状态下的专家示范并聚合回训练集，在纠偏数据上继续训练 2.5k steps，真机任务成功率由 50% 提升至 70%。</p>
+        </article>
+        <article class="feature-visual">
+          <div class="dagger-loop">
+            <div class="loop-core"><strong>50→70</strong><span>% success</span></div>
+            <div class="loop-node node-a"><b>01 · Policy rollout</b><span data-zh="策略执行" data-en="Run the current policy">策略执行</span></div>
+            <div class="loop-node node-b"><b>02 · Human takeover</b><span data-zh="失败前接管" data-en="Intervene before failure">失败前接管</span></div>
+            <div class="loop-node node-c"><b>03 · Aggregate</b><span data-zh="追加纠偏轨迹" data-en="Append corrected trajectories">追加纠偏轨迹</span></div>
+            <div class="loop-node node-d"><b>04 · Fine-tune</b><span data-zh="继续训练 2.5k steps" data-en="Train for another 2.5k steps">继续训练 2.5k steps</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="next-page shell">
+      <div><span data-zh="下一页" data-en="Next">下一页</span><strong data-zh="低延迟闭环部署" data-en="Low-latency deployment">低延迟闭环部署</strong></div>
+      <a href="deployment.html">Deployment →</a>
+    </section>
+  </main>
+  <div data-footer></div>
+  <script src="assets/shared.js"></script>
+  <script src="assets/main.js"></script>
+</body>
+</html>

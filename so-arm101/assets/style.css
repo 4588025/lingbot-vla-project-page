@@ -113,6 +113,31 @@ button { font: inherit; }
 .latency-row.good i { background: var(--lime); }
 .latency-row b { font-size: 20px; }
 
+.rh-explainer { padding-top: 0; }
+.rh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.rh-card { padding: 34px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+.rh-card.rolling { color: white; background: var(--dark); border-color: var(--dark); }
+.rh-card h3 { margin: 48px 0 10px; font-size: 28px; letter-spacing: -.04em; }
+.rh-card > p { margin: 0; color: var(--muted); font-size: 12px; }
+.rh-card.rolling > p { color: #aeb6ad; }
+.execution-lanes { display: grid; gap: 12px; margin-top: 30px; }
+.execution-lane { display: grid; grid-template-columns: 78px 1fr; gap: 15px; align-items: center; }
+.execution-lane > span { color: var(--muted); font-family: "DM Mono", monospace; font-size: 9px; text-transform: uppercase; }
+.rh-card.rolling .execution-lane > span { color: #909a90; }
+.lane-track { display: flex; align-items: stretch; min-height: 48px; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; }
+.rh-card.rolling .lane-track { border-color: rgba(255,255,255,.12); }
+.lane-track i { display: grid; place-items: center; flex: var(--flex); min-width: 48px; padding: 7px; color: var(--ink); background: #e5e1d6; border-right: 1px solid rgba(0,0,0,.08); font-size: 9px; font-style: normal; text-align: center; }
+.lane-track i:last-child { border: 0; }
+.lane-track .execute { background: #d9f4a6; }.lane-track .infer { color: white; background: var(--blue); }.lane-track .gap { color: white; background: var(--orange); }.lane-track .hold { background: #ffcda8; }
+.rh-card.rolling .lane-track i { background: rgba(255,255,255,.08); color: #dfe5de; border-color: rgba(255,255,255,.08); }
+.rh-card.rolling .lane-track .execute { color: var(--ink); background: var(--lime); }.rh-card.rolling .lane-track .infer { color: white; background: var(--blue); }
+.rh-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 28px; }
+.rh-steps div { padding: 14px; background: rgba(0,0,0,.035); border-radius: 12px; }
+.rh-card.rolling .rh-steps div { background: rgba(255,255,255,.06); }
+.rh-steps b { display: block; color: var(--orange); font-family: "DM Mono", monospace; font-size: 9px; }.rh-card.rolling .rh-steps b { color: var(--lime); }
+.rh-steps span { display: block; margin-top: 7px; color: var(--muted); font-size: 10px; }.rh-card.rolling .rh-steps span { color: #aeb6ad; }
+.rh-note { margin-top: 20px; padding: 18px 20px; color: var(--ink); background: var(--lime); border-radius: 14px; font-size: 11px; }
+
 .blend-comparison { padding-top: 0; }
 .blend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .blend-card { overflow: hidden; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
@@ -161,7 +186,7 @@ footer strong { color: white; }
   .system-grid { grid-template-columns: 1fr 1fr; }.system-card:nth-child(2) { border-right: 0; }.system-card:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .pipeline { grid-template-columns: 1fr; }.pipeline-arrow { transform: rotate(90deg); text-align: center; }
   .split-feature { grid-template-columns: 1fr; }
-  .blend-grid, .video-result { grid-template-columns: 1fr; }
+  .blend-grid, .video-result, .rh-grid { grid-template-columns: 1fr; }
   .video-copy h2 { margin-top: 40px; }
 }
 @media (max-width: 680px) {
@@ -174,6 +199,8 @@ footer strong { color: white; }
   .system-grid { grid-template-columns: 1fr; }.system-card { border-right: 0; border-bottom: 1px solid var(--line); }
   .feature-copy, .feature-visual { min-height: auto; padding: 30px; }.feature-copy h2 { margin-top: 45px; font-size: 34px; }
   .loop-node { position: static; width: 100%; margin: 8px 0; }.dagger-loop { display: block; }.dagger-loop::before { display: none; }.loop-core { margin: 20px auto; }
+  .rh-steps { grid-template-columns: 1fr 1fr; }
+  .execution-lane { grid-template-columns: 65px 1fr; }
   .latency-row, .result-bar { grid-template-columns: 85px 1fr 55px; }
   .next-page, footer { align-items: flex-start; flex-direction: column; gap: 20px; }
 }
