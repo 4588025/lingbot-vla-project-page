@@ -21,16 +21,25 @@
       <div class="split-feature">
         <article class="feature-copy">
           <span class="chip">RECEDING HORIZON</span>
-          <h2 data-zh="请求延迟降低 6×" data-en="6× lower request latency">请求延迟降低 6×</h2>
-          <p data-zh="将动作执行与下一次云端推理解耦，使请求延迟从 1200ms 降至 200ms，降低长时序控制中的等待累积。" data-en="Decoupling action execution from the next cloud inference request reduces request latency from 1200ms to 200ms and limits accumulated waiting in long-horizon control.">将动作执行与下一次云端推理解耦，使请求延迟从 1200ms 降至 200ms，降低长时序控制中的等待累积。</p>
+          <h2 data-zh="消除推理等待" data-en="Remove inference pauses">消除推理等待</h2>
+          <p data-zh="在旧动作块执行期间异步推理下一块，使动作下发不再阻塞等待云端响应；请求等待由 1200ms 降至 200ms。" data-en="Infer the next chunk asynchronously while the current chunk is still executing, so action dispatch no longer blocks on the cloud response; request waiting drops from 1200ms to 200ms.">在旧动作块执行期间异步推理下一块，使动作下发不再阻塞等待云端响应；请求等待由 1200ms 降至 200ms。</p>
         </article>
-        <article class="feature-visual">
-          <span class="chip">LATENCY</span>
-          <div class="latency-chart">
-            <div class="latency-row"><span data-zh="同步执行" data-en="Synchronous">同步执行</span><i style="--width:100%"></i><b>1200ms</b></div>
-            <div class="latency-row good"><span>Receding</span><i style="--width:16.7%"></i><b>200ms</b></div>
+        <article class="feature-visual blend-feature">
+          <span class="chip">BLEND_STEPS</span>
+          <h2 data-zh="消除动作块交界抖动" data-en="Remove chunk-transition jitter">消除动作块交界抖动</h2>
+          <p data-zh="在旧动作块与新动作块的交界处对关节目标做线性插值，逐步接入新动作，减少指令突变引起的机械臂抖动。" data-en="Linearly interpolate joint targets where the old and new chunks meet, introducing the incoming motion gradually to suppress robot jitter caused by command discontinuities.">在旧动作块与新动作块的交界处对关节目标做线性插值，逐步接入新动作，减少指令突变引起的机械臂抖动。</p>
+          <div class="blend-preview" aria-label="BLEND_STEPS transition comparison">
+            <div class="blend-preview-row abrupt">
+              <span data-zh="直接切换" data-en="Hard switch">直接切换</span>
+              <svg viewBox="0 0 360 76" role="img" aria-hidden="true"><path d="M4 57 H176 V18 H356"></path><circle cx="176" cy="57" r="4"></circle><circle cx="176" cy="18" r="4"></circle></svg>
+              <b data-zh="突变" data-en="jump">突变</b>
+            </div>
+            <div class="blend-preview-row smooth">
+              <span>BLEND_STEPS</span>
+              <svg viewBox="0 0 360 76" role="img" aria-hidden="true"><path d="M4 57 H122 C164 57 191 18 234 18 H356"></path><circle cx="145" cy="51" r="4"></circle><circle cx="178" cy="38" r="4"></circle><circle cx="211" cy="23" r="4"></circle></svg>
+              <b data-zh="平滑" data-en="smooth">平滑</b>
+            </div>
           </div>
-          <p class="evidence-note" data-zh="BLEND_STEPS 在动作块交界处做线性插值，避免突然跳变。" data-en="BLEND_STEPS applies linear interpolation at action-chunk boundaries to avoid abrupt jumps.">BLEND_STEPS 在动作块交界处做线性插值，避免突然跳变。</p>
         </article>
       </div>
     </section>
