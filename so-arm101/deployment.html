@@ -35,6 +35,55 @@
       </div>
     </section>
 
+    <section class="section shell deploy-architecture">
+      <div class="section-head">
+        <div>
+          <p class="section-index">DEPLOYMENT ARCHITECTURE</p>
+          <h2 data-zh="真机控制留在本地，VLA 推理运行在算力中心。" data-en="Keep robot control local and run VLA inference in the compute center.">真机控制留在本地，VLA 推理运行在算力中心。</h2>
+        </div>
+        <p data-zh="本地端直接连接机械臂和相机，经 SSH 隧道转发 WebSocket 请求；算力中心加载 post-training checkpoint，返回每次约 25 步的动作块。" data-en="The local endpoint directly connects the arm and cameras, forwarding WebSocket requests through an SSH tunnel. The compute center loads the post-training checkpoint and returns action chunks of about 25 steps.">本地端直接连接机械臂和相机，经 SSH 隧道转发 WebSocket 请求；算力中心加载 post-training checkpoint，返回每次约 25 步的动作块。</p>
+      </div>
+      <div class="architecture-map">
+        <article class="architecture-node local">
+          <span class="chip">LOCAL · THINKPAD P1 GEN 4</span>
+          <h3 data-zh="采集与机器人控制" data-en="Capture and robot control">采集与机器人控制</h3>
+          <p>lerobot_hw · Python 3.12</p>
+          <ul>
+            <li data-zh="SO-101 通过 USB 直连" data-en="SO-101 connected directly over USB">SO-101 通过 USB 直连</li>
+            <li data-zh="两路 USB 相机：front / side" data-en="Two USB cameras: front / side">两路 USB 相机：front / side</li>
+            <li data-zh="lerobot-record 负责示范数据采集" data-en="lerobot-record captures demonstrations">lerobot-record 负责示范数据采集</li>
+            <li data-zh="主线程按固定帧率执行真机动作" data-en="Main thread dispatches robot actions at a fixed rate">主线程按固定帧率执行真机动作</li>
+          </ul>
+        </article>
+
+        <div class="architecture-link" aria-label="Bidirectional inference link">
+          <div class="flow-arrow">
+            <strong>SSH TUNNEL · WEBSOCKET</strong>
+            <div class="arrow-line"></div>
+            <span data-zh="最新相机观测 + 关节状态" data-en="Latest camera observations + joint state">最新相机观测 + 关节状态</span>
+          </div>
+          <div class="flow-arrow reverse">
+            <span data-zh="动作块 · 每次约 25 步" data-en="Action chunk · about 25 steps">动作块 · 每次约 25 步</span>
+            <div class="arrow-line"></div>
+            <strong>POLICY RESPONSE</strong>
+          </div>
+        </div>
+
+        <article class="architecture-node cloud">
+          <span class="chip">COMPUTE CENTER</span>
+          <h3 data-zh="VLA 推理服务" data-en="VLA inference service">VLA 推理服务</h3>
+          <p>lingbot-vla-v2</p>
+          <ul>
+            <li data-zh="复用 lingbot-vla-v2 训练环境" data-en="Reuse the lingbot-vla-v2 training environment">复用 lingbot-vla-v2 训练环境</li>
+            <li data-zh="加载 post-training checkpoint" data-en="Load the post-training checkpoint">加载 post-training checkpoint</li>
+            <li><code>deploy.lingbot_vla_v2</code></li>
+            <li data-zh="policy 作为 WebSocket 服务端" data-en="Policy runs as the WebSocket server">policy 作为 WebSocket 服务端</li>
+          </ul>
+        </article>
+      </div>
+      <p class="architecture-note" data-zh="部署边界：本地端负责硬件、相机和控制时钟；算力中心只负责根据最新观测生成动作 chunk。" data-en="Deployment boundary: the local endpoint owns hardware, cameras, and the control clock; the compute center only generates action chunks from the latest observation.">部署边界：本地端负责硬件、相机和控制时钟；算力中心只负责根据最新观测生成动作 chunk。</p>
+    </section>
+
     <section class="section shell rh-explainer">
       <div class="section-head">
         <div>
