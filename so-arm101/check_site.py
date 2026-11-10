@@ -42,7 +42,7 @@ assert all(v in demo for v in ("result-demo.mp4", "result-poster.png", "controls
 assert all(v in navigation for v in ('data-zh="方法"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', "nav-dropdown-menu"))
 assert all(v in deployment for v in ("LEROBOT · ALIGNED BLEND", "ROLLING ACTION EXECUTOR", "action cursor", "elapsed × fps", "81b8c5b"))
 assert all(v in deployment for v in ("WHY RECEDING HORIZON", "SERIAL · BLOCKING", "ROLLING · TWO THREADS", "N=floor(elapsed×fps)", "EXEC_HORIZON=None"))
-assert all(v in deployment for v in ("LEROBOT OFFICIAL ALIGNMENT", "cursor = 120", "cursor = 126", "trim = 126 − 120 = 6", "current_cursor − anchor", "absolute = relative + cached_state", "_accept_aligned"))
+assert "LEROBOT OFFICIAL ALIGNMENT" not in deployment and "cursor = 120" not in deployment
 assert all(v in deployment for v in ("DEPLOYMENT ARCHITECTURE", "LOCAL · UBUNTU", "SSH TUNNEL · WEBSOCKET", "COMPUTE CENTER", "about 25 steps"))
 assert all(v in deployment for v in ("复用 π₀ 训练环境", "Reuse the π₀ training environment", "deploy.pi0"))
 assert "lingbot-vla-v2" not in deployment and "deploy.lingbot_vla_v2" not in deployment
