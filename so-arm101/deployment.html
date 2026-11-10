@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Deployment · π₀ × SO-ARM101</title>
-  <link rel="stylesheet" href="assets/style.css?v=20261110c">
+  <link rel="stylesheet" href="assets/style.css?v=20261110d">
 </head>
 <body data-page="deployment">
   <div data-header></div>
@@ -126,6 +126,40 @@
         </article>
       </div>
       <p class="rh-note" data-zh="当前脚本默认 EXEC_HORIZON=None：后台线程完成一次推理后立即发起下一次，不依赖固定的 10–15 步触发点。只要新 chunk 在旧块耗尽前返回，动作下发节奏就与推理耗时解耦；若仍未返回，主线程保持旧 chunk 的最后一个目标点等待，避免无动作空档。" data-en="The current script defaults to EXEC_HORIZON=None: the worker starts another request immediately after inference, rather than relying on a fixed 10–15-step trigger. Dispatch cadence is decoupled from inference as long as a fresh chunk arrives before playback is exhausted; otherwise, the main thread holds the previous chunk's final target instead of leaving an empty command gap.">当前脚本默认 EXEC_HORIZON=None：后台线程完成一次推理后立即发起下一次，不依赖固定的 10–15 步触发点。只要新 chunk 在旧块耗尽前返回，动作下发节奏就与推理耗时解耦；若仍未返回，主线程保持旧 chunk 的最后一个目标点等待，避免无动作空档。</p>
+    </section>
+
+    <section class="section shell cursor-alignment">
+      <div class="section-head">
+        <div>
+          <p class="section-index">LEROBOT OFFICIAL ALIGNMENT</p>
+          <h2 data-zh="不用估算时间，而是记录实际执行进度。" data-en="Track committed progress instead of estimating time.">不用估算时间，而是记录实际执行进度。</h2>
+        </div>
+        <p data-zh="LeRobot 的 aligned 合并在采集观测时保存 action cursor。新 chunk 返回后，用当前 cursor 与锚点的差值裁掉已经错过的前缀，因此能自然处理调度抖动、hold 和实际下发步数变化。" data-en="LeRobot aligned merge stores an action cursor with the observation. When the new chunk returns, the difference between the current cursor and that anchor trims the expired prefix, naturally accounting for scheduling jitter, holds, and actual committed progress.">LeRobot 的 aligned 合并在采集观测时保存 action cursor。新 chunk 返回后，用当前 cursor 与锚点的差值裁掉已经错过的前缀，因此能自然处理调度抖动、hold 和实际下发步数变化。</p>
+      </div>
+
+      <div class="cursor-equation">
+        <div><span>OBSERVATION ANCHOR</span><strong>cursor = 120</strong><small data-zh="采集相机与关节状态" data-en="Capture images and joint state">采集相机与关节状态</small></div>
+        <i>→</i>
+        <div><span>INFERENCE RETURNS</span><strong>cursor = 126</strong><small data-zh="旧队列实际前进 6 步" data-en="Old queue actually advanced 6 steps">旧队列实际前进 6 步</small></div>
+        <i>→</i>
+        <div class="cursor-result"><span>ALIGNED SUFFIX</span><strong>trim = 126 − 120 = 6</strong><small>future = incoming_chunk[6:]</small></div>
+      </div>
+
+      <div class="cursor-flow">
+        <article><b>01</b><h3 data-zh="绑定锚点" data-en="Bind an anchor">绑定锚点</h3><p><code>observation.action_cursor</code></p></article>
+        <article><b>02</b><h3 data-zh="继续执行" data-en="Keep executing">继续执行</h3><p data-zh="推理期间主循环继续消耗旧动作队列。" data-en="The control loop keeps consuming the old queue during inference.">推理期间主循环继续消耗旧动作队列。</p></article>
+        <article><b>03</b><h3 data-zh="裁掉过期前缀" data-en="Trim stale prefix">裁掉过期前缀</h3><p><code>trim = current_cursor − anchor</code></p></article>
+        <article><b>04</b><h3 data-zh="对齐未来槽位" data-en="Align future slots">对齐未来槽位</h3><p data-zh="仅替换尚未提交的未来目标。" data-en="Replace only future targets that are not yet committed.">仅替换尚未提交的未来目标。</p></article>
+        <article><b>05</b><h3 data-zh="可选平滑" data-en="Optional blending">可选平滑</h3><p data-zh="在相同未来索引上融合连续关节分量。" data-en="Blend continuous components at matching future indices.">在相同未来索引上融合连续关节分量。</p></article>
+      </div>
+
+      <div class="alignment-compare">
+        <article><span class="chip">CURRENT SCRIPT</span><h3><code>floor(elapsed × fps)</code></h3><p data-zh="根据理论控制频率估算经过步数；实现简单，但系统抖动或 hold 时可能产生一步偏差。" data-en="Estimates progress from nominal control rate; simple, but jitter or holds can introduce an off-by-one error.">根据理论控制频率估算经过步数；实现简单，但系统抖动或 hold 时可能产生一步偏差。</p></article>
+        <article><span class="chip">LEROBOT · ALIGNED</span><h3><code>current_cursor − anchor</code></h3><p data-zh="使用实际提交的策略动作数；与机器人真正走过的时间槽一致，适合作为下一版实现。" data-en="Uses the actual number of committed policy actions; it matches the slots the robot really traversed and is the recommended next implementation.">使用实际提交的策略动作数；与机器人真正走过的时间槽一致，适合作为下一版实现。</p></article>
+      </div>
+
+      <p class="relative-note" data-zh="π₀ 相对动作说明：LeRobot 中每个动作都相对于推理开始时缓存的同一个状态，而不是相对于前一个动作的 sequential delta。推理后先执行 absolute = relative + cached_state，再进行 cursor 裁剪；不需要 cumulative sum。" data-en="π₀ relative-action note: in LeRobot every action is relative to the same state cached at inference start, not a sequential delta from the previous action. Postprocessing applies absolute = relative + cached_state before cursor trimming; no cumulative sum is required.">π₀ 相对动作说明：LeRobot 中每个动作都相对于推理开始时缓存的同一个状态，而不是相对于前一个动作的 sequential delta。推理后先执行 <code>absolute = relative + cached_state</code>，再进行 cursor 裁剪；不需要 cumulative sum。</p>
+      <p class="source-note"><span data-zh="依据 LeRobot 官方" data-en="Based on LeRobot official">依据 LeRobot 官方</span> <a href="https://github.com/huggingface/lerobot/blob/main/src/lerobot/inference/execution.py#L2333-L2416" target="_blank" rel="noreferrer">execution.py · _accept_aligned</a> <span data-zh="与" data-en="and">与</span> <a href="https://huggingface.co/docs/lerobot/main/remote_inference" target="_blank" rel="noreferrer">Remote Inference documentation</a>.</p>
     </section>
 
     <section class="section shell blend-comparison">
