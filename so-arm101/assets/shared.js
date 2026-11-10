@@ -3,7 +3,8 @@ const navItems = [
   ["data.html", "数据", "Data", "data"],
   ["dagger.html", "DAgger", "DAgger", "dagger"],
   ["deployment.html", "部署", "Deployment", "deployment"],
-  ["results.html", "结果", "Results", "results"]
+  ["results.html", "结果", "Results", "results"],
+  ["future.html", "改进方向", "Future", "future"]
 ];
 const active = document.body.dataset.page || "";
 document.querySelector("[data-header]").innerHTML = `<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">π₀</span><span>SO-ARM101</span></a><div class="header-actions"><nav class="site-nav">${navItems.map(([href,zh,en,key]) => `<a class="${active === key ? "active" : ""}" href="${href}" data-zh="${zh}" data-en="${en}">${zh}</a>`).join("")}</nav><button class="language-toggle" data-language type="button"><b>EN</b> / 中</button></div></header>`;

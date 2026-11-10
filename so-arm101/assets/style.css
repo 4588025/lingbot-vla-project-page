@@ -60,6 +60,7 @@ button { font: inherit; }
 .metric strong { display: block; margin-top: 18px; font-size: 38px; letter-spacing: -.06em; }
 .metric strong span { color: var(--orange); font-size: 18px; }
 .metric small { color: var(--muted); }
+.result-metrics { width: 100%; margin-top: 20px; grid-template-columns: repeat(5, 1fr); }
 
 .section { padding-block: 105px; }
 .section-head { display: grid; grid-template-columns: 1fr .7fr; gap: 60px; align-items: end; margin-bottom: 45px; }
