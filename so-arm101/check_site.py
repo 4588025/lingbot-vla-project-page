@@ -20,6 +20,7 @@ assert REQUIRED == {p.name for p in PAGES}
 for page in PAGES:
     text = page.read_text(encoding="utf-8")
     assert "data-header" in text and "data-footer" in text and "data-language" not in text
+    assert not any(phrase in text for phrase in ("不代表", "未补充", "均来自当前项目描述", "not achieved results", "additional experimental statistic"))
     parser = Links(); parser.feed(text)
     for target in parser.targets:
         parsed = urlsplit(target)

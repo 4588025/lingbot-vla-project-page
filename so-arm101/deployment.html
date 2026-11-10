@@ -165,7 +165,7 @@
     <section class="section shell blend-comparison">
       <div class="section-head">
         <div><p class="section-index">BLEND_STEPS</p><h2 data-zh="两套动作块衔接方式。" data-en="Two action-chunk blending strategies.">两套动作块衔接方式。</h2></div>
-        <p data-zh="两者都先解决动作时间对齐，再进行平滑；平滑不能代替对齐。以下是实现机制对比，不是成功率对比。" data-en="Both align action time before smoothing; smoothing cannot replace alignment. This compares implementation mechanics, not success rates.">两者都先解决动作时间对齐，再进行平滑；平滑不能代替对齐。以下是实现机制对比，不是成功率对比。</p>
+        <p data-zh="两者都先解决动作时间对齐，再对重叠的未来动作进行平滑。左侧使用固定权重融合相同未来索引，右侧从上一条实发动作递增接入新 chunk。" data-en="Both align action time before smoothing overlapping future targets. The left blends matching future indices with a constant weight; the right ramps from the last dispatched action into the incoming chunk.">两者都先解决动作时间对齐，再对重叠的未来动作进行平滑。左侧使用固定权重融合相同未来索引，右侧从上一条实发动作递增接入新 chunk。</p>
       </div>
       <div class="blend-grid">
         <article class="blend-card">
