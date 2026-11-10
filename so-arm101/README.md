@@ -1,4 +1,4 @@
-# π₀ × SO-ARM101 project page
+# 面向长时序机器人操作的 π₀ 真机在环学习与闭环策略优化
 
 Static bilingual project site for the SO-ARM101 long-horizon manipulation project.
 

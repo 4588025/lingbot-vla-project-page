@@ -31,4 +31,4 @@ document.querySelector("[data-header]").innerHTML = `
     </div>
   </header>`;
 
-document.querySelector("[data-footer]").innerHTML = `<footer><div><strong>π₀ × SO-ARM101</strong><br><span data-zh="长时序真机操作系统" data-en="Long-horizon real-robot manipulation">长时序真机操作系统</span></div><div>Python · PyTorch · LeRobot · OpenPI · Flow Matching · FSDP2 · DAgger</div></footer>`;
+document.querySelector("[data-footer]").innerHTML = `<footer><div><strong data-zh="面向长时序机器人操作的 π₀ 真机在环学习与闭环策略优化" data-en="π₀ Real-World-in-the-Loop Learning and Closed-Loop Policy Optimization for Long-Horizon Robot Manipulation">面向长时序机器人操作的 π₀ 真机在环学习与闭环策略优化</strong><br><span>π₀ · DAgger · SO-ARM101</span></div><div>Python · PyTorch · LeRobot · OpenPI · Flow Matching · FSDP2 · DAgger</div></footer>`;

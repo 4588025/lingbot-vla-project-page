@@ -35,6 +35,8 @@ future = (ROOT / "future.html").read_text(encoding="utf-8")
 demo = (ROOT / "demo.html").read_text(encoding="utf-8")
 navigation = (ROOT / "assets/shared.js").read_text(encoding="utf-8")
 assert all(v in home for v in ("50<span>%</span> → 70", "1200<span>ms</span> → 200", "0.03637"))
+assert all(v in home for v in ("面向长时序机器人操作的", "π₀ 真机在环学习", "与闭环策略优化", "π₀ Real-World-in-the-Loop Learning"))
+assert "面向长时序机器人操作的 π₀ 真机在环学习与闭环策略优化" in navigation
 assert "继续训练 2.5k steps" in home
 assert all(v in dagger for v in ("25 条", "25 real-robot corrective trajectories", "2.5k steps", "50%", "70%"))
 assert all(v in results for v in ("50%", "70%", "7.5", "DAgger 数据", "25<span>条</span>", "DAgger FT", "2.5", "0.03637", "200<span>ms</span>", "demo.html"))
