@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Deployment · π₀ × SO-ARM101</title>
-  <link rel="stylesheet" href="assets/style.css?v=20261110b">
+  <link rel="stylesheet" href="assets/style.css?v=20261110c">
 </head>
 <body data-page="deployment">
   <div data-header></div>
@@ -45,7 +45,7 @@
       </div>
       <div class="architecture-map">
         <article class="architecture-node local">
-          <span class="chip">LOCAL · THINKPAD P1 GEN 4</span>
+          <span class="chip">LOCAL · UBUNTU</span>
           <h3 data-zh="采集与机器人控制" data-en="Capture and robot control">采集与机器人控制</h3>
           <p>lerobot_hw · Python 3.12</p>
           <ul>
@@ -82,6 +82,34 @@
         </article>
       </div>
       <p class="architecture-note" data-zh="部署边界：本地端负责硬件、相机和控制时钟；算力中心只负责根据最新观测生成动作 chunk。" data-en="Deployment boundary: the local endpoint owns hardware, cameras, and the control clock; the compute center only generates action chunks from the latest observation.">部署边界：本地端负责硬件、相机和控制时钟；算力中心只负责根据最新观测生成动作 chunk。</p>
+    </section>
+
+    <section class="section shell future-direction">
+      <div class="section-head">
+        <div>
+          <p class="section-index">FUTURE DIRECTION · REAL-TIME EXPO-FT</p>
+          <h2 data-zh="从“动作不断档”走向“执行前实时纠正”。" data-en="From uninterrupted actions to execution-time correction.">从“动作不断档”走向“执行前实时纠正”。</h2>
+        </div>
+        <p data-zh="当前 Receding Horizon 解决推理期间的停顿，但新 chunk 仍可能来自过期观测。后续可引入轻量 Edit Policy，在动作下发前读取最新状态并修正候选动作，再由 Q-function 选择价值更高的 chunk。" data-en="The current receding-horizon loop removes pauses during inference, but a new chunk may still come from a stale observation. A lightweight edit policy could use the latest state to correct candidates immediately before execution, followed by Q-function chunk selection.">当前 Receding Horizon 解决推理期间的停顿，但新 chunk 仍可能来自过期观测。后续可引入轻量 Edit Policy，在动作下发前读取最新状态并修正候选动作，再由 Q-function 选择价值更高的 chunk。</p>
+      </div>
+
+      <div class="future-pipeline" aria-label="Real-Time EXPO-FT improvement pipeline">
+        <article><b>01</b><span class="chip">SLOW · CLOUD</span><h3 data-zh="VLA 生成候选" data-en="VLA proposes candidates">VLA 生成候选</h3><p data-zh="大型 VLA 异步生成多个长期 action chunks。" data-en="The large VLA asynchronously proposes long-horizon action chunks.">大型 VLA 异步生成多个长期 action chunks。</p></article>
+        <i>→</i>
+        <article><b>02</b><span class="chip">LATEST STATE</span><h3 data-zh="读取最新观测" data-en="Read the latest state">读取最新观测</h3><p data-zh="使用执行时刻的相机与关节状态，而不是推理开始时的旧状态。" data-en="Use camera and joint state at execution time instead of the stale inference-time state.">使用执行时刻的相机与关节状态，而不是推理开始时的旧状态。</p></article>
+        <i>→</i>
+        <article><b>03</b><span class="chip">FAST · LOCAL</span><h3 data-zh="Residual 修正" data-en="Residual action edit">Residual 修正</h3><p data-zh="Ubuntu 本地端运行轻量 Edit Policy，对关节动作做低延迟修正。" data-en="A lightweight edit policy runs on the local Ubuntu endpoint and corrects joint actions with low latency.">Ubuntu 本地端运行轻量 Edit Policy，对关节动作做低延迟修正。</p></article>
+        <i>→</i>
+        <article><b>04</b><span class="chip">SELECT & EXECUTE</span><h3 data-zh="Q 选择并执行" data-en="Q-select and execute">Q 选择并执行</h3><p data-zh="比较原始与修正候选，再接入时钟对齐、安全限幅和 BLEND_STEPS。" data-en="Select among original and edited candidates, then apply clock alignment, safety limits, and BLEND_STEPS.">比较原始与修正候选，再接入时钟对齐、安全限幅和 BLEND_STEPS。</p></article>
+      </div>
+
+      <div class="future-roadmap">
+        <article><span>P1 · MEDIUM</span><h3 data-zh="监督式 Edit Policy" data-en="Supervised edit policy">监督式 Edit Policy</h3><p data-zh="先利用现有 DAgger 纠偏轨迹学习动作 residual，验证最新观测修正是否有效。" data-en="First learn action residuals from existing DAgger corrections and validate execution-time editing.">先利用现有 DAgger 纠偏轨迹学习动作 residual，验证最新观测修正是否有效。</p></article>
+        <article><span>P2 · HIGH</span><h3 data-zh="候选动作 Q 选择" data-en="Q-based candidate selection">候选动作 Q 选择</h3><p data-zh="引入多候选 chunk 与离线 Q-function，在不做在线探索前先评估选择收益。" data-en="Introduce multiple chunks and an offline Q-function before enabling online exploration.">引入多候选 chunk 与离线 Q-function，在不做在线探索前先评估选择收益。</p></article>
+        <article><span>P3 · VERY HIGH</span><h3 data-zh="完整在线 RL" data-en="Full online RL">完整在线 RL</h3><p data-zh="加入 replay buffer、奖励检测、自动/人工复位和真机安全保护，完成 Real-Time EXPO-FT。" data-en="Add replay, reward detection, resets, and real-robot safeguards for full Real-Time EXPO-FT.">加入 replay buffer、奖励检测、自动/人工复位和真机安全保护，完成 Real-Time EXPO-FT。</p></article>
+      </div>
+
+      <p class="future-evidence"><strong data-zh="研究依据：" data-en="Research basis:">研究依据：</strong><a href="https://arxiv.org/abs/2609.18207" target="_blank" rel="noreferrer">Reinforcement Learning for Real-Time Vision-Language-Action Policies</a><span data-zh="。论文使用 DROID、笛卡尔速度控制与动态任务；其结果属于外部研究证据，不代表当前 SO-101 项目已达到相同表现。" data-en=". The paper studies DROID, Cartesian velocity control, and dynamic tasks; its results are external evidence, not achieved results of this SO-101 project.">。论文使用 DROID、笛卡尔速度控制与动态任务；其结果属于外部研究证据，不代表当前 SO-101 项目已达到相同表现。</span></p>
     </section>
 
     <section class="section shell rh-explainer">
