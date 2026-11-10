@@ -5,7 +5,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent
 PAGES = sorted(ROOT.glob("*.html"))
-REQUIRED = {"index.html", "data.html", "dagger.html", "deployment.html", "results.html", "future.html"}
+REQUIRED = {"index.html", "data.html", "dagger.html", "deployment.html", "results.html", "future.html", "demo.html"}
 
 class Links(HTMLParser):
     def __init__(self):
@@ -32,11 +32,14 @@ dagger = (ROOT / "dagger.html").read_text(encoding="utf-8")
 results = (ROOT / "results.html").read_text(encoding="utf-8")
 deployment = (ROOT / "deployment.html").read_text(encoding="utf-8")
 future = (ROOT / "future.html").read_text(encoding="utf-8")
+demo = (ROOT / "demo.html").read_text(encoding="utf-8")
+navigation = (ROOT / "assets/shared.js").read_text(encoding="utf-8")
 assert all(v in home for v in ("50<span>%</span> → 70", "1200<span>ms</span> → 200", "0.03637"))
 assert "继续训练 2.5k steps" in home
 assert all(v in dagger for v in ("25 条", "25 real-robot corrective trajectories", "2.5k steps", "50%", "70%"))
-assert all(v in results for v in ("50%", "70%", "7.5", "DAgger 数据", "25<span>条</span>", "DAgger FT", "2.5", "0.03637", "200<span>ms</span>", "future.html"))
-assert all(v in results for v in ("result-demo.mp4", "result-poster.png", "controls", "playsinline"))
+assert all(v in results for v in ("50%", "70%", "7.5", "DAgger 数据", "25<span>条</span>", "DAgger FT", "2.5", "0.03637", "200<span>ms</span>", "demo.html"))
+assert all(v in demo for v in ("result-demo.mp4", "result-poster.png", "controls", "playsinline", "30<span>Hz</span>", "≈5<span>Hz</span>", "25<span>steps</span>"))
+assert all(v in navigation for v in ('data-zh="方法"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', "nav-dropdown-menu"))
 assert all(v in deployment for v in ("LEROBOT · ALIGNED BLEND", "ROLLING ACTION EXECUTOR", "action cursor", "elapsed × fps", "81b8c5b"))
 assert all(v in deployment for v in ("WHY RECEDING HORIZON", "SERIAL · BLOCKING", "ROLLING · TWO THREADS", "N=floor(elapsed×fps)", "EXEC_HORIZON=None"))
 assert all(v in deployment for v in ("LEROBOT OFFICIAL ALIGNMENT", "cursor = 120", "cursor = 126", "trim = 126 − 120 = 6", "current_cursor − anchor", "absolute = relative + cached_state", "_accept_aligned"))

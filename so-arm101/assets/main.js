@@ -20,3 +20,20 @@ function applyLanguage(lang) {
 }
 applyLanguage(stored);
 toggle?.addEventListener("click", () => applyLanguage(document.documentElement.lang.startsWith("zh") ? "en" : "zh"));
+
+const dropdown = document.querySelector(".nav-dropdown");
+const dropdownTrigger = document.querySelector(".nav-dropdown-trigger");
+function setDropdown(open) {
+  dropdown?.classList.toggle("open", open);
+  dropdownTrigger?.setAttribute("aria-expanded", String(open));
+}
+dropdownTrigger?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  setDropdown(!dropdown?.classList.contains("open"));
+});
+document.addEventListener("click", (event) => {
+  if (dropdown && !dropdown.contains(event.target)) setDropdown(false);
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") setDropdown(false);
+});

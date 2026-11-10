@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="SO-ARM101 real-robot demonstration with π0 and DAgger">
+  <title>Demo · π₀ × SO-ARM101</title>
+  <link rel="stylesheet" href="assets/style.css?v=20261110e">
+</head>
+<body data-page="demo">
+  <div data-header></div>
+  <main>
+    <section class="page-hero">
+      <div class="shell">
+        <p class="eyebrow">05 / REAL-ROBOT DEMO</p>
+        <h1 data-zh="让策略在真实机械臂上连续执行。" data-en="Continuous policy execution on the real robot.">让策略在真实机械臂上连续执行。</h1>
+        <p data-zh="SO-ARM101 本地端以 30 Hz 下发动作，远程 π₀ 约以 5 Hz 生成 25-step action chunk，并通过滚动时域控制持续更新未来轨迹。" data-en="The SO-ARM101 client dispatches actions at 30 Hz while remote π₀ generates 25-step action chunks at about 5 Hz, continuously updating the future trajectory through receding-horizon control.">SO-ARM101 本地端以 30 Hz 下发动作，远程 π₀ 约以 5 Hz 生成 25-step action chunk，并通过滚动时域控制持续更新未来轨迹。</p>
+      </div>
+    </section>
+
+    <section class="metric-band demo-metrics">
+      <div class="metric"><span class="metric-label" data-zh="控制频率" data-en="Control rate">控制频率</span><strong>30<span>Hz</span></strong><small>SO-ARM101 client</small></div>
+      <div class="metric"><span class="metric-label" data-zh="预测频率" data-en="Prediction rate">预测频率</span><strong>≈5<span>Hz</span></strong><small>remote π₀</small></div>
+      <div class="metric"><span class="metric-label">Action chunk</span><strong>25<span>steps</span></strong><small>Receding Horizon</small></div>
+    </section>
+
+    <section class="section shell">
+      <div class="video-result demo-video">
+        <article class="video-copy">
+          <span class="chip">REAL-ROBOT ROLLOUT</span>
+          <h2 data-zh="SO-ARM101 真机执行" data-en="SO-ARM101 real-world rollout">SO-ARM101 真机执行</h2>
+          <p data-zh="视频展示 π₀ 策略在真实桌面环境中的连续动作。播放器支持暂停、拖动进度和全屏查看。" data-en="The video shows continuous π₀ policy execution in a real tabletop environment. Use the native controls to pause, seek, or enter fullscreen.">视频展示 π₀ 策略在真实桌面环境中的连续动作。播放器支持暂停、拖动进度和全屏查看。</p>
+        </article>
+        <div class="video-frame"><video controls playsinline preload="metadata" poster="assets/media/result-poster.png"><source src="assets/media/result-demo.mp4" type="video/mp4"><span data-zh="浏览器无法播放该视频。" data-en="Your browser cannot play this video.">浏览器无法播放该视频。</span></video></div>
+      </div>
+    </section>
+  </main>
+  <div data-footer></div>
+  <script src="assets/shared.js"></script><script src="assets/main.js"></script>
+</body>
+</html>
