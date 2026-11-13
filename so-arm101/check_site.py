@@ -29,6 +29,7 @@ for page in PAGES:
 
 home = (ROOT / "index.html").read_text(encoding="utf-8")
 dagger = (ROOT / "dagger.html").read_text(encoding="utf-8")
+data = (ROOT / "data.html").read_text(encoding="utf-8")
 results = (ROOT / "results.html").read_text(encoding="utf-8")
 deployment = (ROOT / "deployment.html").read_text(encoding="utf-8")
 future = (ROOT / "future.html").read_text(encoding="utf-8")
@@ -41,7 +42,10 @@ assert "继续训练 2.5k steps" in home
 assert all(v in dagger for v in ("25 条", "25 real-robot corrective trajectories", "2.5k steps", "50%", "70%"))
 assert all(v in results for v in ("50%", "70%", "7.5", "DAgger 数据", "25<span>条</span>", "DAgger FT", "2.5", "0.03637", "200<span>ms</span>", "demo.html"))
 assert all(v in demo for v in ("result-demo.mp4", "result-poster.png", "controls", "playsinline", "30<span>Hz</span>", "≈5<span>Hz</span>", "25<span>steps</span>"))
-assert all(v in navigation for v in ('data-zh="方法"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', "nav-dropdown-menu"))
+assert all(v in navigation for v in ('data-zh="方法"', 'data-zh="任务、数据"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', "nav-dropdown-menu"))
+assert '["data.html", "数据处理"' not in navigation
+assert all(v in data for v in ("1.1 / TASK", "1.2 / DATA COLLECTION &amp; FILTERING", "PICK_STACK_BLOCK", "Leader / Follower", "pick_stack_block_trimmed", "episode_2", "34,717", "30<em>FPS</em>", "23.63<em>s</em>", "708 frames", "assets/media/episode-2-front.mp4", "assets/media/episode-2-side.mp4", "controls", "playsinline"))
+assert "huggingface.co" not in data and "hf.space" not in data and "<iframe" not in data
 assert all(v in deployment for v in ("LEROBOT · ALIGNED BLEND", "ROLLING ACTION EXECUTOR", "action cursor", "elapsed × fps", "81b8c5b"))
 assert all(v in deployment for v in ("WHY RECEDING HORIZON", "SERIAL · BLOCKING", "ROLLING · TWO THREADS", "N=floor(elapsed×fps)", "EXEC_HORIZON=None"))
 assert all(v in deployment for v in ("消除推理等待", "Remove inference pauses", "消除动作块交界抖动", "Remove chunk-transition jitter", "blend-preview"))

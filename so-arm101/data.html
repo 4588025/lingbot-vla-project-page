@@ -3,40 +3,136 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>数据处理 · 面向长时序机器人操作的 π₀ 真机在环学习与闭环策略优化</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <meta name="description" content="SO-ARM101 积木抓取堆叠任务、真机数据采集、轨迹过滤与 LeRobot Episode 2 预览">
+  <title>任务、数据 · 面向长时序机器人操作的 π₀ 真机在环学习与闭环策略优化</title>
+  <link rel="stylesheet" href="assets/style.css?v=20261113a">
 </head>
 <body data-page="data">
   <div data-header></div>
   <main>
-    <section class="page-hero">
+    <section class="page-hero task-data-hero">
       <div class="shell">
-        <p class="eyebrow">01 / DATA PIPELINE</p>
-        <h1 data-zh="先修复轨迹，再训练策略。" data-en="Repair trajectories before training policies.">先修复轨迹，再训练策略。</h1>
-        <p data-zh="遥操作数据不是天然干净的。系统按时间顺序检查动作连续性，定位停滞、跳变和非法片段，避免无效动作污染 Flow Matching 目标。" data-en="Teleoperation data is not clean by default. The system checks temporal action continuity to locate stalls, jumps, and illegal segments before they corrupt Flow Matching targets.">遥操作数据不是天然干净的。系统按时间顺序检查动作连续性，定位停滞、跳变和非法片段，避免无效动作污染 Flow Matching 目标。</p>
+        <p class="eyebrow">01 / TASK &amp; DATA</p>
+        <h1 data-zh="从抓取、对齐到稳定堆叠。" data-en="Pick, align, and stack—end to end.">从抓取、对齐到稳定堆叠。</h1>
+        <p data-zh="任务要求 SO-ARM101 在连续视觉观测下完成积木抓取与堆叠。示范数据通过 Leader/Follower 遥操作采集，再按动作连续性修剪无效片段，为 π₀ 微调和真机纠偏提供统一的数据基础。" data-en="SO-ARM101 must pick and stack blocks from continuous visual observations. Leader/Follower teleoperation produces demonstrations, which are trimmed by action continuity to provide a consistent data foundation for π₀ fine-tuning and real-world correction.">任务要求 SO-ARM101 在连续视觉观测下完成积木抓取与堆叠。示范数据通过 Leader/Follower 遥操作采集，再按动作连续性修剪无效片段，为 π₀ 微调和真机纠偏提供统一的数据基础。</p>
       </div>
     </section>
-    <section class="section shell">
-      <div class="split-feature">
-        <article class="feature-copy">
-          <span class="chip">SO-ARM101 LEADER / FOLLOWER</span>
-          <h2 data-zh="专家示范采集" data-en="Expert demonstration capture">专家示范采集</h2>
-          <p data-zh="操作员通过 Leader Arm 遥操作 Follower Arm，记录观测、关节动作与任务上下文，形成长时序专家轨迹。" data-en="An operator teleoperates the Follower Arm through the Leader Arm while observations, joint actions, and task context are recorded into long-horizon expert trajectories.">操作员通过 Leader Arm 遥操作 Follower Arm，记录观测、关节动作与任务上下文，形成长时序专家轨迹。</p>
-        </article>
-        <article class="feature-visual">
-          <span class="chip">TEMPORAL FILTER</span>
-          <div class="filter-track">
-            <div class="filter-row"><span>valid</span><i style="--keep:94%"></i><b>keep</b></div>
-            <div class="filter-row"><span>stall</span><i style="--keep:24%"></i><b>trim</b></div>
-            <div class="filter-row"><span>jump</span><i style="--keep:12%"></i><b>drop</b></div>
-            <div class="filter-row"><span>resume</span><i style="--keep:88%"></i><b>keep</b></div>
+    <section class="section shell task-section">
+      <div class="section-head">
+        <div><p class="section-index">1.1 / TASK</p><h2 data-zh="积木抓取与堆叠" data-en="Pick and stack blocks">积木抓取与堆叠</h2></div>
+        <p data-zh="一个完整回合不仅要求抓稳目标积木，还要求在移动后重新建立精确的空间关系，把积木对齐并稳定放置在基座积木上。" data-en="A complete episode requires more than a stable grasp: after transport, the policy must recover the spatial relationship, align the block, and place it securely on the base block.">一个完整回合不仅要求抓稳目标积木，还要求在移动后重新建立精确的空间关系，把积木对齐并稳定放置在基座积木上。</p>
+      </div>
+      <div class="task-layout">
+        <article class="task-copy-card">
+          <span class="chip">PICK_STACK_BLOCK</span>
+          <p data-zh="任务由 SO-ARM101 Follower Arm 执行。策略根据前视与侧视图像、当前关节状态以及语言指令，依次完成接近目标、闭合夹爪、抬升、移动、对齐、下放、松爪和撤离。任一阶段的位置或姿态误差都会传递到后续阶段，因此它同时考验长时序规划、视觉定位和精细闭环控制。" data-en="The SO-ARM101 Follower Arm executes the task. From front and side images, current joint state, and the language instruction, the policy approaches the target, closes the gripper, lifts, transports, aligns, lowers, releases, and retreats. Position or orientation errors propagate downstream, jointly testing long-horizon planning, visual localization, and precise closed-loop control.">任务由 SO-ARM101 Follower Arm 执行。策略根据前视与侧视图像、当前关节状态以及语言指令，依次完成接近目标、闭合夹爪、抬升、移动、对齐、下放、松爪和撤离。任一阶段的位置或姿态误差都会传递到后续阶段，因此它同时考验长时序规划、视觉定位和精细闭环控制。</p>
+          <div class="task-criteria">
+            <div><b>01</b><span data-zh="抓取稳定" data-en="Stable grasp">抓取稳定</span></div>
+            <div><b>02</b><span data-zh="空间对齐" data-en="Spatial alignment">空间对齐</span></div>
+            <div><b>03</b><span data-zh="堆叠后保持" data-en="Stable after release">堆叠后保持</span></div>
           </div>
         </article>
+        <article class="task-sequence" aria-label="Pick and stack task sequence">
+          <span class="chip">TASK SEQUENCE</span>
+          <div class="sequence-rail">
+            <div><b>01</b><span data-zh="观察与接近" data-en="Observe & approach">观察与接近</span></div>
+            <div><b>02</b><span data-zh="抓取与抬升" data-en="Grasp & lift">抓取与抬升</span></div>
+            <div><b>03</b><span data-zh="移动至目标" data-en="Move to target">移动至目标</span></div>
+            <div><b>04</b><span data-zh="视觉对齐" data-en="Visual alignment">视觉对齐</span></div>
+            <div><b>05</b><span data-zh="下放与松爪" data-en="Lower & release">下放与松爪</span></div>
+            <div><b>06</b><span data-zh="撤离并确认" data-en="Retreat & verify">撤离并确认</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="section data-section">
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="section-index">1.2 / DATA COLLECTION &amp; FILTERING</p><h2 data-zh="数据采集和过滤" data-en="Data collection and filtering">数据采集和过滤</h2></div>
+          <p data-zh="每个回合按 LeRobot 格式保存多视角图像、机器人状态和对应动作；过滤后的数据集包含 50 个回合、34,717 帧，并以 30 FPS 记录。" data-en="Each episode stores multi-view images, robot state, and corresponding actions in LeRobot format. The filtered dataset contains 50 episodes and 34,717 frames recorded at 30 FPS.">每个回合按 LeRobot 格式保存多视角图像、机器人状态和对应动作；过滤后的数据集包含 50 个回合、34,717 帧，并以 30 FPS 记录。</p>
+        </div>
+        <div class="dataset-facts">
+          <div><span data-zh="回合" data-en="Episodes">回合</span><strong>50</strong><small>LeRobot episodes</small></div>
+          <div><span data-zh="总帧数" data-en="Frames">总帧数</span><strong>34,717</strong><small>trimmed frames</small></div>
+          <div><span data-zh="采集频率" data-en="Frame rate">采集频率</span><strong>30<em>FPS</em></strong><small>front + side</small></div>
+          <div><span>Episode 2</span><strong>23.63<em>s</em></strong><small>708 frames</small></div>
+        </div>
+        <div class="data-method-grid">
+          <article class="data-method-card">
+            <span class="chip">RECORD</span>
+            <h3 data-zh="Leader / Follower 遥操作" data-en="Leader / Follower teleoperation">Leader / Follower 遥操作</h3>
+            <p data-zh="操作员使用 Leader Arm 控制 Follower Arm 完成整段任务。系统同步记录前视与侧视 USB 相机、关节状态、夹爪状态和实际动作，并以独立 episode 组织一次完整示范。" data-en="An operator uses the Leader Arm to control the Follower Arm through the full task. Front and side USB cameras, joint state, gripper state, and executed actions are synchronized and stored as one complete demonstration episode.">操作员使用 Leader Arm 控制 Follower Arm 完成整段任务。系统同步记录前视与侧视 USB 相机、关节状态、夹爪状态和实际动作，并以独立 episode 组织一次完整示范。</p>
+            <ul class="data-tags"><li>front camera</li><li>side camera</li><li>joint state</li><li>action</li></ul>
+          </article>
+          <article class="data-method-card dark">
+            <span class="chip">TRIM &amp; FILTER</span>
+            <h3 data-zh="按时间连续性清理轨迹" data-en="Clean trajectories by temporal continuity">按时间连续性清理轨迹</h3>
+            <p data-zh="预处理修剪回合开头和结尾的等待段，并检查停滞、突跳与非法动作片段。有效操作顺序保持不变，避免无效帧改变 Flow Matching 的动作目标。整理后的数据集以 pick_stack_block_trimmed 发布。" data-en="Preprocessing trims idle periods at the beginning and end of an episode and checks stalls, discontinuities, and invalid action segments. The valid operation order is preserved so ineffective frames do not distort Flow Matching targets. The curated dataset is published as pick_stack_block_trimmed.">预处理修剪回合开头和结尾的等待段，并检查停滞、突跳与非法动作片段。有效操作顺序保持不变，避免无效帧改变 Flow Matching 的动作目标。整理后的数据集以 pick_stack_block_trimmed 发布。</p>
+            <div class="filter-track compact">
+              <div class="filter-row"><span>valid</span><i style="--keep:94%"></i><b>keep</b></div>
+              <div class="filter-row"><span>idle</span><i style="--keep:28%"></i><b>trim</b></div>
+              <div class="filter-row"><span>jump</span><i style="--keep:12%"></i><b>drop</b></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="section shell dataset-preview-section">
+      <div class="section-head">
+        <div><p class="section-index">DATASET PREVIEW</p><h2 data-zh="Episode 2 交互预览" data-en="Interactive Episode 2 preview">Episode 2 交互预览</h2></div>
+        <p data-zh="本地同步回放前视与侧视相机，沿同一时间轴检查抓取、搬运与堆叠过程。" data-en="Replay the front and side cameras locally on one synchronized timeline to inspect picking, transport, and stacking.">本地同步回放前视与侧视相机，沿同一时间轴检查抓取、搬运与堆叠过程。</p>
+      </div>
+      <div class="local-episode-preview">
+        <div class="episode-preview-head">
+          <div><span class="dataset-live"></span><strong>pick_stack_block · episode_2</strong></div>
+          <div class="episode-preview-meta"><span>30 FPS</span><span>708 FRAMES</span><span>23.63 S</span></div>
+        </div>
+        <div class="episode-video-grid">
+          <article>
+            <div class="episode-video-label"><span>01</span><strong data-zh="前视相机" data-en="Front camera">前视相机</strong></div>
+            <video class="episode-video" controls playsinline preload="metadata" src="assets/media/episode-2-front.mp4" aria-label="Episode 2 front camera"></video>
+          </article>
+          <article>
+            <div class="episode-video-label"><span>02</span><strong data-zh="侧视相机" data-en="Side camera">侧视相机</strong></div>
+            <video class="episode-video" controls playsinline preload="metadata" src="assets/media/episode-2-side.mp4" aria-label="Episode 2 side camera"></video>
+          </article>
+        </div>
+        <p class="episode-sync-note" data-zh="两路视频已按 Episode 2 起点裁剪；播放、暂停与拖动任一路视频时，另一路会自动对齐。" data-en="Both videos are trimmed to the Episode 2 start; playing, pausing, or seeking either view keeps the other aligned.">两路视频已按 Episode 2 起点裁剪；播放、暂停与拖动任一路视频时，另一路会自动对齐。</p>
       </div>
     </section>
     <section class="next-page shell"><div><span data-zh="下一页" data-en="Next">下一页</span><strong>Human-in-the-Loop DAgger</strong></div><a href="dagger.html">DAgger →</a></section>
   </main>
   <div data-footer></div>
   <script src="assets/shared.js"></script><script src="assets/main.js"></script>
+  <script>
+    (() => {
+      const videos = [...document.querySelectorAll('.episode-video')];
+      let syncing = false;
+      const peer = video => videos.find(item => item !== video);
+      videos.forEach(video => {
+        video.addEventListener('play', () => {
+          if (syncing) return;
+          syncing = true;
+          const other = peer(video);
+          if (Math.abs(other.currentTime - video.currentTime) > 0.08) other.currentTime = video.currentTime;
+          other.play().catch(() => {});
+          syncing = false;
+        });
+        video.addEventListener('pause', () => {
+          if (syncing || video.ended) return;
+          syncing = true;
+          peer(video).pause();
+          syncing = false;
+        });
+        video.addEventListener('seeked', () => {
+          if (syncing) return;
+          syncing = true;
+          const other = peer(video);
+          if (Math.abs(other.currentTime - video.currentTime) > 0.08) other.currentTime = video.currentTime;
+          syncing = false;
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

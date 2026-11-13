@@ -1,6 +1,5 @@
 const active = document.body.dataset.page || "";
 const experimentItems = [
-  ["data.html", "数据处理", "Data pipeline", "data"],
   ["dagger.html", "DAgger 纠偏", "DAgger correction", "dagger"],
   ["deployment.html", "部署优化", "Deployment", "deployment"],
   ["future.html", "改进方向", "Future direction", "future"]
@@ -13,6 +12,7 @@ document.querySelector("[data-header]").innerHTML = `
     <div class="header-actions">
       <nav class="site-nav" aria-label="Primary navigation">
         <a class="${active === "home" ? "active" : ""}" href="index.html" data-zh="方法" data-en="Method">方法</a>
+        <a class="${active === "data" ? "active" : ""}" href="data.html" data-zh="任务、数据" data-en="Task & Data">任务、数据</a>
         <div class="nav-dropdown ${experimentActive ? "active" : ""}">
           <button class="nav-dropdown-trigger" type="button" aria-expanded="false">
             <span data-zh="实验" data-en="Experiments">实验</span><i aria-hidden="true">⌄</i>
