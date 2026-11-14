@@ -44,7 +44,8 @@ assert all(v in results for v in ("50%", "70%", "7.5", "DAgger 数据", "25<span
 assert all(v in demo for v in ("result-demo.mp4", "result-poster.png", "controls", "playsinline", "30<span>Hz</span>", "≈5<span>Hz</span>", "25<span>steps</span>"))
 assert all(v in navigation for v in ('data-zh="方法"', 'data-zh="任务、数据"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', "nav-dropdown-menu"))
 assert '["data.html", "数据处理"' not in navigation
-assert all(v in data for v in ("1.1 / TASK", "1.2 / DATA COLLECTION &amp; FILTERING", "PICK_STACK_BLOCK", "Leader / Follower", "pick_stack_block_trimmed", "episode_2", "34,717", "30<em>FPS</em>", "23.63<em>s</em>", "708 frames", "assets/media/episode-2-front.mp4", "assets/media/episode-2-side.mp4", "controls", "playsinline"))
+assert all(v in data for v in ("1.1 / TASK", "1.2 / DATA COLLECTION &amp; FILTERING", "SEQUENTIAL PICK &amp; STACK", "Leader / Follower", "红色物块", "蓝色物块", "指定平台", "sequential_object_stack", "episode_2", "34,717", "30<em>FPS</em>", "23.63<em>s</em>", "708 frames", "assets/media/episode-2-front.mp4", "assets/media/episode-2-side.mp4", "controls", "playsinline"))
+assert "积木" not in data and "瓶盖" not in data
 assert "huggingface.co" not in data and "hf.space" not in data and "<iframe" not in data
 assert all(v in deployment for v in ("LEROBOT · ALIGNED BLEND", "ROLLING ACTION EXECUTOR", "action cursor", "elapsed × fps", "81b8c5b"))
 assert all(v in deployment for v in ("WHY RECEDING HORIZON", "SERIAL · BLOCKING", "ROLLING · TWO THREADS", "N=floor(elapsed×fps)", "EXEC_HORIZON=None"))
