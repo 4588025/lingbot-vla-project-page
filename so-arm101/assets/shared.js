@@ -11,7 +11,7 @@ document.querySelector("[data-header]").innerHTML = `
     <a class="brand" href="index.html"><span class="brand-mark">π₀</span><span>SO-ARM101</span></a>
     <div class="header-actions">
       <nav class="site-nav" aria-label="Primary navigation">
-        <a class="${active === "home" ? "active" : ""}" href="index.html" data-zh="方法" data-en="Method">方法</a>
+        <a class="${active === "home" ? "active" : ""}" href="index.html" data-zh="首页" data-en="Home">首页</a>
         <a class="${active === "data" ? "active" : ""}" href="data.html" data-zh="任务、数据" data-en="Task & Data">任务、数据</a>
         <div class="nav-dropdown ${experimentActive ? "active" : ""}">
           <button class="nav-dropdown-trigger" type="button" aria-expanded="false">

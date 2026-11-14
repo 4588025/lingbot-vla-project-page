@@ -42,7 +42,7 @@ assert "继续训练 2.5k steps" in home
 assert all(v in dagger for v in ("25 条", "25 real-robot corrective trajectories", "2.5k steps", "50%", "70%"))
 assert all(v in results for v in ("50%", "70%", "7.5", "DAgger 数据", "25<span>条</span>", "DAgger FT", "2.5", "0.03637", "200<span>ms</span>", "demo.html"))
 assert all(v in demo for v in ("result-demo.mp4", "result-poster.png", "controls", "playsinline", "30<span>Hz</span>", "≈5<span>Hz</span>", "25<span>steps</span>"))
-assert all(v in navigation for v in ('data-zh="方法"', 'data-zh="任务、数据"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', "nav-dropdown-menu"))
+assert all(v in navigation for v in ('data-zh="首页"', 'data-en="Home"', 'data-zh="任务、数据"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', "nav-dropdown-menu"))
 assert '["data.html", "数据处理"' not in navigation
 assert all(v in data for v in ("1.1 / TASK", "1.2 / DATA COLLECTION &amp; FILTERING", "SEQUENTIAL PICK &amp; STACK", "Leader / Follower", "红色物块", "蓝色物块", "指定平台", "sequential_object_stack", "episode_2", "34,717", "30<em>FPS</em>", "23.63<em>s</em>", "708 frames", "assets/media/episode-2-front.mp4", "assets/media/episode-2-side.mp4", "controls", "playsinline"))
 assert "积木" not in data and "瓶盖" not in data
