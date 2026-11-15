@@ -41,7 +41,8 @@ assert "面向长时序机器人操作的 π₀ 真机在环学习与闭环策�
 assert "继续训练 2.5k steps" in home
 assert all(v in dagger for v in ("25 条", "25 real-robot corrective trajectories", "2.5k steps", "50%", "70%"))
 assert all(v in results for v in ("50%", "70%", "7.5", "DAgger 数据", "25<span>条</span>", "DAgger FT", "2.5", "0.03637", "200<span>ms</span>", "demo.html"))
-assert all(v in demo for v in ("result-demo.mp4", "result-poster.png", "controls", "playsinline", "30<span>Hz</span>", "≈5<span>Hz</span>", "25<span>steps</span>"))
+assert all(v in demo for v in ("双视角真机执行", "Gripper view", "Overview", "demo-gripper-view.mp4", "demo-overview.mp4", "demo-gripper-view-poster.jpg", "demo-overview-poster.jpg", "controls", "playsinline", "30<span>Hz</span>", "≈5<span>Hz</span>", "25<span>steps</span>"))
+assert "result-demo.mp4" not in demo and "result-poster.png" not in demo
 assert all(v in navigation for v in ('data-zh="首页"', 'data-en="Home"', 'data-zh="任务、数据"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', "nav-dropdown-menu"))
 assert '["future.html", "DSRL", "DSRL", "future"]' in navigation and "改进方向" not in navigation
 assert '["data.html", "数据处理"' not in navigation
@@ -59,4 +60,8 @@ assert "FUTURE DIRECTION · REAL-TIME EXPO-FT" not in deployment
 assert all(v in future for v in ("<title>DSRL ·", "05 / DSRL", "REAL-TIME EXPO-FT", "π₀ 生成候选", "Residual 修正", "Q 选择并执行", "P3 · VERY HIGH", "2609.18207"))
 assert (ROOT / "assets/media/result-demo.mp4").stat().st_size > 100_000
 assert (ROOT / "assets/media/result-poster.png").stat().st_size > 10_000
+assert (ROOT / "assets/media/demo-gripper-view.mp4").stat().st_size > 100_000
+assert (ROOT / "assets/media/demo-overview.mp4").stat().st_size > 100_000
+assert (ROOT / "assets/media/demo-gripper-view-poster.jpg").stat().st_size > 5_000
+assert (ROOT / "assets/media/demo-overview-poster.jpg").stat().st_size > 5_000
 print(f"verified {len(PAGES)} pages and all local links")

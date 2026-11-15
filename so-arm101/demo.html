@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="SO-ARM101 real-robot demonstration with π0 and DAgger">
+  <meta name="description" content="Dual-view SO-ARM101 real-robot demonstration with π0 and DAgger">
   <title>真机演示 · 面向长时序机器人操作的 π₀ 真机在环学习与闭环策略优化</title>
-  <link rel="stylesheet" href="assets/style.css?v=20261110e">
+  <link rel="stylesheet" href="assets/style.css?v=20261115a">
 </head>
 <body data-page="demo">
   <div data-header></div>
@@ -24,18 +24,61 @@
       <div class="metric"><span class="metric-label">Action chunk</span><strong>25<span>steps</span></strong><small>Receding Horizon</small></div>
     </section>
 
-    <section class="section shell">
-      <div class="video-result demo-video">
-        <article class="video-copy">
-          <span class="chip">REAL-ROBOT ROLLOUT</span>
-          <h2 data-zh="SO-ARM101 真机执行" data-en="SO-ARM101 real-world rollout">SO-ARM101 真机执行</h2>
-          <p data-zh="视频展示 π₀ 策略在真实桌面环境中的连续动作。播放器支持暂停、拖动进度和全屏查看。" data-en="The video shows continuous π₀ policy execution in a real tabletop environment. Use the native controls to pause, seek, or enter fullscreen.">视频展示 π₀ 策略在真实桌面环境中的连续动作。播放器支持暂停、拖动进度和全屏查看。</p>
-        </article>
-        <div class="video-frame"><video controls playsinline preload="metadata" poster="assets/media/result-poster.png"><source src="assets/media/result-demo.mp4" type="video/mp4"><span data-zh="浏览器无法播放该视频。" data-en="Your browser cannot play this video.">浏览器无法播放该视频。</span></video></div>
+    <section class="section shell demo-rollout-section">
+      <div class="section-head">
+        <div><p class="section-index">REAL-ROBOT ROLLOUT</p><h2 data-zh="双视角真机执行" data-en="Dual-view real-robot rollout">双视角真机执行</h2></div>
+        <p data-zh="夹爪近景用于观察抓取与接触状态，全局俯视用于检查目标定位、移动路径和最终堆叠结果。两路视频沿同一时间轴同步播放。" data-en="The gripper view reveals grasp and contact states, while the overview shows target localization, motion paths, and the final stack. Both videos play on one synchronized timeline.">夹爪近景用于观察抓取与接触状态，全局俯视用于检查目标定位、移动路径和最终堆叠结果。两路视频沿同一时间轴同步播放。</p>
+      </div>
+      <div class="local-episode-preview demo-rollout-preview">
+        <div class="episode-preview-head">
+          <div><span class="dataset-live"></span><strong>π₀ · sequential_object_stack</strong></div>
+          <div class="episode-preview-meta"><span>30 FPS</span><span>2 VIEWS</span><span>18.50 S</span></div>
+        </div>
+        <div class="episode-video-grid">
+          <article>
+            <div class="episode-video-label"><span>01</span><strong data-zh="夹爪视角" data-en="Gripper view">夹爪视角</strong></div>
+            <video class="demo-rollout-video" controls playsinline preload="metadata" poster="assets/media/demo-gripper-view-poster.jpg" src="assets/media/demo-gripper-view.mp4" aria-label="Gripper-view real-robot rollout"></video>
+          </article>
+          <article>
+            <div class="episode-video-label"><span>02</span><strong data-zh="全局视角" data-en="Overview">全局视角</strong></div>
+            <video class="demo-rollout-video" controls playsinline preload="metadata" poster="assets/media/demo-overview-poster.jpg" src="assets/media/demo-overview.mp4" aria-label="Overview real-robot rollout"></video>
+          </article>
+        </div>
+        <p class="episode-sync-note" data-zh="播放、暂停或拖动任一路视频时，另一路会自动对齐；也可以分别进入全屏查看细节。" data-en="Playing, pausing, or seeking either view keeps the other aligned; each view can also be opened fullscreen for detail.">播放、暂停或拖动任一路视频时，另一路会自动对齐；也可以分别进入全屏查看细节。</p>
       </div>
     </section>
   </main>
   <div data-footer></div>
   <script src="assets/shared.js"></script><script src="assets/main.js"></script>
+  <script>
+    (() => {
+      const videos = [...document.querySelectorAll('.demo-rollout-video')];
+      let syncing = false;
+      const peer = video => videos.find(item => item !== video);
+      videos.forEach(video => {
+        video.addEventListener('play', () => {
+          if (syncing) return;
+          syncing = true;
+          const other = peer(video);
+          if (Math.abs(other.currentTime - video.currentTime) > 0.08) other.currentTime = video.currentTime;
+          other.play().catch(() => {});
+          syncing = false;
+        });
+        video.addEventListener('pause', () => {
+          if (syncing || video.ended) return;
+          syncing = true;
+          peer(video).pause();
+          syncing = false;
+        });
+        video.addEventListener('seeked', () => {
+          if (syncing) return;
+          syncing = true;
+          const other = peer(video);
+          if (Math.abs(other.currentTime - video.currentTime) > 0.08) other.currentTime = video.currentTime;
+          syncing = false;
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
