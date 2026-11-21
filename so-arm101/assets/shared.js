@@ -43,6 +43,9 @@ document.querySelector("[data-header]").innerHTML = `
             <a href="future.html#gr-rl">
               <b>04</b><span data-zh="GR-RL" data-en="GR-RL">GR-RL</span>
             </a>
+            <a href="future.html#adaptive-gravity-compensation">
+              <b>05</b><span data-zh="自适应重力补偿" data-en="Adaptive gravity compensation">自适应重力补偿</span>
+            </a>
           </div>
         </div>
       </nav>

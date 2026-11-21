@@ -37,6 +37,27 @@
       </div>
     </section>
 
+    <section class="section shell gravity-direction direction-anchor" id="adaptive-gravity-compensation">
+      <div class="section-head">
+        <div><p class="section-index">ADAPTIVE GRAVITY COMPENSATION</p><h2 data-zh="自适应重力补偿：让机械臂在不同姿态与负载下保持稳定。" data-en="Adaptive gravity compensation for stable motion across poses and payloads.">自适应重力补偿：让机械臂在不同姿态与负载下保持稳定。</h2></div>
+        <p data-zh="固定重力补偿难以覆盖夹爪空载、抓取物块以及双臂伸展等不同工况。后续可根据实时关节角、速度和电机反馈在线估计重力项与负载变化，在策略动作之外叠加低频补偿。" data-en="Fixed gravity compensation cannot cover an empty gripper, a grasped object, and extended-arm configurations equally well. A future controller can estimate gravity and payload changes online from joint position, velocity, and motor feedback, then add a low-frequency compensation term outside the policy action.">固定重力补偿难以覆盖夹爪空载、抓取物块以及双臂伸展等不同工况。后续可根据实时关节角、速度和电机反馈在线估计重力项与负载变化，在策略动作之外叠加低频补偿。</p>
+      </div>
+      <div class="future-pipeline" aria-label="Adaptive gravity compensation pipeline">
+        <article><b>01</b><span class="chip">SENSE</span><h3 data-zh="读取机器人状态" data-en="Read robot state">读取机器人状态</h3><p data-zh="采集关节角、速度、电流或力矩反馈，并记录夹爪开合状态。" data-en="Collect joint position, velocity, current or torque feedback, together with gripper state.">采集关节角、速度、电流或力矩反馈，并记录夹爪开合状态。</p></article>
+        <i>→</i>
+        <article><b>02</b><span class="chip">ESTIMATE</span><h3 data-zh="在线估计负载" data-en="Estimate payload online">在线估计负载</h3><p data-zh="根据姿态变化更新重力模型参数，识别空载与持物时的力矩差异。" data-en="Update gravity-model parameters across poses and identify torque differences between empty and loaded motion.">根据姿态变化更新重力模型参数，识别空载与持物时的力矩差异。</p></article>
+        <i>→</i>
+        <article><b>03</b><span class="chip">COMPENSATE</span><h3 data-zh="叠加补偿量" data-en="Apply compensation">叠加补偿量</h3><p data-zh="在不改变 π₀ 轨迹语义的前提下，对底层关节命令叠加平滑、限幅的补偿。" data-en="Add smooth, bounded compensation to low-level joint commands without changing the semantic trajectory proposed by π₀.">在不改变 π₀ 轨迹语义的前提下，对底层关节命令叠加平滑、限幅的补偿。</p></article>
+        <i>→</i>
+        <article><b>04</b><span class="chip">ADAPT</span><h3 data-zh="按执行误差更新" data-en="Adapt from tracking error">按执行误差更新</h3><p data-zh="利用跟踪误差和电机负载缓慢更新参数，避免快速变化干扰动作策略。" data-en="Slowly update parameters from tracking error and motor load so fast adaptation does not disturb the policy.">利用跟踪误差和电机负载缓慢更新参数，避免快速变化干扰动作策略。</p></article>
+      </div>
+      <div class="future-roadmap">
+        <article><span>GOAL · STABILITY</span><h3 data-zh="减少姿态下垂" data-en="Reduce pose sag">减少姿态下垂</h3><p data-zh="改善机械臂伸展或持物时的静态保持能力，降低末端位置随姿态变化产生的系统偏差。" data-en="Improve static holding when the arm is extended or carrying an object, reducing pose-dependent end-effector bias.">改善机械臂伸展或持物时的静态保持能力，降低末端位置随姿态变化产生的系统偏差。</p></article>
+        <article><span>GOAL · TRACKING</span><h3 data-zh="提高轨迹跟踪" data-en="Improve trajectory tracking">提高轨迹跟踪</h3><p data-zh="减小关节控制器为了抵抗重力产生的持续误差，让抓取、搬运和堆叠阶段更稳定。" data-en="Reduce persistent control error caused by gravity so grasping, transport, and stacking remain steadier.">减小关节控制器为了抵抗重力产生的持续误差，让抓取、搬运和堆叠阶段更稳定。</p></article>
+        <article><span>SAFETY · BOUNDED</span><h3 data-zh="限幅与失效回退" data-en="Bounds and fallback">限幅与失效回退</h3><p data-zh="补偿量设置关节级限幅、低通滤波和异常回退；当估计不可信时恢复固定参数，避免在线更新放大抖动。" data-en="Use joint-wise bounds, low-pass filtering, and anomaly fallback. Revert to fixed parameters when estimates are unreliable to prevent adaptation from amplifying jitter.">补偿量设置关节级限幅、低通滤波和异常回退；当估计不可信时恢复固定参数，避免在线更新放大抖动。</p></article>
+      </div>
+    </section>
+
     <section class="section shell rl-directions">
       <div class="section-head">
         <div><p class="section-index">RL POST-TRAINING</p><h2 data-zh="三条可继续验证的 VLA 强化学习路线。" data-en="Three VLA reinforcement-learning routes to evaluate next.">三条可继续验证的 VLA 强化学习路线。</h2></div>
