@@ -8,6 +8,8 @@ const ZH_TRANSLATIONS = {
   "Demo": "演示",
   "Resources": "资源",
   "Home": "首页",
+  "Future work": "改进方向",
+  "Cross-modal augmentation": "跨模态数据增强",
   "Back to top ↑": "返回顶部 ↑",
   "LingBot-VLA 2.0 adaptation for robust manipulation.": "面向稳健操作的 LingBot-VLA 2.0 适配方案。",
 
@@ -220,7 +222,7 @@ const ZH_TRANSLATIONS = {
   "H0 → H1 / Model progression": "H0 → H1 / 模型演进",
   "H1 compared with H0.": "H1 与 H0 对比。",
   "H0 uses the Lab20k baseline; H1 is the best reported system with relative actions, augmentation, and adaptive execution.": "H0 使用 Lab20k 基线；H1 是结合相对动作、数据增强与自适应执行的最终最佳系统。",
-  "H0 uses the Lab20k baseline; H1 combines joint-space relative displacement, demonstration distribution expansion, and adaptive temporal execution.": "H0 使用 Lab20k 基线；H1 融合关节空间相对偏移表征、专家示范分布扩展与自适应执行步长。",
+  "H0 is the result of 20k-step full-parameter SFT; H1 is the result of a further 8k-step LoRA fine-tuning stage initialized from H0.": "H0 为 20k steps 全参数 SFT 结果；H1 为在 H0 基础上继续进行 8k steps LoRA 微调后的结果。",
   "H1 − H0": "H1 − H0",
   "Reported task-success comparison. H0 denotes the Lab20k baseline, while H1 denotes the final best system.": "报告中的任务成功率对比：H0 表示 Lab20k 基线，H1 表示最终最佳系统。",
   "H1 / Best model": "H1 / 最优模型",
@@ -311,6 +313,110 @@ const ZH_TRANSLATIONS = {
   ,"Semantics-preserving perturbations expand the Clean expert-demonstration distribution.": "通过语义保持扰动扩展 Clean 专家示范分布。"
   ,"Semantics-preserving strong–weak expansion": "语义保持的强—弱增强"
   ,"Expanded": "分布扩展后"
+  ,"The complete method and training recipe are presented on this homepage; experiments, results, demonstrations, and future work remain focused pages.": "完整方法与训练方案统一呈现在首页；实验、结果、演示与改进方向继续使用独立页面。"
+  ,"RTC and cross-modal data expansion.": "RTC 与跨模态数据扩展。"
+  ,"Explore continuous asynchronous execution and physically consistent augmentation beyond visual appearance.": "探索连续异步执行，以及超越视觉外观的物理一致数据增强。"
+  ,"Open future work": "查看改进方向"
+  ,"05 / Future work": "05 / 改进方向"
+  ,"From a stronger policy": "从更强的策略"
+  ,"to a stronger system.": "走向更强的系统。"
+  ,"Two next-stage directions target execution latency and data diversity without rewriting the validated baseline.": "下一阶段聚焦推理延迟与数据多样性，同时保留已经验证的基线。"
+  ,"Future work pages": "改进方向页面"
+  ,"RTC / Runtime": "RTC / 运行时"
+  ,"Continuous action generation under inference latency.": "在推理延迟下保持连续动作生成。"
+  ,"Run inference while the current chunk executes, preserve committed actions, and inpaint a compatible future suffix.": "在执行当前动作块时并行推理，保留已提交动作，并补全兼容的未来后缀。"
+  ,"Open RTC": "查看 RTC"
+  ,"Data / Training": "数据 / 训练"
+  ,"Augmentation beyond appearance.": "超越外观的数据增强。"
+  ,"Extend visual perturbations to morphology, actions, proprioception, language, simulation, and recovery trajectories.": "将视觉扰动扩展到形态、动作、本体状态、语言、仿真与恢复轨迹。"
+  ,"Open augmentation roadmap": "查看增强路线"
+  ,"Future work / RTC": "改进方向 / RTC"
+  ,"Plan the next chunk": "在当前动作块结束前"
+  ,"before the current one ends.": "规划下一个动作块。"
+  ,"Real-Time Chunking is a candidate inference upgrade for reducing stop-and-go motion and chunk-boundary discontinuity.": "Real-Time Chunking 是候选推理优化，用于减少走走停停与动作块边界不连续。"
+  ,"Inference-only candidate": "仅推理侧候选方案"
+  ,"Asynchronous, but still continuous": "异步执行，同时保持连续"
+  ,"Synchronous serving makes the robot wait for every new prediction. Naive asynchronous serving removes the pause but uses stale observations and can introduce a jump between chunks. RTC conditions generation on the action prefix already committed for execution.": "同步服务会让机器人等待每次新预测；朴素异步虽消除停顿，却使用过时观测并可能造成动作块跳变。RTC 用已确定执行的动作前缀约束后续生成。"
+  ,"preserve the validated prediction horizon": "保留已验证的预测 Horizon"
+  ,"Design objective": "设计目标"
+  ,"Hide model and network latency without silently changing the trained action representation, normalization contract, or safety limits.": "在不改变已训练动作表征、归一化协议与安全边界的前提下隐藏模型和网络延迟。"
+  ,"Proposed direction · not a reported project result": "候选方向 · 不是已报告的项目结果"
+  ,"RTC integration path": "RTC 接入路径"
+  ,"Freeze what will execute. Regenerate what can change.": "冻结必然执行的动作，重新生成仍可调整的部分。"
+  ,"The controller keeps a timestamped action buffer while the flow policy produces the next compatible suffix.": "控制器维护带时间戳的动作缓冲区，同时由流策略生成兼容的后续动作。"
+  ,"Observe": "获取观测"
+  ,"Capture the latest three-camera observation and joint state.": "获取最新三相机观测与关节状态。"
+  ,"Keep executing": "持续执行"
+  ,"Continue the current safe prefix while inference runs asynchronously.": "异步推理期间继续执行当前安全前缀。"
+  ,"Lock prefix": "锁定前缀"
+  ,"Mark actions that latency guarantees will execute before the new chunk arrives.": "标记在新动作块到达前必然执行的动作。"
+  ,"Inpaint suffix": "补全后缀"
+  ,"Denoise only the unconstrained future so the next chunk remains compatible.": "只对未约束的未来动作去噪，使下一动作块与当前执行保持兼容。"
+  ,"Switch smoothly": "平滑切换"
+  ,"Atomically replace the future buffer, retain safety checks, and observe again.": "原子替换未来动作缓冲，保留安全检查，然后重新观测。"
+  ,"Validation before adoption": "采用前验证"
+  ,"Measure continuity and success together.": "同时衡量连续性与成功率。"
+  ,"RTC should be accepted only if it improves throughput without trading away closed-loop reliability.": "只有在不牺牲闭环可靠性的前提下提升吞吐量，RTC 才应被采用。"
+  ,"Controlled latency sweep": "受控延迟扫描"
+  ,"Compare synchronous serving, naive asynchronous serving, and RTC under native, +100 ms, and +200 ms latency using the same tasks and seeds.": "使用相同任务与种子，在原生、+100 ms 与 +200 ms 延迟下比较同步服务、朴素异步与 RTC。"
+  ,"System-level acceptance": "系统级验收"
+  ,"Report success rate, idle time, action throughput, inter-chunk jerk, safety interventions, and recovery behavior—not speed alone.": "报告成功率、空闲时间、动作吞吐、块间冲击、安全介入与恢复行为，而不只看速度。"
+  ,"Next direction": "下一个方向"
+  ,"Go beyond visual perturbations": "超越视觉扰动"
+  ,"Future work / Data augmentation": "改进方向 / 数据增强"
+  ,"Augment the whole trajectory,": "增强完整轨迹，"
+  ,"not only the pixels.": "而不只是像素。"
+  ,"The next data recipe should preserve physical consistency across vision, language, proprioception, actions, and the simulator.": "下一版数据方案应在视觉、语言、本体状态、动作与仿真环境之间保持物理一致性。"
+  ,"Priority candidate": "优先候选方案"
+  ,"Bimanual morphological symmetry": "双臂形态对称增强"
+  ,"For a genuinely symmetric dual-arm embodiment, one trajectory can produce a mirrored counterpart—but only when every modality is transformed together.": "对于真正对称的双臂构型，一条轨迹可以生成镜像样本，但必须同步变换所有模态。"
+  ,"GR-RL filtered BC to filtered BC + symmetry augmentation": "GR-RL：过滤 BC 到过滤 BC + 对称增强"
+  ,"Not a plain image flip": "不是简单图像翻转"
+  ,"Horizontally flip all views, exchange left and right wrist cameras, mirror states and actions through a robot-specific kinematic map, and rewrite left/right language consistently.": "水平镜像全部视角、交换左右腕相机、通过机器人专用运动学映射变换状态与动作，并同步改写语言中的左右关系。"
+  ,"External evidence · requires a LingBot/RoboTwin ablation": "外部证据 · 仍需 LingBot/RoboTwin 消融验证"
+  ,"Symmetry transform": "对称变换"
+  ,"One mirrored sample, five synchronized mappings.": "一个镜像样本，五项同步映射。"
+  ,"Any missing mapping creates an observation–action contradiction and can make training worse.": "任一映射缺失都会造成观测—动作矛盾，甚至使训练效果变差。"
+  ,"Flip views": "镜像视角"
+  ,"Mirror head images horizontally and swap the flipped left/right wrist streams.": "水平镜像头部图像，并交换镜像后的左右腕相机流。"
+  ,"Mirror pose": "镜像姿态"
+  ,"Transform world-frame poses, then convert them back into the correct local arm frames.": "先在世界坐标系中镜像姿态，再转换回正确的双臂局部坐标系。"
+  ,"Swap arms": "交换双臂"
+  ,"Apply the same kinematic symmetry to every action step; do not simply negate joint values.": "对每个动作步应用同一运动学对称映射，不能直接对关节值取负。"
+  ,"Rewrite space": "改写空间语义"
+  ,"Exchange left/right references while keeping task identity and object semantics unchanged.": "交换左右指代，同时保持任务身份与物体语义不变。"
+  ,"Replay check": "回放检查"
+  ,"Verify limits, FK symmetry, gripper semantics, collisions, and task-success equivalence.": "验证关节限位、正运动学对称性、夹爪语义、碰撞与任务成功条件等价性。"
+  ,"Beyond visual augmentation": "超越视觉增强"
+  ,"Expand diversity at six levels.": "从六个层级扩展数据多样性。"
+  ,"The existing F1 recipe remains the visual baseline; these additions target state, action, semantics, physics, and closed-loop recovery.": "现有 F1 保留为视觉增强基线；新增方向覆盖状态、动作、语义、物理与闭环恢复。"
+  ,"Morphology": "形态"
+  ,"Left–right symmetry": "左右对称"
+  ,"Mirror coordinated dual-arm trajectories with robot-specific camera, state, action, and language transforms.": "通过机器人专用的相机、状态、动作与语言变换镜像双臂协同轨迹。"
+  ,"Simulation": "仿真"
+  ,"Domain randomization": "域随机化"
+  ,"Regenerate trajectories with varied lighting, clutter, backgrounds, object poses, tabletop height, and camera calibration.": "在不同光照、杂物、背景、物体姿态、桌面高度与相机标定下重新生成轨迹。"
+  ,"Proprioception": "本体状态"
+  ,"Calibration robustness": "标定鲁棒性"
+  ,"Add bounded encoder noise, zero-offset drift, latency, and observation dropout while retaining feasible robot states.": "在保持机器人状态可行的前提下加入有界编码器噪声、零点漂移、延迟与观测丢失。"
+  ,"Action": "动作"
+  ,"Trajectory variants": "轨迹变体"
+  ,"Apply constrained timing changes, smooth perturbations, and alternate valid grasps only when labels remain executable.": "仅在标签仍可执行时加入受约束的时序变化、平滑扰动与替代抓取。"
+  ,"Language": "语言"
+  ,"Instruction diversity": "指令多样性"
+  ,"Use verified paraphrases, object aliases, spatial rewrites, and explicit left/right swaps tied to the transformed scene.": "使用经过验证的改写、物体别名、空间关系重写，以及与场景变换绑定的左右交换。"
+  ,"Closed loop": "闭环"
+  ,"Recovery data": "恢复数据"
+  ,"Collect policy rollouts, near-failures, retries, and corrective demonstrations instead of training only on clean success paths.": "收集策略 rollout、临界失败、重试与纠正示范，而不是只训练干净成功轨迹。"
+  ,"Adoption guardrails": "采用边界"
+  ,"Symmetry is powerful only when it is real.": "只有真实存在的对称性才有价值。"
+  ,"Apply the transform per task and embodiment, not as an unconditional global switch.": "应按任务和机器人构型启用，而不是作为无条件全局开关。"
+  ,"Use when": "适用条件"
+  ,"The system is truly symmetric": "系统确实对称"
+  ,"Left and right arms share morphology and limits, cameras have calibrated mirror mappings, and the task remains valid after swapping spatial roles.": "左右臂具有相同形态和限位，相机具备标定后的镜像映射，且交换空间角色后任务仍然有效。"
+  ,"Reject when": "禁用条件"
+  ,"Semantics or physics are asymmetric": "语义或物理不对称"
+  ,"Do not mirror handed tools, asymmetric joint limits, fixed one-sided fixtures, text that cannot be rewritten safely, or tasks whose success predicate changes under reflection.": "不要镜像具有手性的工具、不对称关节限位、固定单侧装置、无法安全改写的文本，或镜像后成功条件发生变化的任务。"
 };
 
 const TITLE_ZH = {
@@ -322,6 +428,9 @@ const TITLE_ZH = {
   "Demonstration distribution expansion · HumaLog-VLA": "专家示范分布扩展 · HumaLog-VLA",
   "Results · HumaLog-VLA": "结果 · HumaLog-VLA",
   "Demo · HumaLog-VLA": "演示 · HumaLog-VLA"
+  ,"Future work · HumaLog-VLA": "改进方向 · HumaLog-VLA"
+  ,"RTC roadmap · HumaLog-VLA": "RTC 路线 · HumaLog-VLA"
+  ,"Cross-modal augmentation roadmap · HumaLog-VLA": "跨模态数据增强路线 · HumaLog-VLA"
 };
 
 const originalText = new WeakMap();
