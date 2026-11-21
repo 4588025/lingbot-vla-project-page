@@ -1,8 +1,7 @@
 const active = document.body.dataset.page || "";
 const experimentItems = [
   ["dagger.html", "DAgger 纠偏", "DAgger correction", "dagger"],
-  ["deployment.html", "部署优化", "Deployment", "deployment"],
-  ["future.html", "DSRL", "DSRL", "future"]
+  ["deployment.html", "部署优化", "Deployment", "deployment"]
 ];
 const experimentActive = experimentItems.some(([, , , key]) => active === key);
 
@@ -26,6 +25,7 @@ document.querySelector("[data-header]").innerHTML = `
         </div>
         <a class="${active === "results" ? "active" : ""}" href="results.html" data-zh="结果" data-en="Results">结果</a>
         <a class="${active === "demo" ? "active" : ""}" href="demo.html" data-zh="演示" data-en="Demo">演示</a>
+        <a class="${active === "future" ? "active" : ""}" href="future.html" data-zh="DSRL" data-en="DSRL">DSRL</a>
       </nav>
       <button class="language-toggle" data-language type="button"><b>EN</b> / 中</button>
     </div>

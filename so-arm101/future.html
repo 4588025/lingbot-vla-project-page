@@ -12,9 +12,28 @@
   <main>
     <section class="page-hero">
       <div class="shell">
-        <p class="eyebrow">05 / DSRL</p>
+        <p class="eyebrow">06 / DSRL</p>
         <h1 data-zh="让慢速 π₀ 提供长期规划，让快速策略完成即时纠正。" data-en="Let slow π₀ plan ahead and a fast policy react now.">让慢速 π₀ 提供长期规划，让快速策略完成即时纠正。</h1>
-        <p data-zh="当前系统已经通过 Receding Horizon 将推理和执行解耦。下一步借鉴 Real-Time EXPO-FT，在动作下发前利用最新观测修正候选 chunk，进一步处理观测过期问题。" data-en="The current system already decouples inference from execution with a receding horizon. The next direction, inspired by Real-Time EXPO-FT, is to edit candidate chunks from the latest observation immediately before execution.">当前系统已经通过 Receding Horizon 将推理和执行解耦。下一步借鉴 Real-Time EXPO-FT，在动作下发前利用最新观测修正候选 chunk，进一步处理观测过期问题。</p>
+        <p data-zh="后续改进同时从数据与控制两侧推进：通过多场景采集和高质量示范提升策略泛化，再借鉴 Real-Time EXPO-FT，在动作下发前利用最新观测修正候选 chunk。" data-en="The next stage advances both data and control: multi-scene collection and high-quality demonstrations improve generalization, while Real-Time EXPO-FT-inspired editing corrects candidate chunks from the latest observation before execution.">后续改进同时从数据与控制两侧推进：通过多场景采集和高质量示范提升策略泛化，再借鉴 Real-Time EXPO-FT，在动作下发前利用最新观测修正候选 chunk。</p>
+      </div>
+    </section>
+
+    <section class="section shell future-data-direction">
+      <div class="section-head">
+        <div><p class="section-index">DATA IMPROVEMENT</p><h2 data-zh="扩展场景覆盖，提高示范质量。" data-en="Broaden scene coverage and improve demonstration quality.">扩展场景覆盖，提高示范质量。</h2></div>
+        <p data-zh="数据侧优先解决训练分布单一和示范噪声问题，使策略在物体位置、光照、背景和相机视角变化时仍能稳定完成顺序抓取与堆叠。" data-en="The data track targets narrow training distributions and demonstration noise so the policy remains stable under changes in object position, lighting, background, and camera viewpoint.">数据侧优先解决训练分布单一和示范噪声问题，使策略在物体位置、光照、背景和相机视角变化时仍能稳定完成顺序抓取与堆叠。</p>
+      </div>
+      <div class="future-roadmap future-data-roadmap">
+        <article>
+          <span>DATA · COVERAGE</span>
+          <h3 data-zh="多场景采集" data-en="Multi-scene collection">多场景采集</h3>
+          <p data-zh="在保持任务语义一致的前提下，系统改变红蓝物块初始位置、指定平台位置、桌面背景、光照强度与方向，并加入小范围相机视角扰动。通过覆盖更多真实部署条件，降低策略对单一场景布局的依赖。" data-en="Keep the task semantics fixed while varying red and blue object positions, target-platform placement, tabletop background, lighting intensity and direction, and small camera-view perturbations. This reduces dependence on one deployment layout.">在保持任务语义一致的前提下，系统改变红蓝物块初始位置、指定平台位置、桌面背景、光照强度与方向，并加入小范围相机视角扰动。通过覆盖更多真实部署条件，降低策略对单一场景布局的依赖。</p>
+        </article>
+        <article>
+          <span>DATA · QUALITY</span>
+          <h3 data-zh="高质量示范" data-en="High-quality demonstrations">高质量示范</h3>
+          <p data-zh="建立统一成功标准，优先保留抓取稳定、路径清晰、放置准确且无多余停顿的示范；剔除夹取失败、碰撞、长时间静止和不可恢复轨迹，并对关键接触与堆叠阶段进行质量复核。" data-en="Use consistent success criteria and retain demonstrations with stable grasps, clear paths, accurate placement, and no unnecessary pauses. Reject failed grips, collisions, long idle periods, and unrecoverable trajectories, then review critical contact and stacking phases.">建立统一成功标准，优先保留抓取稳定、路径清晰、放置准确且无多余停顿的示范；剔除夹取失败、碰撞、长时间静止和不可恢复轨迹，并对关键接触与堆叠阶段进行质量复核。</p>
+        </article>
       </div>
     </section>
 

@@ -45,8 +45,8 @@ assert all(v in results for v in ("50%", "70%", "7.5", "DAgger 数据", "25<span
 assert 'data-zh="请求间隔"' in results and 'data-en="Request interval"' in results and ">Latency<" not in results
 assert all(v in demo for v in ("双视角真机执行", "Gripper view", "Overview", "demo-gripper-view.mp4", "demo-overview-square.mp4", "demo-gripper-view-poster.jpg", "demo-overview-square-poster.jpg", "controls", "playsinline", "30<span>Hz</span>", "≈5<span>Hz</span>", "25<span>steps</span>"))
 assert "result-demo.mp4" not in demo and "result-poster.png" not in demo
-assert all(v in navigation for v in ('data-zh="首页"', 'data-en="Home"', 'data-zh="任务、数据"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', "nav-dropdown-menu"))
-assert '["future.html", "DSRL", "DSRL", "future"]' in navigation and "改进方向" not in navigation
+assert all(v in navigation for v in ('data-zh="首页"', 'data-en="Home"', 'data-zh="任务、数据"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', 'href="future.html" data-zh="DSRL"', "nav-dropdown-menu"))
+assert '["future.html", "DSRL", "DSRL", "future"]' not in navigation and navigation.index('data-zh="演示"') < navigation.index('href="future.html" data-zh="DSRL"')
 assert '["data.html", "数据处理"' not in navigation
 assert all(v in data for v in ("1.1 / TASK", "1.2 / DATA COLLECTION &amp; FILTERING", "SEQUENTIAL PICK &amp; STACK", "Leader / Follower", "红色物块", "蓝色物块", "指定平台", "sequential_object_stack", "episode_2", "34,717", "30<em>FPS</em>", "23.63<em>s</em>", "708 frames", "assets/media/episode-2-front.mp4", "assets/media/episode-2-side.mp4", "controls", "playsinline"))
 assert "积木" not in data and "瓶盖" not in data
@@ -60,7 +60,7 @@ assert all(v in deployment for v in ("DEPLOYMENT ARCHITECTURE", "LOCAL · UBUNTU
 assert all(v in deployment for v in ("复用 π₀ 训练环境", "Reuse the π₀ training environment", "deploy.pi0"))
 assert "lingbot-vla-v2" not in deployment and "deploy.lingbot_vla_v2" not in deployment
 assert "FUTURE DIRECTION · REAL-TIME EXPO-FT" not in deployment
-assert all(v in future for v in ("<title>DSRL ·", "05 / DSRL", "REAL-TIME EXPO-FT", "π₀ 生成候选", "Residual 修正", "Q 选择并执行", "P3 · VERY HIGH", "2609.18207"))
+assert all(v in future for v in ("<title>DSRL ·", "06 / DSRL", "DATA IMPROVEMENT", "多场景采集", "高质量示范", "Multi-scene collection", "High-quality demonstrations", "REAL-TIME EXPO-FT", "π₀ 生成候选", "Residual 修正", "Q 选择并执行", "P3 · VERY HIGH", "2609.18207"))
 assert (ROOT / "assets/media/result-demo.mp4").stat().st_size > 100_000
 assert (ROOT / "assets/media/result-poster.png").stat().st_size > 10_000
 assert (ROOT / "assets/media/demo-gripper-view.mp4").stat().st_size > 100_000
