@@ -4,6 +4,7 @@ const experimentItems = [
   ["deployment.html", "部署优化", "Deployment", "deployment"]
 ];
 const experimentActive = experimentItems.some(([, , , key]) => active === key);
+const futureActive = active === "future";
 
 document.querySelector("[data-header]").innerHTML = `
   <header class="site-header">
@@ -25,7 +26,16 @@ document.querySelector("[data-header]").innerHTML = `
         </div>
         <a class="${active === "results" ? "active" : ""}" href="results.html" data-zh="结果" data-en="Results">结果</a>
         <a class="${active === "demo" ? "active" : ""}" href="demo.html" data-zh="演示" data-en="Demo">演示</a>
-        <a class="${active === "future" ? "active" : ""}" href="future.html" data-zh="DSRL" data-en="DSRL">DSRL</a>
+        <div class="nav-dropdown ${futureActive ? "active" : ""}">
+          <button class="nav-dropdown-trigger" type="button" aria-expanded="false">
+            <span data-zh="改进方向" data-en="Future work">改进方向</span><i aria-hidden="true">⌄</i>
+          </button>
+          <div class="nav-dropdown-menu">
+            <a class="${futureActive ? "active" : ""}" href="future.html">
+              <b>01</b><span data-zh="DSRL" data-en="DSRL">DSRL</span>
+            </a>
+          </div>
+        </div>
       </nav>
       <button class="language-toggle" data-language type="button"><b>EN</b> / 中</button>
     </div>
