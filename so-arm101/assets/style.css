@@ -228,6 +228,11 @@ html[lang="en"] .hero h1.project-title { font-size: clamp(36px, 3.65vw, 56px); l
 .future-data-roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .future-data-roadmap article { min-height: 260px; }
 .future-data-roadmap p { font-size: 14px; line-height: 1.8; }
+.direction-anchor { scroll-margin-top: 110px; }
+.rl-directions { padding-top: 72px; }
+.rl-method-roadmap article { display: flex; min-height: 390px; flex-direction: column; }
+.rl-method-roadmap p { font-size: 14px; line-height: 1.75; }
+.method-source { align-self: flex-start; margin-top: auto; padding-top: 28px; color: var(--blue); font-size: 13px; font-weight: 800; text-decoration: underline; text-underline-offset: 4px; }
 .future-evidence { margin-top: 18px; padding: 18px 20px; color: var(--muted); background: #e9e6dd; border-radius: 14px; font-size: 10px; }
 .future-evidence a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
 

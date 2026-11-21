@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="DSRL for real-time π0 control on SO-ARM101">
   <title>DSRL · 面向长时序机器人操作的 π₀ 真机在环学习与闭环策略优化</title>
-  <link rel="stylesheet" href="assets/style.css?v=20261110c">
+  <link rel="stylesheet" href="assets/style.css?v=20261121a">
 </head>
 <body data-page="future">
   <div data-header></div>
   <main>
-    <section class="page-hero">
+    <section class="page-hero direction-anchor" id="dsrl">
       <div class="shell">
         <p class="eyebrow">06 / DSRL</p>
         <h1 data-zh="让慢速 π₀ 提供长期规划，让快速策略完成即时纠正。" data-en="Let slow π₀ plan ahead and a fast policy react now.">让慢速 π₀ 提供长期规划，让快速策略完成即时纠正。</h1>
@@ -33,6 +33,33 @@
           <span>DATA · QUALITY</span>
           <h3 data-zh="高质量示范" data-en="High-quality demonstrations">高质量示范</h3>
           <p data-zh="建立统一成功标准，优先保留抓取稳定、路径清晰、放置准确且无多余停顿的示范；剔除夹取失败、碰撞、长时间静止和不可恢复轨迹，并对关键接触与堆叠阶段进行质量复核。" data-en="Use consistent success criteria and retain demonstrations with stable grasps, clear paths, accurate placement, and no unnecessary pauses. Reject failed grips, collisions, long idle periods, and unrecoverable trajectories, then review critical contact and stacking phases.">建立统一成功标准，优先保留抓取稳定、路径清晰、放置准确且无多余停顿的示范；剔除夹取失败、碰撞、长时间静止和不可恢复轨迹，并对关键接触与堆叠阶段进行质量复核。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell rl-directions">
+      <div class="section-head">
+        <div><p class="section-index">RL POST-TRAINING</p><h2 data-zh="三条可继续验证的 VLA 强化学习路线。" data-en="Three VLA reinforcement-learning routes to evaluate next.">三条可继续验证的 VLA 强化学习路线。</h2></div>
+        <p data-zh="三种方法分别从紧凑表示、异构经验和示范质量切入，可结合真机数据规模、安全约束与训练成本分阶段验证。" data-en="The three methods approach adaptation through compact representations, heterogeneous experience, and demonstration quality, and can be evaluated in stages under real-robot data, safety, and compute constraints.">三种方法分别从紧凑表示、异构经验和示范质量切入，可结合真机数据规模、安全约束与训练成本分阶段验证。</p>
+      </div>
+      <div class="future-roadmap rl-method-roadmap">
+        <article class="direction-anchor" id="rl-token">
+          <span>ONLINE RL · COMPACT INTERFACE</span>
+          <h3>RL Token</h3>
+          <p data-zh="从预训练 VLA 暴露紧凑的 RL token，并在其上训练小型 actor–critic 头，以较低的更新成本细化动作，同时用 VLA 原始策略约束在线探索。适合先冻结 π₀ 主干，只训练轻量策略头。" data-en="Expose a compact RL token from the pretrained VLA and train small actor–critic heads on top, refining actions at low update cost while anchoring exploration to the original VLA policy. This suggests freezing the π₀ backbone first and training only lightweight heads.">从预训练 VLA 暴露紧凑的 RL token，并在其上训练小型 actor–critic 头，以较低的更新成本细化动作，同时用 VLA 原始策略约束在线探索。适合先冻结 π₀ 主干，只训练轻量策略头。</p>
+          <a class="method-source" href="https://arxiv.org/abs/2604.23073" target="_blank" rel="noreferrer">RL Token paper</a>
+        </article>
+        <article class="direction-anchor" id="recap">
+          <span>OFFLINE + ONLINE · CORRECTIONS</span>
+          <h3>RECAP</h3>
+          <p data-zh="通过 advantage-conditioned policy 统一利用专家示范、策略自主执行数据和人工接管纠偏。它与现有 DAgger 数据路径较匹配，可把成功示范、失败轨迹及接管片段共同用于离线预训练与真机专项优化。" data-en="Use an advantage-conditioned policy to combine demonstrations, autonomous rollouts, and expert interventions. This aligns with the existing DAgger pipeline and can reuse successful demonstrations, failures, and takeover segments for offline pretraining and task-specific robot adaptation.">通过 advantage-conditioned policy 统一利用专家示范、策略自主执行数据和人工接管纠偏。它与现有 DAgger 数据路径较匹配，可把成功示范、失败轨迹及接管片段共同用于离线预训练与真机专项优化。</p>
+          <a class="method-source" href="https://arxiv.org/abs/2511.14759" target="_blank" rel="noreferrer">RECAP paper</a>
+        </article>
+        <article class="direction-anchor" id="gr-rl">
+          <span>FILTER + AUGMENT + ONLINE RL</span>
+          <h3>GR-RL</h3>
+          <p data-zh="先使用任务进度价值过滤低质量示范，再进行形态对称增强，最后通过在线 RL 的潜空间噪声预测器修正部署行为。适合长时序、高精度任务，可与本项目的高质量示范筛选和数据增强路线结合。" data-en="Filter low-quality demonstrations with a task-progress value model, apply morphological symmetry augmentation, and then refine deployment behavior through an online-RL latent noise predictor. This is suited to long-horizon precision tasks and complements the project's demonstration filtering and augmentation plans.">先使用任务进度价值过滤低质量示范，再进行形态对称增强，最后通过在线 RL 的潜空间噪声预测器修正部署行为。适合长时序、高精度任务，可与本项目的高质量示范筛选和数据增强路线结合。</p>
+          <a class="method-source" href="https://arxiv.org/abs/2512.01801" target="_blank" rel="noreferrer">GR-RL paper</a>
         </article>
       </div>
     </section>

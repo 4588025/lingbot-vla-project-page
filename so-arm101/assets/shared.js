@@ -31,8 +31,17 @@ document.querySelector("[data-header]").innerHTML = `
             <span data-zh="改进方向" data-en="Future work">改进方向</span><i aria-hidden="true">⌄</i>
           </button>
           <div class="nav-dropdown-menu">
-            <a class="${futureActive ? "active" : ""}" href="future.html">
+            <a class="${futureActive ? "active" : ""}" href="future.html#dsrl">
               <b>01</b><span data-zh="DSRL" data-en="DSRL">DSRL</span>
+            </a>
+            <a href="future.html#rl-token">
+              <b>02</b><span data-zh="RL Token" data-en="RL Token">RL Token</span>
+            </a>
+            <a href="future.html#recap">
+              <b>03</b><span data-zh="RECAP" data-en="RECAP">RECAP</span>
+            </a>
+            <a href="future.html#gr-rl">
+              <b>04</b><span data-zh="GR-RL" data-en="GR-RL">GR-RL</span>
             </a>
           </div>
         </div>
