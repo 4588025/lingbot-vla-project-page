@@ -36,11 +36,13 @@ future = (ROOT / "future.html").read_text(encoding="utf-8")
 demo = (ROOT / "demo.html").read_text(encoding="utf-8")
 navigation = (ROOT / "assets/shared.js").read_text(encoding="utf-8")
 assert all(v in home for v in ("50<span>%</span> → 70", "1200<span>ms</span> → 200", "0.03637"))
+assert 'data-zh="请求间隔"' in home and 'data-en="Request interval"' in home and "请求延迟" not in home
 assert all(v in home for v in ("面向长时序机器人操作的", "π₀ 真机在环学习", "与闭环策略优化", "π₀ Real-World-in-the-Loop Learning"))
 assert "面向长时序机器人操作的 π₀ 真机在环学习与闭环策略优化" in navigation
 assert "继续训练 2.5k steps" in home
 assert all(v in dagger for v in ("25 条", "25 real-robot corrective trajectories", "2.5k steps", "50%", "70%"))
 assert all(v in results for v in ("50%", "70%", "7.5", "DAgger 数据", "25<span>条</span>", "DAgger FT", "2.5", "0.03637", "200<span>ms</span>", "demo.html"))
+assert 'data-zh="请求间隔"' in results and 'data-en="Request interval"' in results and ">Latency<" not in results
 assert all(v in demo for v in ("双视角真机执行", "Gripper view", "Overview", "demo-gripper-view.mp4", "demo-overview-square.mp4", "demo-gripper-view-poster.jpg", "demo-overview-square-poster.jpg", "controls", "playsinline", "30<span>Hz</span>", "≈5<span>Hz</span>", "25<span>steps</span>"))
 assert "result-demo.mp4" not in demo and "result-poster.png" not in demo
 assert all(v in navigation for v in ('data-zh="首页"', 'data-en="Home"', 'data-zh="任务、数据"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', "nav-dropdown-menu"))
@@ -52,6 +54,7 @@ assert "huggingface.co" not in data and "hf.space" not in data and "<iframe" not
 assert all(v in deployment for v in ("LEROBOT · ALIGNED BLEND", "ROLLING ACTION EXECUTOR", "action cursor", "elapsed × fps", "81b8c5b"))
 assert all(v in deployment for v in ("WHY RECEDING HORIZON", "SERIAL · BLOCKING", "ROLLING · TWO THREADS", "N=floor(elapsed×fps)", "EXEC_HORIZON=None"))
 assert all(v in deployment for v in ("消除推理等待", "Remove inference pauses", "消除动作块交界抖动", "Remove chunk-transition jitter", "blend-preview"))
+assert "连续推理请求的间隔由约 1200ms 缩短至 200ms" in deployment and "请求等待由 1200ms" not in deployment
 assert "LEROBOT OFFICIAL ALIGNMENT" not in deployment and "cursor = 120" not in deployment
 assert all(v in deployment for v in ("DEPLOYMENT ARCHITECTURE", "LOCAL · UBUNTU", "SSH TUNNEL · WEBSOCKET", "COMPUTE CENTER", "about 25 steps"))
 assert all(v in deployment for v in ("复用 π₀ 训练环境", "Reuse the π₀ training environment", "deploy.pi0"))
