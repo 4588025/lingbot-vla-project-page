@@ -40,18 +40,21 @@ assert 'data-zh="请求间隔"' in home and 'data-en="Request interval"' in home
 assert all(v in home for v in ("面向长时序机器人操作的", "π₀ 真机在环学习", "与闭环策略优化", "π₀ Real-World-in-the-Loop Learning"))
 assert "面向长时序机器人操作的 π₀ 真机在环学习与闭环策略优化" in navigation
 assert "继续训练 2.5k steps" in home
+assert all(v in home for v in ('data-zh="查看 RTC"', 'data-en="View RTC"')) and "查看部署优化" not in home
 assert all(v in dagger for v in ("25 条", "25 real-robot corrective trajectories", "2.5k steps", "50%", "70%"))
 assert all(v in results for v in ("50%", "70%", "7.5", "DAgger 数据", "25<span>条</span>", "DAgger FT", "2.5", "0.03637", "200<span>ms</span>", "demo.html"))
 assert 'data-zh="请求间隔"' in results and 'data-en="Request interval"' in results and ">Latency<" not in results
 assert all(v in demo for v in ("双视角真机执行", "Gripper view", "Overview", "demo-gripper-view.mp4", "demo-overview-square.mp4", "demo-gripper-view-poster.jpg", "demo-overview-square-poster.jpg", "controls", "playsinline", "30<span>Hz</span>", "≈5<span>Hz</span>", "25<span>steps</span>"))
 assert "result-demo.mp4" not in demo and "result-poster.png" not in demo
 assert all(v in navigation for v in ('data-zh="首页"', 'data-en="Home"', 'data-zh="任务、数据"', 'data-zh="实验"', 'data-zh="结果"', 'data-zh="演示"', 'data-zh="改进方向"', 'data-en="Future work"', 'href="future.html#dsrl"', 'href="future.html#rl-token"', 'href="future.html#recap"', 'href="future.html#gr-rl"', 'data-zh="DSRL"', 'data-zh="RL Token"', 'data-zh="RECAP"', 'data-zh="GR-RL"', "nav-dropdown-menu"))
+assert '["deployment.html", "RTC", "RTC", "deployment"]' in navigation and "部署优化" not in navigation
 assert '["future.html", "DSRL", "DSRL", "future"]' not in navigation and navigation.index('data-zh="演示"') < navigation.index('data-zh="改进方向"') < navigation.index('href="future.html#dsrl"')
 assert '["data.html", "数据处理"' not in navigation
 assert all(v in data for v in ("1.1 / TASK", "1.2 / DATA COLLECTION &amp; FILTERING", "SEQUENTIAL PICK &amp; STACK", "Leader / Follower", "红色物块", "蓝色物块", "指定平台", "sequential_object_stack", "episode_2", "34,717", "30<em>FPS</em>", "23.63<em>s</em>", "708 frames", "assets/media/episode-2-front.mp4", "assets/media/episode-2-side.mp4", "controls", "playsinline"))
 assert "积木" not in data and "瓶盖" not in data
 assert "huggingface.co" not in data and "hf.space" not in data and "<iframe" not in data
 assert all(v in deployment for v in ("LEROBOT · ALIGNED BLEND", "ROLLING ACTION EXECUTOR", "action cursor", "elapsed × fps", "81b8c5b"))
+assert "<title>RTC ·" in deployment and "<title>部署优化 ·" not in deployment
 assert all(v in deployment for v in ("WHY RECEDING HORIZON", "SERIAL · BLOCKING", "ROLLING · TWO THREADS", "N=floor(elapsed×fps)", "EXEC_HORIZON=None"))
 assert all(v in deployment for v in ("消除推理等待", "Remove inference pauses", "消除动作块交界抖动", "Remove chunk-transition jitter", "blend-preview"))
 assert "连续推理请求的间隔由约 1200ms 缩短至 200ms" in deployment and "请求等待由 1200ms" not in deployment

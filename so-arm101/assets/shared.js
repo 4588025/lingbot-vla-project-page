@@ -1,7 +1,7 @@
 const active = document.body.dataset.page || "";
 const experimentItems = [
   ["dagger.html", "DAgger 纠偏", "DAgger correction", "dagger"],
-  ["deployment.html", "部署优化", "Deployment", "deployment"]
+  ["deployment.html", "RTC", "RTC", "deployment"]
 ];
 const experimentActive = experimentItems.some(([, , , key]) => active === key);
 const futureActive = active === "future";
